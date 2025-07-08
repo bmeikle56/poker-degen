@@ -12,7 +12,7 @@ struct MainView: View {
 
     var body: some View {
         VStack {
-            
+            PokerTable()
         }
         .navigationBarHidden(true)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
