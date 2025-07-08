@@ -73,25 +73,25 @@ struct MainView: View {
                             Image("2c")
                                 .resizable()
                                 .scaledToFit()
-                                .frame(width: 55, height: 55)
+                                .frame(width: 56, height: 56)
                         }
                         Button(action: {}) {
                             Image("td")
                                 .resizable()
                                 .scaledToFit()
-                                .frame(width: 55, height: 55)
+                                .frame(width: 56, height: 56)
                         }
                         Button(action: {}) {
                             Image("jd")
                                 .resizable()
                                 .scaledToFit()
-                                .frame(width: 55, height: 55)
+                                .frame(width: 56, height: 56)
                         }
                         Button(action: {}) {
                             Image("4s")
                                 .resizable()
                                 .scaledToFit()
-                                .frame(width: 55, height: 55)
+                                .frame(width: 56, height: 56)
                         }
                         Button(action: {}) {
                             Image("qd")
