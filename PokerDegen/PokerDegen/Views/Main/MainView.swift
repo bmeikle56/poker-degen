@@ -46,20 +46,20 @@ struct MainView: View {
     var body: some View {
         VStack {
             PokerTable()
-            HStack(spacing: -38.0) {
+            HStack(spacing: -29.0) {
                 Button(action: {}) {
-                    Image("card")
+                    Image("ac")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 80, height: 80)
-                        .rotationEffect(.degrees(-6))
+                        .rotationEffect(.degrees(-9))
                 }
                 Button(action: {}) {
-                    Image("card")
+                    Image("5c")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 80, height: 80)
-                        .rotationEffect(.degrees(6))
+                        .rotationEffect(.degrees(9))
                 }
             }
         }
