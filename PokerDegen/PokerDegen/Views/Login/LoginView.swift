@@ -63,7 +63,9 @@ struct LoginButton: View {
     var body: some View {
         Button(action: {
             navigationController.pushViewController(
-                UIHostingController(rootView: LoginView(navigationController: navigationController)), animated: true
+                UIHostingController(rootView:
+                                        LoginView(navigationController: navigationController)
+                                   ), animated: true
             )
         }, label: {
             Text("Login")
@@ -98,6 +100,7 @@ struct LoginView: View {
             Spacer().frame(height: 20)
             LoginButton(navigationController: navigationController)
         }
+        .navigationBarHidden(true)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.black)
         .ignoresSafeArea()
