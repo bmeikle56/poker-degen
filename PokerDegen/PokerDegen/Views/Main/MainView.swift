@@ -12,20 +12,20 @@ struct PokerTable: View {
         GeometryReader { geo in
             let scale: CGFloat = 0.75
             let width = geo.size.width * scale
-            let height = geo.size.height * scale
+            let height = geo.size.height
 
             ZStack {
                 Capsule()
                     .fill(Color.green.opacity(0.3))
                     .rotation3DEffect(
-                            .degrees(45),
+                            .degrees(50),
                             axis: (x: 1, y: 0, z: 0),
                             perspective: 0.5
                         )
                 Capsule()
                     .stroke(Color.pokerMaroon, lineWidth: 6)
                     .rotation3DEffect(
-                            .degrees(45),
+                            .degrees(50),
                             axis: (x: 1, y: 0, z: 0),
                             perspective: 0.5
                         )
@@ -45,21 +45,80 @@ struct MainView: View {
 
     var body: some View {
         VStack {
-            PokerTable()
-            HStack(spacing: -29.0) {
-                Button(action: {}) {
-                    Image("ac")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 80, height: 80)
-                        .rotationEffect(.degrees(-9))
+            ZStack {
+                PokerTable()
+                VStack {
+                    HStack(spacing: -29.0) {
+                        Button(action: {}) {
+                            Image("card")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 80, height: 80)
+                                .rotationEffect(.degrees(-9))
+                        }
+                        Button(action: {}) {
+                            Image("card")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 80, height: 80)
+                                .rotationEffect(.degrees(9))
+                        }
+                    }
+                    Spacer().frame(height: 350)
                 }
-                Button(action: {}) {
-                    Image("5c")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 80, height: 80)
-                        .rotationEffect(.degrees(9))
+                VStack {
+                    Spacer().frame(height: 20)
+                    HStack(spacing: -10.0) {
+                        Button(action: {}) {
+                            Image("2c")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 55, height: 55)
+                        }
+                        Button(action: {}) {
+                            Image("td")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 55, height: 55)
+                        }
+                        Button(action: {}) {
+                            Image("jd")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 55, height: 55)
+                        }
+                        Button(action: {}) {
+                            Image("4s")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 55, height: 55)
+                        }
+                        Button(action: {}) {
+                            Image("qd")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 55, height: 55)
+                        }
+                    }
+                }
+                VStack {
+                    Spacer().frame(height: 470)
+                    HStack(spacing: -29.0) {
+                        Button(action: {}) {
+                            Image("ad")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 80, height: 80)
+                                .rotationEffect(.degrees(-9))
+                        }
+                        Button(action: {}) {
+                            Image("kd")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 80, height: 80)
+                                .rotationEffect(.degrees(9))
+                        }
+                    }
                 }
             }
         }
