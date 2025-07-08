@@ -58,8 +58,16 @@ struct PasswordField: View {
 }
 
 struct LoginButton: View {
+    let navigationController: UINavigationController
+
     var body: some View {
-        Button(action: {}, label: {
+        Button(action: {
+            navigationController.pushViewController(
+                UIHostingController(rootView:
+                                        MainView(navigationController: navigationController)
+                                   ), animated: true
+            )
+        }, label: {
             Text("Login")
                 .foregroundColor(.black)
                 .font(.system(size: 18, weight: .bold, design: .default))
@@ -72,6 +80,8 @@ struct LoginButton: View {
 }
 
 struct LoginView: View {
+    let navigationController: UINavigationController
+
     var body: some View {
         VStack {
             HStack {
@@ -88,8 +98,9 @@ struct LoginView: View {
             Spacer().frame(height: 20)
             PasswordField(placeholder: "Password")
             Spacer().frame(height: 20)
-            LoginButton()
+            LoginButton(navigationController: navigationController)
         }
+        .navigationBarHidden(true)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.black)
         .ignoresSafeArea()
@@ -97,5 +108,5 @@ struct LoginView: View {
 }
 
 #Preview {
-    LoginView()
+    LoginView(navigationController: UINavigationController())
 }
