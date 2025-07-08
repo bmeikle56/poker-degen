@@ -64,7 +64,7 @@ struct LoginButton: View {
         Button(action: {
             navigationController.pushViewController(
                 UIHostingController(rootView:
-                                        LoginView(navigationController: navigationController)
+                                        MainView(navigationController: navigationController)
                                    ), animated: true
             )
         }, label: {
