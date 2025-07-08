@@ -9,6 +9,29 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>PokerDegen2.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>D27FA2EA2E1C9974001427D1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D27FA2F72E1C9976001427D1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D27FA3012E1C9976001427D1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 	</dict>
 </dict>
 </plist>
