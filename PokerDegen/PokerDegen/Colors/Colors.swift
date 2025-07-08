@@ -9,4 +9,5 @@ import SwiftUI
 
 extension Color {
     static let pdBlue: Color = .init(red: 0, green: 1, blue: 1)
+    static let smoothGray: Color = .init(red: 0.4, green: 0.4, blue: 0.4)
 }
