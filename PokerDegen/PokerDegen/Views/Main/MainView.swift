@@ -7,12 +7,61 @@
 
 import SwiftUI
 
+struct PokerTable: View {
+    var body: some View {
+        GeometryReader { geo in
+            let scale: CGFloat = 0.75
+            let width = geo.size.width * scale
+            let height = geo.size.height * scale
+
+            ZStack {
+                Capsule()
+                    .fill(Color.green.opacity(0.3))
+                    .rotation3DEffect(
+                            .degrees(45),
+                            axis: (x: 1, y: 0, z: 0),
+                            perspective: 0.5
+                        )
+                Capsule()
+                    .stroke(Color.pokerMaroon, lineWidth: 6)
+                    .rotation3DEffect(
+                            .degrees(45),
+                            axis: (x: 1, y: 0, z: 0),
+                            perspective: 0.5
+                        )
+            }
+            .frame(width: width, height: height)
+            .position(x: geo.size.width / 2, y: geo.size.height / 2)
+            .shadow(radius: 10)
+        }
+        .aspectRatio(0.6, contentMode: .fit)
+        .padding()
+    }
+}
+
+
 struct MainView: View {
     let navigationController: UINavigationController
 
     var body: some View {
         VStack {
             PokerTable()
+            HStack(spacing: -38.0) {
+                Button(action: {}) {
+                    Image("card")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 80, height: 80)
+                        .rotationEffect(.degrees(-6))
+                }
+                Button(action: {}) {
+                    Image("card")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 80, height: 80)
+                        .rotationEffect(.degrees(6))
+                }
+            }
         }
         .navigationBarHidden(true)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
