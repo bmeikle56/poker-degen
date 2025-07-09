@@ -42,6 +42,17 @@ struct PokerTable: View {
 
 struct MainView: View {
     let navigationController: UINavigationController
+    @State private var showPopover = false
+    
+    private func action() {
+        let hostingController = UIHostingController(rootView: CardSelector(navigationController: navigationController))
+        hostingController.modalPresentationStyle = .overCurrentContext
+        hostingController.view.backgroundColor = .clear
+        navigationController.modalPresentationStyle = .overCurrentContext
+        navigationController.present(hostingController, animated: true)
+    }
+    
+    @State private var modelResponse: String?
 
     var body: some View {
         VStack {
@@ -49,14 +60,18 @@ struct MainView: View {
                 PokerTable()
                 VStack {
                     HStack(spacing: -29.0) {
-                        Button(action: {}) {
+                        Button(action: {
+                            action()
+                        }) {
                             Image("card")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 80, height: 80)
                                 .rotationEffect(.degrees(-9))
                         }
-                        Button(action: {}) {
+                        Button(action: {
+                            action()
+                        }) {
                             Image("card")
                                 .resizable()
                                 .scaledToFit()
@@ -69,31 +84,41 @@ struct MainView: View {
                 VStack {
                     Spacer().frame(height: 20)
                     HStack(spacing: -10.0) {
-                        Button(action: {}) {
+                        Button(action: {
+                            action()
+                        }) {
                             Image("2c")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 56, height: 56)
                         }
-                        Button(action: {}) {
+                        Button(action: {
+                            action()
+                        }) {
                             Image("td")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 56, height: 56)
                         }
-                        Button(action: {}) {
+                        Button(action: {
+                            action()
+                        }) {
                             Image("jd")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 56, height: 56)
                         }
-                        Button(action: {}) {
+                        Button(action: {
+                            action()
+                        }) {
                             Image("4s")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 56, height: 56)
                         }
-                        Button(action: {}) {
+                        Button(action: {
+                            action()
+                        }) {
                             Image("qd")
                                 .resizable()
                                 .scaledToFit()
@@ -104,14 +129,18 @@ struct MainView: View {
                 VStack {
                     Spacer().frame(height: 470)
                     HStack(spacing: -29.0) {
-                        Button(action: {}) {
+                        Button(action: {
+                            action()
+                        }) {
                             Image("ad")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 80, height: 80)
                                 .rotationEffect(.degrees(-9))
                         }
-                        Button(action: {}) {
+                        Button(action: {
+                            action()
+                        }) {
                             Image("kd")
                                 .resizable()
                                 .scaledToFit()
@@ -120,6 +149,40 @@ struct MainView: View {
                         }
                     }
                 }
+                VStack {
+                    Spacer().frame(height: 700)
+                    Button(action: {
+                        print("showPopover: \(showPopover)")
+                        Task {
+                            modelResponse = nil
+                            modelResponse = try await callChatGPT() as? String
+                        }
+                    }, label: {
+                        Text("Analyze")
+                            .foregroundStyle(Color.white)
+                            .padding()
+                            .background(
+                                RoundedRectangle(cornerRadius: 12)
+                            )
+                    })
+                    .onChange(of: modelResponse, { _, _ in
+                        showPopover = true
+                    })
+                }
+            }
+            .popover(isPresented: $showPopover) {
+                VStack(spacing: 16) {
+                    if let modelResponse {
+                        Text(modelResponse)
+                            .font(.headline)
+                            .foregroundStyle(Color.black)
+                    }
+                    Button("Close") {
+                        showPopover = false
+                    }
+                }
+                .padding()
+                .frame(width: 200, height: 150)
             }
         }
         .navigationBarHidden(true)
