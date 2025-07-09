@@ -10,10 +10,18 @@ import SwiftUI
 struct Suit: View {
     let suit: String
     let color: Color
+    let value: String
+    @Binding var selecting: String
+    
     @Environment(\.dismiss) var dismiss
 
     var body: some View {
         Button(action: {
+            if selecting == "card" {
+                /// our card is empty...
+            } else {
+                selecting = String(selecting.prefix(1)) + value
+            }
             dismiss()
         }) {
             Text(suit)
@@ -25,16 +33,17 @@ struct Suit: View {
 
 struct CardSelector: View {
     let navigationController: UINavigationController
+    @Binding var card: String
 
     var body: some View {
         VStack(spacing: 10) {
             HStack(spacing: 20) {
-                Suit(suit: "♠︎", color: .black)
-                Suit(suit: "♥︎", color: .red)
+                Suit(suit: "♠︎", color: .black, value: "s", selecting: $card)
+                Suit(suit: "♥︎", color: .red, value: "h", selecting: $card)
             }
             HStack(spacing: 20) {
-                Suit(suit: "♦︎", color: .red)
-                Suit(suit: "♣︎", color: .black)
+                Suit(suit: "♦︎", color: .red, value: "d", selecting: $card)
+                Suit(suit: "♣︎", color: .black, value: "c", selecting: $card)
             }
         }
         .frame(width: 200, height: 200)
@@ -43,6 +52,9 @@ struct CardSelector: View {
     }
 }
 
-#Preview {
-    CardSelector(navigationController: UINavigationController())
-}
+//#Preview {
+//    CardSelector(
+//        navigationController: UINavigationController(),
+//        card: "hc1"
+//    )
+//}
