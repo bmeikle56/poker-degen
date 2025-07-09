@@ -211,23 +211,23 @@ struct MainView: View {
                 }
                 VStack {
                     Spacer().frame(height: 700)
-//                    Button(action: {
-//                        print("showPopover: \(showPopover)")
-//                        Task {
-//                            modelResponse = nil
-//                            modelResponse = try await callChatGPT() as? String
-//                        }
-//                    }, label: {
-//                        Text("Analyze")
-//                            .foregroundStyle(Color.white)
-//                            .padding()
-//                            .background(
-//                                RoundedRectangle(cornerRadius: 12)
-//                            )
-//                    })
-//                    .onChange(of: modelResponse, { _, _ in
-//                        showPopover = true
-//                    })
+                    Button(action: {
+                        print("showPopover: \(showPopover)")
+                        Task {
+                            modelResponse = nil
+                            modelResponse = try await callChatGPT(with: viewModel) as? String
+                        }
+                    }, label: {
+                        Text("Analyze")
+                            .foregroundStyle(Color.white)
+                            .padding()
+                            .background(
+                                RoundedRectangle(cornerRadius: 12)
+                            )
+                    })
+                    .onChange(of: modelResponse, { _, _ in
+                        showPopover = true
+                    })
                 }
             }
             .popover(isPresented: $showPopover) {
