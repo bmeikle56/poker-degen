@@ -10,7 +10,7 @@ import Foundation
 func callChatGPT() async throws -> Any {
     let url = URL(string: "https://api.openai.com/v1/chat/completions")!
     let model = "gpt-4.1-mini"
-    let apiKey = "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"
+    let apiKey = "api-key"
     
     var request = URLRequest(url: url)
     request.httpMethod = "POST"
