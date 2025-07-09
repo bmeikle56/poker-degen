@@ -29,6 +29,9 @@ struct CardImage: View {
     let name: String
 
     var resolvedName: String {
+        
+        /// we are in the middle of selecting an empty card, and don't want to render
+        /// an image too early
         if name.hasPrefix("_") {
             return "card"
         } else {
@@ -74,53 +77,6 @@ struct PokerTable: View {
         .padding()
     }
 }
-
-struct HoldemBoard: View {
-    let action: () -> Void
-    
-    @ObservedObject var viewModel: CardViewModel
-
-    var body: some View {
-        HStack(spacing: -10.0) {
-            Button(action: {
-                action()
-            }) {
-                CardImage(name: viewModel.cc1)
-                    .scaledToFit()
-                    .frame(width: 56, height: 56)
-            }
-            Button(action: {
-                action()
-            }) {
-                CardImage(name: viewModel.cc2)
-                    .scaledToFit()
-                    .frame(width: 56, height: 56)
-            }
-            Button(action: {
-                action()
-            }) {
-                CardImage(name: viewModel.cc3)
-                    .scaledToFit()
-                    .frame(width: 56, height: 56)
-            }
-            Button(action: {
-                action()
-            }) {
-                CardImage(name: viewModel.cc4)
-                    .scaledToFit()
-                    .frame(width: 56, height: 56)
-            }
-            Button(action: {
-                action()
-            }) {
-                CardImage(name: viewModel.cc5)
-                    .scaledToFit()
-                    .frame(width: 55, height: 55)
-            }
-        }
-    }
-}
-
 
 struct MainView: View {
     let navigationController: UINavigationController
@@ -173,10 +129,58 @@ struct MainView: View {
                 }
                 VStack {
                     Spacer().frame(height: 20)
-//                    HoldemBoard(
-//                        action: action,
-//                        viewModel: viewModel
-//                    )
+                    HStack(spacing: -10.0) {
+                        Button(action: {
+                            select(card: $viewModel.cc1)
+                        }) {
+                            CardImage(name: viewModel.cc1)
+                                .scaledToFit()
+                                .frame(width: 60, height: 60)
+                        }
+                        .onLongPressGesture() {
+                            viewModel.cc1 = "card"
+                        }
+                        Button(action: {
+                            select(card: $viewModel.cc2)
+                        }) {
+                            CardImage(name: viewModel.cc2)
+                                .scaledToFit()
+                                .frame(width: 60, height: 60)
+                        }
+                        .onLongPressGesture() {
+                            viewModel.cc2 = "card"
+                        }
+                        Button(action: {
+                            select(card: $viewModel.cc3)
+                        }) {
+                            CardImage(name: viewModel.cc3)
+                                .scaledToFit()
+                                .frame(width: 60, height: 60)
+                        }
+                        .onLongPressGesture() {
+                            viewModel.cc3 = "card"
+                        }
+                        Button(action: {
+                            select(card: $viewModel.cc4)
+                        }) {
+                            CardImage(name: viewModel.cc4)
+                                .scaledToFit()
+                                .frame(width: 60, height: 60)
+                        }
+                        .onLongPressGesture() {
+                            viewModel.cc4 = "card"
+                        }
+                        Button(action: {
+                            select(card: $viewModel.cc5)
+                        }) {
+                            CardImage(name: viewModel.cc5)
+                                .scaledToFit()
+                                .frame(width: 60, height: 60)
+                        }
+                        .onLongPressGesture() {
+                            viewModel.cc5 = "card"
+                        }
+                    }
                 }
                 VStack {
                     Spacer().frame(height: 470)
