@@ -20,6 +20,7 @@ struct Suit: View {
         Button(action: {
             if selecting == "card" {
                 /// our card is empty...
+                selecting = "_" + value
             } else {
                 selecting = String(selecting.prefix(1)) + value
             }
