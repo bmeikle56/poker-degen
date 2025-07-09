@@ -42,6 +42,7 @@ struct PokerTable: View {
 
 struct MainView: View {
     let navigationController: UINavigationController
+    @State private var showPopover = false
     
     private func action() {
         let hostingController = UIHostingController(rootView: CardSelector(navigationController: navigationController))
@@ -50,6 +51,8 @@ struct MainView: View {
         navigationController.modalPresentationStyle = .overCurrentContext
         navigationController.present(hostingController, animated: true)
     }
+    
+    @State private var modelResponse: String?
 
     var body: some View {
         VStack {
@@ -146,6 +149,40 @@ struct MainView: View {
                         }
                     }
                 }
+                VStack {
+                    Spacer().frame(height: 700)
+                    Button(action: {
+                        print("showPopover: \(showPopover)")
+                        Task {
+                            modelResponse = nil
+                            modelResponse = try await callChatGPT() as? String
+                        }
+                    }, label: {
+                        Text("Analyze")
+                            .foregroundStyle(Color.white)
+                            .padding()
+                            .background(
+                                RoundedRectangle(cornerRadius: 12)
+                            )
+                    })
+                    .onChange(of: modelResponse, { _, _ in
+                        showPopover = true
+                    })
+                }
+            }
+            .popover(isPresented: $showPopover) {
+                VStack(spacing: 16) {
+                    if let modelResponse {
+                        Text(modelResponse)
+                            .font(.headline)
+                            .foregroundStyle(Color.black)
+                    }
+                    Button("Close") {
+                        showPopover = false
+                    }
+                }
+                .padding()
+                .frame(width: 200, height: 150)
             }
         }
         .navigationBarHidden(true)
