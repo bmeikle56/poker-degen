@@ -25,6 +25,24 @@ class CardViewModel: ObservableObject {
     @Published var v1c2: String = "qd"
 }
 
+struct CardImage: View {
+    let name: String
+
+    var resolvedName: String {
+        if name.hasPrefix("_") {
+            return "card"
+        } else {
+            return name
+        }
+    }
+
+    var body: some View {
+        Image(resolvedName)
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+    }
+}
+
 struct PokerTable: View {
     var body: some View {
         GeometryReader { geo in
@@ -67,40 +85,35 @@ struct HoldemBoard: View {
             Button(action: {
                 action()
             }) {
-                Image(viewModel.cc1)
-                    .resizable()
+                CardImage(name: viewModel.cc1)
                     .scaledToFit()
                     .frame(width: 56, height: 56)
             }
             Button(action: {
                 action()
             }) {
-                Image(viewModel.cc2)
-                    .resizable()
+                CardImage(name: viewModel.cc2)
                     .scaledToFit()
                     .frame(width: 56, height: 56)
             }
             Button(action: {
                 action()
             }) {
-                Image(viewModel.cc3)
-                    .resizable()
+                CardImage(name: viewModel.cc3)
                     .scaledToFit()
                     .frame(width: 56, height: 56)
             }
             Button(action: {
                 action()
             }) {
-                Image(viewModel.cc4)
-                    .resizable()
+                CardImage(name: viewModel.cc4)
                     .scaledToFit()
                     .frame(width: 56, height: 56)
             }
             Button(action: {
                 action()
             }) {
-                Image(viewModel.cc5)
-                    .resizable()
+                CardImage(name: viewModel.cc5)
                     .scaledToFit()
                     .frame(width: 55, height: 55)
             }
@@ -136,20 +149,24 @@ struct MainView: View {
                         Button(action: {
                             select(card: $viewModel.v1c1)
                         }) {
-                            Image(viewModel.v1c1)
-                                .resizable()
+                            CardImage(name: viewModel.v1c1)
                                 .scaledToFit()
                                 .frame(width: 80, height: 80)
                                 .rotationEffect(.degrees(-9))
                         }
+                        .onLongPressGesture() {
+                            viewModel.v1c1 = "card"
+                        }
                         Button(action: {
                             select(card: $viewModel.v1c2)
                         }) {
-                            Image(viewModel.v1c2)
-                                .resizable()
+                            CardImage(name: viewModel.v1c2)
                                 .scaledToFit()
                                 .frame(width: 80, height: 80)
                                 .rotationEffect(.degrees(9))
+                        }
+                        .onLongPressGesture() {
+                            viewModel.v1c2 = "card"
                         }
                     }
                     Spacer().frame(height: 350)
@@ -167,20 +184,24 @@ struct MainView: View {
                         Button(action: {
                             select(card: $viewModel.hc1)
                         }) {
-                            Image(viewModel.hc1)
-                                .resizable()
+                            CardImage(name: viewModel.hc1)
                                 .scaledToFit()
                                 .frame(width: 80, height: 80)
                                 .rotationEffect(.degrees(-9))
                         }
+                        .onLongPressGesture() {
+                            viewModel.hc1 = "card"
+                        }
                         Button(action: {
                             select(card: $viewModel.hc2)
                         }) {
-                            Image(viewModel.hc2)
-                                .resizable()
+                            CardImage(name: viewModel.hc2)
                                 .scaledToFit()
                                 .frame(width: 80, height: 80)
                                 .rotationEffect(.degrees(9))
+                        }
+                        .onLongPressGesture() {
+                            viewModel.hc2 = "card"
                         }
                     }
                 }
