@@ -62,6 +62,9 @@ struct LoginButton: View {
 
     var body: some View {
         Button(action: {
+            Task {
+                await login(username: "braeden", password: "pokerdegen")
+            }
             navigationController.pushViewController(
                 UIHostingController(rootView:
                                         MainView(navigationController: navigationController)
