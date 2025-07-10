@@ -13,23 +13,38 @@ let apiKey = "pokerdegen"
 
 func login(username: String, password: String) async {
     let path = "/login"
-    let url = URL(string: scheme + host + path)!
-    var request = URLRequest(url: url)
-    request.httpMethod = "POST"
-    request.addValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
-    request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+    let method = "POST"
     let body: [String: Any] = [
         "username": username,
         "password": password
     ]
+    let (data, _) = await fetchData(path: path, method: method, body: body)!
+    print("data: \(data)")
+}
+
+enum ServiceError: Error {
+    case statusCode
+}
+
+private func fetchData(path: String, method: String, body: [String: Any]? = nil) async -> ([String: Any], HTTPURLResponse)? {
+    let url = URL(string: scheme + host + path)!
+    var request = URLRequest(url: url)
+    request.httpMethod = method
+    request.addValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
+    request.addValue("application/json", forHTTPHeaderField: "Content-Type")
     do {
-        request.httpBody = try JSONSerialization.data(withJSONObject: body)
+        if let body {
+            request.httpBody = try JSONSerialization.data(withJSONObject: body)
+        }
         let (data, response) = try await URLSession.shared.data(for: request) as! (Data, HTTPURLResponse)
-        print("response.statusCode: \(response.statusCode)")
-        let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
-        print("json from /login: \(String(describing: json))")
+        if (response.statusCode != 200) {
+            throw ServiceError.statusCode
+        }
+        let json = try JSONSerialization.jsonObject(with: data) as! [String: Any]
+        return (json, response)
     } catch {
         /// do something with error...
+        return nil
     }
 }
 
