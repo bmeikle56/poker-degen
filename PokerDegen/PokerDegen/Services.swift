@@ -22,7 +22,17 @@ func login(username: String, password: String) async {
     print("data: \(data)")
 }
 
-enum ServiceError: Error {
+///
+///
+///
+///
+/// #### Encapsulated service library code ####
+///
+///
+///
+///
+
+private enum ServiceError: Error {
     case statusCode
 }
 
