@@ -9,7 +9,8 @@ import SwiftUI
 
 struct UsernameField: View {
     let placeholder: String
-    @State private var username: String = ""
+    
+    @Binding var username: String
     
     var body: some View {
         ZStack(alignment: .leading) {
@@ -22,6 +23,7 @@ struct UsernameField: View {
             TextField("", text: $username)
                 .padding()
                 .frame(width: 250)
+                .autocapitalization(.none)
                 .foregroundStyle(Color.smoothGray)
                 .overlay(
                     RoundedRectangle(cornerRadius: 8)
@@ -34,7 +36,8 @@ struct UsernameField: View {
 
 struct PasswordField: View {
     let placeholder: String
-    @State private var password: String = ""
+    
+    @Binding var password: String
     
     var body: some View {
         ZStack(alignment: .leading) {
@@ -59,17 +62,20 @@ struct PasswordField: View {
 
 struct LoginButton: View {
     let navigationController: UINavigationController
+    
+    @Binding var username: String
+    @Binding var password: String
 
     var body: some View {
         Button(action: {
             Task {
-                await login(username: "braeden", password: "pokerdegen")
+                if await login(username: username, password: password) {
+                    navigationController.pushViewController(
+                        UIHostingController(rootView:
+                                                MainView(navigationController: navigationController)
+                                           ), animated: true)
+                }
             }
-            navigationController.pushViewController(
-                UIHostingController(rootView:
-                                        MainView(navigationController: navigationController)
-                                   ), animated: true
-            )
         }, label: {
             Text("Login")
                 .foregroundColor(.black)
@@ -84,6 +90,9 @@ struct LoginButton: View {
 
 struct LoginView: View {
     let navigationController: UINavigationController
+    
+    @State var username: String = ""
+    @State var password: String = ""
 
     var body: some View {
         VStack {
@@ -97,11 +106,11 @@ struct LoginView: View {
                     .font(.system(size: 34, weight: .bold, design: .default))
             }
             Spacer().frame(height: 40)
-            UsernameField(placeholder: "Username")
+            UsernameField(placeholder: "Username", username: $username)
             Spacer().frame(height: 20)
-            PasswordField(placeholder: "Password")
+            PasswordField(placeholder: "Password", password: $password)
             Spacer().frame(height: 20)
-            LoginButton(navigationController: navigationController)
+            LoginButton(navigationController: navigationController, username: $username, password: $password)
         }
         .navigationBarHidden(true)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -111,5 +120,9 @@ struct LoginView: View {
 }
 
 #Preview {
-    LoginView(navigationController: UINavigationController())
+    LoginView(
+        navigationController: UINavigationController(),
+        username: "username",
+        password: "password",
+    )
 }

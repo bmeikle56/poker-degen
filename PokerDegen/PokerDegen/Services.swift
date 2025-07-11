@@ -11,7 +11,7 @@ let scheme = "https://"
 let host = "poker-degen-backend-production.up.railway.app"
 let apiKey = "pokerdegen" /// this needs to go in the Keychain...
 
-func login(username: String, password: String) async {
+func login(username: String, password: String) async -> Bool {
     let path = "/login"
     let method = "POST"
     let body: [String: Any] = [
@@ -19,8 +19,10 @@ func login(username: String, password: String) async {
         "password": password
     ]
     let httpBody = try! JSONSerialization.data(withJSONObject: body)
-    let (data, _) = await fetchData(path: path, method: method, httpBody: httpBody)!
-    print("__ login data: \(data)")
+    if let data = await fetchData(path: path, method: method, httpBody: httpBody) {
+        return data["message"] as! String == "Login successful"
+    }
+    return false
 }
 
 func analyze(viewModel: CardViewModel) async throws -> String {
@@ -28,8 +30,10 @@ func analyze(viewModel: CardViewModel) async throws -> String {
     let method = "POST"
     let body = viewModel.boardData
     let httpBody = try JSONEncoder().encode(body)
-    let (data, _) = await fetchData(path: path, method: method, httpBody: httpBody)!
-    return data["response"] as! String
+    if let data = await fetchData(path: path, method: method, httpBody: httpBody) {
+        return data["response"] as! String
+    }
+    return "Unable to analyze"
 }
 
 
@@ -47,7 +51,7 @@ private enum ServiceError: Error {
     case statusCode
 }
 
-private func fetchData(path: String, method: String, httpBody: Data? = nil) async -> ([String: Any], HTTPURLResponse)? {
+private func fetchData(path: String, method: String, httpBody: Data? = nil) async -> [String: Any]? {
     let url = URL(string: scheme + host + path)!
     var request = URLRequest(url: url)
     request.httpMethod = method
@@ -63,7 +67,7 @@ private func fetchData(path: String, method: String, httpBody: Data? = nil) asyn
         }
         
         let json = try JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
-        return (json, response)
+        return json
     } catch {
         /// do something with error...
         return nil
