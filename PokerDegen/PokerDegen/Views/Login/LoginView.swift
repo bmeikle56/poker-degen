@@ -7,6 +7,19 @@
 
 import SwiftUI
 
+struct ErrorView: View {
+    @Binding var isAuthorized: Bool?
+
+    var body: some View {
+        if let isAuthorized, isAuthorized == false {
+            Text("Incorrect username or password")
+                .foregroundStyle(Color.red)
+        } else {
+            Spacer().frame(height: 20)
+        }
+    }
+}
+
 struct UsernameField: View {
     let placeholder: String
     
@@ -65,16 +78,12 @@ struct LoginButton: View {
     
     @Binding var username: String
     @Binding var password: String
+    @Binding var isAuthorized: Bool?
 
     var body: some View {
         Button(action: {
             Task {
-                if await login(username: username, password: password) {
-                    navigationController.pushViewController(
-                        UIHostingController(rootView:
-                                                MainView(navigationController: navigationController)
-                                           ), animated: true)
-                }
+                isAuthorized = await login(username: username, password: password)
             }
         }, label: {
             Text("Login")
@@ -85,6 +94,14 @@ struct LoginButton: View {
                 .background(Color.pdBlue)
                 .cornerRadius(8)
         })
+        .onChange(of: isAuthorized, { _, _ in
+            if let isAuthorized, isAuthorized == true {
+                navigationController.pushViewController(
+                    UIHostingController(rootView:
+                                            MainView(navigationController: navigationController)
+                                       ), animated: true)
+            }
+        })
     }
 }
 
@@ -93,6 +110,7 @@ struct LoginView: View {
     
     @State var username: String = ""
     @State var password: String = ""
+    @State var isAuthorized: Bool?
 
     var body: some View {
         VStack {
@@ -106,11 +124,13 @@ struct LoginView: View {
                     .font(.system(size: 34, weight: .bold, design: .default))
             }
             Spacer().frame(height: 40)
+            ErrorView(isAuthorized: $isAuthorized)
+            Spacer().frame(height: 20)
             UsernameField(placeholder: "Username", username: $username)
             Spacer().frame(height: 20)
             PasswordField(placeholder: "Password", password: $password)
             Spacer().frame(height: 20)
-            LoginButton(navigationController: navigationController, username: $username, password: $password)
+            LoginButton(navigationController: navigationController, username: $username, password: $password, isAuthorized: $isAuthorized)
         }
         .navigationBarHidden(true)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
