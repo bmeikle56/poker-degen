@@ -1,7 +1,7 @@
 import Foundation
 
 func loadEnvFile() {
-    guard let contents = try? String(contentsOfFile: ".env") else {
+    guard let contents = try? String(contentsOfFile: ".env", encoding: .utf8) else {
         print("Failed to read .env file")
         return
     }

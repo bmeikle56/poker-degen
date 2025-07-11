@@ -1,7 +1,7 @@
 import Vapor
 
 struct ModelWrapperRequest: Content {
-    let viewModel: ViewModel
+    let board: ViewModel
 }
 
 struct ViewModel: Codable {
@@ -18,6 +18,8 @@ struct ViewModel: Codable {
     let v1c2: String
 }
 
-func modelWrapperController(_ req: Request) async throws -> String {
+func modelWrapperController(_ request: Request) async throws -> String {
+    let modelWrapperRequest = try request.content.decode(ModelWrapperRequest.self)
+    print("__ modelWrapperRequest: \(modelWrapperRequest)")
     return try await modelWrapper()
 }

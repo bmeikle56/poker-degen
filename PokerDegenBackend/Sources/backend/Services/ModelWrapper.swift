@@ -7,7 +7,7 @@ func modelWrapper() async throws -> String {
     let model = "gpt-4.1-mini"
     let apiKey = Environment.get("OPENAI_API_KEY")!
     
-    var request = URLRequest(url: url)
+    var request = Foundation.URLRequest(url: url)
     request.httpMethod = "POST"
     request.addValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
     request.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -30,7 +30,7 @@ func modelWrapper() async throws -> String {
     
     request.httpBody = try JSONSerialization.data(withJSONObject: body)
 
-    let (data, _) = try await URLSession.shared.data(for: request)
+    let (data, _) = try await Foundation.URLSession.shared.data(for: request)
     let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
     let choices = json?["choices"] as? [[String: Any]]
     let message = choices?.first?["message"] as? [String: Any]
