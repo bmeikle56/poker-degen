@@ -243,6 +243,24 @@ struct MainView: View {
                         showPopover = true
                     })
                 }
+                VStack {
+                    Spacer().frame(height: 330)
+                    HStack {
+                        Spacer().frame(width: 80)
+                        Image("chips")
+                            .resizable()
+                            .frame(width: 40, height: 40)
+                    }
+                }
+                VStack {
+                    HStack {
+                        Image("chips")
+                            .resizable()
+                            .frame(width: 40, height: 40)
+                        Spacer().frame(width: 80)
+                    }
+                    Spacer().frame(height: 210)
+                }
             }
             .popover(isPresented: $showPopover) {
                 VStack(spacing: 16) {
