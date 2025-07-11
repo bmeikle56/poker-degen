@@ -8,6 +8,16 @@
 import SwiftUI
 import Combine
 
+struct BoardData: Codable {
+    let board: CardData
+}
+
+struct CardData: Codable {
+    let cc1, cc2, cc3, cc4, cc5: String
+    let hc1, hc2: String
+    let v1c1, v1c2: String
+}
+
 class CardViewModel: ObservableObject {
     /// cc4 = Community Card 4 (the turn)
     @Published var cc1: String = "card"
@@ -23,6 +33,10 @@ class CardViewModel: ObservableObject {
     /// v1c2 = Villian 1 Card 2
     @Published var v1c1: String = "ac"
     @Published var v1c2: String = "qd"
+    
+    var boardData: BoardData {
+        BoardData(board: CardData(cc1: cc1, cc2: cc2, cc3: cc3, cc4: cc4, cc5: cc5, hc1: hc1, hc2: hc2, v1c1: v1c1, v1c2: v1c2))
+    }
 }
 
 struct CardImage: View {
@@ -215,7 +229,7 @@ struct MainView: View {
                         print("showPopover: \(showPopover)")
                         Task {
                             modelResponse = nil
-                            modelResponse = try await callChatGPT(with: viewModel) as? String
+                            modelResponse = try await analyze(viewModel: viewModel)
                         }
                     }, label: {
                         Text("Analyze")
@@ -232,23 +246,40 @@ struct MainView: View {
             }
             .popover(isPresented: $showPopover) {
                 VStack(spacing: 16) {
-                    if let modelResponse {
-                        Text(modelResponse)
-                            .font(.headline)
-                            .foregroundStyle(Color.black)
+                    ScrollView {
+                        if let modelResponse {
+                            MarkdownView(markdownString: modelResponse)
+                                .font(.system(size: 14, weight: .regular, design: .default))
+                                .foregroundStyle(Color.black)
+                                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        }
                     }
                     Button("Close") {
                         showPopover = false
                     }
                 }
                 .padding()
-                .frame(width: 200, height: 150)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
         .navigationBarHidden(true)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.black)
         .ignoresSafeArea()
+    }
+}
+
+struct MarkdownView: View {
+    let markdownString: String
+
+    var body: some View {
+        if let attributed = try? AttributedString(markdown: markdownString) {
+            Text(attributed)
+                .padding()
+        } else {
+            Text(markdownString)
+                .foregroundColor(.red)
+        }
     }
 }
 

@@ -18,21 +18,18 @@ func login(username: String, password: String) async {
         "username": username,
         "password": password
     ]
-    let (data, _) = await fetchData(path: path, method: method, body: body)!
-    print("data: \(data)")
+    let httpBody = try! JSONSerialization.data(withJSONObject: body)
+    let (data, _) = await fetchData(path: path, method: method, httpBody: httpBody)!
+    print("__ login data: \(data)")
 }
 
-func analyze(board: CardViewModel) async throws -> String {
+func analyze(viewModel: CardViewModel) async throws -> String {
     let path = "/modelWrapper"
     let method = "POST"
-    let body: [String: Any] = [
-        "board": board,
-    ]
-    let httpBody = try JSONSerialization.data(withJSONObject: body)
-    print("httpBody: \(httpBody)")
-    let (data, _) = await fetchData(path: path, method: method, body: body)!
-    print("data: \(data)")
-    return "haha"
+    let body = viewModel.boardData
+    let httpBody = try JSONEncoder().encode(body)
+    let (data, _) = await fetchData(path: path, method: method, httpBody: httpBody)!
+    return data["response"] as! String
 }
 
 
@@ -50,15 +47,15 @@ private enum ServiceError: Error {
     case statusCode
 }
 
-private func fetchData(path: String, method: String, body: [String: Any]? = nil) async -> ([String: Any], HTTPURLResponse)? {
+private func fetchData(path: String, method: String, httpBody: Data? = nil) async -> ([String: Any], HTTPURLResponse)? {
     let url = URL(string: scheme + host + path)!
     var request = URLRequest(url: url)
     request.httpMethod = method
     request.addValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
     request.addValue("application/json", forHTTPHeaderField: "Content-Type")
     do {
-        if let body {
-            request.httpBody = try JSONSerialization.data(withJSONObject: body)
+        if let httpBody {
+            request.httpBody = httpBody
         }
         let (data, response) = try await URLSession.shared.data(for: request) as! (Data, HTTPURLResponse)
         if (response.statusCode != 200) {
