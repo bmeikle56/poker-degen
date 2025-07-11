@@ -32,7 +32,7 @@ func analyze(board: CardViewModel) async throws -> String {
     print("httpBody: \(httpBody)")
     let (data, _) = await fetchData(path: path, method: method, body: body)!
     print("data: \(data)")
-    return data
+    return "haha"
 }
 
 
@@ -50,7 +50,7 @@ private enum ServiceError: Error {
     case statusCode
 }
 
-private func fetchData(path: String, method: String, body: [String: Any]? = nil) async -> (String, HTTPURLResponse)? {
+private func fetchData(path: String, method: String, body: [String: Any]? = nil) async -> ([String: Any], HTTPURLResponse)? {
     let url = URL(string: scheme + host + path)!
     var request = URLRequest(url: url)
     request.httpMethod = method
@@ -65,8 +65,8 @@ private func fetchData(path: String, method: String, body: [String: Any]? = nil)
             throw ServiceError.statusCode
         }
         
-        let decodedString = String(data: data, encoding: .utf8)!
-        return (decodedString, response)
+        let json = try JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
+        return (json, response)
     } catch {
         /// do something with error...
         return nil
