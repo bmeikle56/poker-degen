@@ -1,10 +1,11 @@
 import Foundation
+import Vapor
 
 //func modelWrapper(with model: CardViewModel) async throws -> String {
 func modelWrapper() async throws -> String {
     let url = URL(string: "https://api.openai.com/v1/chat/completions")!
     let model = "gpt-4.1-mini"
-    let apiKey = "api-key"
+    let apiKey = Environment.get("OPENAI_API_KEY")!
     
     var request = URLRequest(url: url)
     request.httpMethod = "POST"
