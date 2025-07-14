@@ -1,18 +1,34 @@
 //
-//  ContentView.swift
+//  AuthScaffoldViews.swift
 //  PokerDegen
 //
-//  Created by Braeden Meikle on 7/7/25.
+//  Created by Braeden Meikle on 7/13/25.
 //
 
 import SwiftUI
 
-struct ErrorView: View {
+struct PokerDegenTitleView: View {
+    var body: some View {
+        HStack {
+            DiamondShape()
+                .stroke(Color.pdBlue, lineWidth: 4)
+                .frame(width: 20, height: 40)
+            Spacer().frame(width: 20)
+            Text("PokerDegen")
+                .foregroundStyle(Color.pdBlue)
+                .font(.system(size: 34, weight: .bold, design: .default))
+        }
+    }
+}
+
+struct AuthErrorMessageView: View {
+    let message: String
+
     @Binding var isAuthorized: Bool?
 
     var body: some View {
         if let isAuthorized, isAuthorized == false {
-            Text("Incorrect username or password")
+            Text(message)
                 .foregroundStyle(Color.red)
         } else {
             Spacer().frame(height: 20)
@@ -73,8 +89,10 @@ struct PasswordField: View {
     }
 }
 
-struct LoginButton: View {
+struct AuthButton: View {
     let navigationController: UINavigationController
+    let text: String
+    let action: () -> Void
     
     @Binding var username: String
     @Binding var password: String
@@ -86,7 +104,7 @@ struct LoginButton: View {
                 isAuthorized = await login(username: username, password: password)
             }
         }, label: {
-            Text("Login")
+            Text(text)
                 .foregroundColor(.black)
                 .font(.system(size: 18, weight: .bold, design: .default))
                 .padding()
@@ -96,53 +114,8 @@ struct LoginButton: View {
         })
         .onChange(of: isAuthorized, { _, _ in
             if let isAuthorized, isAuthorized == true {
-                navigationController.pushViewController(
-                    UIHostingController(rootView:
-                                            MainView(navigationController: navigationController)
-                                       ), animated: true)
+                action()
             }
         })
     }
-}
-
-struct LoginView: View {
-    let navigationController: UINavigationController
-    
-    @State var username: String = ""
-    @State var password: String = ""
-    @State var isAuthorized: Bool?
-
-    var body: some View {
-        VStack {
-            HStack {
-                DiamondShape()
-                    .stroke(Color.pdBlue, lineWidth: 4)
-                    .frame(width: 20, height: 40)
-                Spacer().frame(width: 20)
-                Text("PokerDegen")
-                    .foregroundStyle(Color.pdBlue)
-                    .font(.system(size: 34, weight: .bold, design: .default))
-            }
-            Spacer().frame(height: 40)
-            ErrorView(isAuthorized: $isAuthorized)
-            Spacer().frame(height: 20)
-            UsernameField(placeholder: "Username", username: $username)
-            Spacer().frame(height: 20)
-            PasswordField(placeholder: "Password", password: $password)
-            Spacer().frame(height: 20)
-            LoginButton(navigationController: navigationController, username: $username, password: $password, isAuthorized: $isAuthorized)
-        }
-        .navigationBarHidden(true)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.black)
-        .ignoresSafeArea()
-    }
-}
-
-#Preview {
-    LoginView(
-        navigationController: UINavigationController(),
-        username: "username",
-        password: "password",
-    )
 }
