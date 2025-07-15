@@ -27,12 +27,12 @@ class CardViewModel: ObservableObject {
     @Published var cc5: String = "card"
     
     /// hc1 = Hero Card 1
-    @Published var hc1: String = "4s"
-    @Published var hc2: String = "5s"
+    @Published var hc1: String = "card"
+    @Published var hc2: String = "card"
     
     /// v1c2 = Villian 1 Card 2
-    @Published var v1c1: String = "ac"
-    @Published var v1c2: String = "qd"
+    @Published var v1c1: String = "card"
+    @Published var v1c2: String = "card"
     
     var boardData: BoardData {
         BoardData(board: CardData(cc1: cc1, cc2: cc2, cc3: cc3, cc4: cc4, cc5: cc5, hc1: hc1, hc2: hc2, v1c1: v1c1, v1c2: v1c2))
@@ -68,20 +68,22 @@ struct PokerTable: View {
             let height = geo.size.height
 
             ZStack {
+                // Diamond overlay texture
                 Capsule()
-                    .fill(Color.green.opacity(0.3))
-                    .rotation3DEffect(
-                            .degrees(50),
-                            axis: (x: 1, y: 0, z: 0),
-                            perspective: 0.5
-                        )
+                    .overlay(
+                        DiamondPattern()
+                            .clipShape(Capsule())
+                            .rotation3DEffect(
+                                .degrees(50),
+                                axis: (x: 1, y: 0, z: 0),
+                                perspective: 0.5
+                            )
+                    )
+
+                // Maroon border
                 Capsule()
-                    .stroke(Color.pokerMaroon, lineWidth: 6)
-                    .rotation3DEffect(
-                            .degrees(50),
-                            axis: (x: 1, y: 0, z: 0),
-                            perspective: 0.5
-                        )
+                    .stroke(Color.pokerMaroon, lineWidth: 8)
+                    .rotation3DEffect(.degrees(50), axis: (x: 1, y: 0, z: 0), perspective: 0.5)
             }
             .frame(width: width, height: height)
             .position(x: geo.size.width / 2, y: geo.size.height / 2)
@@ -89,6 +91,51 @@ struct PokerTable: View {
         }
         .aspectRatio(0.6, contentMode: .fit)
         .padding()
+    }
+}
+
+struct DiamondPattern: View {
+    var body: some View {
+        GeometryReader { geo in
+            let spacing: CGFloat = 30
+            let columns = Int(geo.size.width / spacing) + 2
+            let rows = Int(geo.size.height / spacing) + 2
+
+            let color1 = Color.green.opacity(0.1)
+            let color2 = Color.green.opacity(0.1)
+
+            ZStack {
+                Color.green.opacity(0.3)
+                ForEach(0..<columns, id: \.self) { i in
+                    ForEach(0..<rows, id: \.self) { j in
+                        DiamondShape()
+                            .fill((i + j).isMultiple(of: 2) ? color1 : color2)
+                            .frame(width: spacing, height: spacing)
+                            .position(
+                                x: CGFloat(i) * spacing,
+                                y: CGFloat(j) * spacing
+                            )
+                        
+                    }
+                }
+            }
+        }
+    }
+}
+
+struct DiamondShape: Shape {
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        let centerX = rect.midX
+        let centerY = rect.midY
+
+        path.move(to: CGPoint(x: centerX, y: rect.minY))
+        path.addLine(to: CGPoint(x: rect.maxX, y: centerY))
+        path.addLine(to: CGPoint(x: centerX, y: rect.maxY))
+        path.addLine(to: CGPoint(x: rect.minX, y: centerY))
+        path.closeSubpath()
+
+        return path
     }
 }
 
@@ -211,18 +258,26 @@ struct MainView: View {
                 VStack {
                     Spacer().frame(height: 700)
                     Button(action: {
-                        print("showPopover: \(showPopover)")
                         Task {
                             modelResponse = nil
                             modelResponse = try await analyze(viewModel: viewModel)
                         }
                     }, label: {
-                        Text("Analyze")
-                            .foregroundStyle(Color.white)
-                            .padding()
-                            .background(
-                                RoundedRectangle(cornerRadius: 12)
-                            )
+                        HStack {
+                            Text("1")
+                                .foregroundStyle(Color.pdBlue)
+                            DiamondOutline()
+                                .fill(Color.pdBlue)
+                                .frame(width: 12, height: 24)
+                            Spacer().frame(width: 12)
+                            Text("Analyze")
+                                .foregroundStyle(Color.pdBlue)
+                        }
+                        .padding()
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(Color.pdBlue, lineWidth: 2)
+                        )
                     })
                     .onChange(of: modelResponse, { _, _ in
                         showPopover = true
@@ -245,6 +300,33 @@ struct MainView: View {
                         Spacer().frame(width: 80)
                     }
                     Spacer().frame(height: 210)
+                }
+                VStack {
+                    HStack {
+                        Spacer()
+                        HStack {
+                            Text("100")
+                                .foregroundStyle(Color.pdBlue)
+                            DiamondOutline()
+                                .fill(Color.pdBlue)
+                                .frame(width: 12, height: 24)
+                            Button(action: {
+                                // nothing for now
+                            }, label: {
+                                Text("+")
+                                    .foregroundStyle(Color.pdBlue)
+                                    .font(.system(size: 24, weight: .heavy, design: .default))
+                                    .padding(.horizontal, 4)
+                                    .padding(.top, -4)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 8)
+                                            .stroke(Color.pdBlue, lineWidth: 2)
+                                    )
+                            })
+                        }
+                        .padding(50)
+                    }
+                    Spacer()
                 }
             }
             .popover(isPresented: $showPopover) {

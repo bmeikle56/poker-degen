@@ -10,7 +10,7 @@ import SwiftUI
 struct PokerDegenTitleView: View {
     var body: some View {
         HStack {
-            DiamondShape()
+            DiamondOutline()
                 .stroke(Color.pdBlue, lineWidth: 4)
                 .frame(width: 20, height: 40)
             Spacer().frame(width: 20)
