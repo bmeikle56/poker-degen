@@ -32,7 +32,7 @@ class CardViewModel: ObservableObject {
     
     /// v1c2 = Villian 1 Card 2
     @Published var v1c1: String = "card"
-    @Published var v1c2: String = "cardg"
+    @Published var v1c2: String = "card"
     
     var boardData: BoardData {
         BoardData(board: CardData(cc1: cc1, cc2: cc2, cc3: cc3, cc4: cc4, cc5: cc5, hc1: hc1, hc2: hc2, v1c1: v1c1, v1c2: v1c2))
@@ -211,18 +211,26 @@ struct MainView: View {
                 VStack {
                     Spacer().frame(height: 700)
                     Button(action: {
-                        print("showPopover: \(showPopover)")
                         Task {
                             modelResponse = nil
                             modelResponse = try await analyze(viewModel: viewModel)
                         }
                     }, label: {
-                        Text("Analyze")
-                            .foregroundStyle(Color.white)
-                            .padding()
-                            .background(
-                                RoundedRectangle(cornerRadius: 12)
-                            )
+                        HStack {
+                            Text("1")
+                                .foregroundStyle(Color.pdBlue)
+                            DiamondOutline()
+                                .fill(Color.pdBlue)
+                                .frame(width: 12, height: 24)
+                            Spacer().frame(width: 12)
+                            Text("Analyze")
+                                .foregroundStyle(Color.pdBlue)
+                        }
+                        .padding()
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(Color.pdBlue, lineWidth: 2)
+                        )
                     })
                     .onChange(of: modelResponse, { _, _ in
                         showPopover = true
