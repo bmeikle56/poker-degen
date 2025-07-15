@@ -30,12 +30,7 @@ struct SignupView: View {
             AuthButton(
                 navigationController: navigationController,
                 text: "Signup",
-                action: {
-                    navigationController.pushViewController(
-                        UIHostingController(rootView: MainView(navigationController: navigationController)),
-                        animated: true
-                    )
-                },
+                auth: signup,
                 username: $username,
                 password: $password,
                 isAuthorized: $isAuthorized

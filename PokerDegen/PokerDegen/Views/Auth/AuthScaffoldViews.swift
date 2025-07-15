@@ -92,7 +92,7 @@ struct PasswordField: View {
 struct AuthButton: View {
     let navigationController: UINavigationController
     let text: String
-    let action: () -> Void
+    let auth: (String, String) async -> Bool
     
     @Binding var username: String
     @Binding var password: String
@@ -101,7 +101,7 @@ struct AuthButton: View {
     var body: some View {
         Button(action: {
             Task {
-                isAuthorized = await login(username: username, password: password)
+                isAuthorized = await auth(username, password)
             }
         }, label: {
             Text(text)
@@ -114,7 +114,10 @@ struct AuthButton: View {
         })
         .onChange(of: isAuthorized, { _, _ in
             if let isAuthorized, isAuthorized == true {
-                action()
+                navigationController.pushViewController(
+                    UIHostingController(rootView: MainView(navigationController: navigationController)),
+                    animated: true
+                )
             }
         })
     }
