@@ -30,12 +30,7 @@ struct LoginView: View {
             AuthButton(
                 navigationController: navigationController,
                 text: "Login",
-                action: {
-                    navigationController.pushViewController(
-                        UIHostingController(rootView: MainView(navigationController: navigationController)),
-                        animated: true
-                    )
-                },
+                auth: login,
                 username: $username,
                 password: $password,
                 isAuthorized: $isAuthorized

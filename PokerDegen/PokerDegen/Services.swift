@@ -25,6 +25,20 @@ func login(username: String, password: String) async -> Bool {
     return false
 }
 
+func signup(username: String, password: String) async -> Bool {
+    let path = "/signup"
+    let method = "POST"
+    let body: [String: Any] = [
+        "username": username,
+        "password": password
+    ]
+    let httpBody = try! JSONSerialization.data(withJSONObject: body)
+    if let data = await fetchData(path: path, method: method, httpBody: httpBody) {
+        return data["message"] as! String == "Sign up successful"
+    }
+    return false
+}
+
 func analyze(viewModel: CardViewModel) async throws -> String {
     let path = "/modelWrapper"
     let method = "POST"
