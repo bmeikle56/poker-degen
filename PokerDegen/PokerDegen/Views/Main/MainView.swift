@@ -27,12 +27,12 @@ class CardViewModel: ObservableObject {
     @Published var cc5: String = "card"
     
     /// hc1 = Hero Card 1
-    @Published var hc1: String = "4s"
-    @Published var hc2: String = "5s"
+    @Published var hc1: String = "card"
+    @Published var hc2: String = "card"
     
     /// v1c2 = Villian 1 Card 2
-    @Published var v1c1: String = "ac"
-    @Published var v1c2: String = "qd"
+    @Published var v1c1: String = "card"
+    @Published var v1c2: String = "cardg"
     
     var boardData: BoardData {
         BoardData(board: CardData(cc1: cc1, cc2: cc2, cc3: cc3, cc4: cc4, cc5: cc5, hc1: hc1, hc2: hc2, v1c1: v1c1, v1c2: v1c2))
