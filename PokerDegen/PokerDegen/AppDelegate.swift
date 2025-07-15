@@ -21,7 +21,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let rootSwiftUIView = LoginView(navigationController: navigationController)
         let hostingController = UIHostingController(rootView: rootSwiftUIView)
         navigationController.viewControllers = [hostingController]
-        window?.backgroundColor = .white
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
         return true
