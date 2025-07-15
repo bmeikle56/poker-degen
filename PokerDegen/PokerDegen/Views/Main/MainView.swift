@@ -92,6 +92,35 @@ struct PokerTable: View {
     }
 }
 
+struct CardView: View {
+    let onTap: (Binding<String>) -> Void
+    var width: CGFloat = 80
+    var height: CGFloat = 80
+    var rotation: Double = 0
+
+    @Binding var card: String
+    
+    @State private var tapCount = 0
+
+    var body: some View {
+        CardImage(name: card)
+            .scaledToFit()
+            .frame(width: width, height: height)
+            .rotationEffect(.degrees(rotation))
+            .onTapGesture {
+                tapCount += 1
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    if tapCount == 1 {
+                        onTap($card)
+                    } else if tapCount == 2 {
+                        card = "card"
+                    }
+                    tapCount = 0
+                }
+            }
+    }
+}
+
 struct MainView: View {
     let navigationController: UINavigationController
     
@@ -116,111 +145,67 @@ struct MainView: View {
                 PokerTable()
                 VStack {
                     HStack(spacing: -29.0) {
-                        Button(action: {
-                            select(card: $viewModel.v1c1)
-                        }) {
-                            CardImage(name: viewModel.v1c1)
-                                .scaledToFit()
-                                .frame(width: 80, height: 80)
-                                .rotationEffect(.degrees(-9))
-                        }
-                        .onLongPressGesture() {
-                            viewModel.v1c1 = "card"
-                        }
-                        Button(action: {
-                            select(card: $viewModel.v1c2)
-                        }) {
-                            CardImage(name: viewModel.v1c2)
-                                .scaledToFit()
-                                .frame(width: 80, height: 80)
-                                .rotationEffect(.degrees(9))
-                        }
-                        .onLongPressGesture() {
-                            viewModel.v1c2 = "card"
-                        }
+                        CardView(
+                            onTap: select,
+                            rotation: -9,
+                            card: $viewModel.v1c1
+                        )
+                        CardView(
+                            onTap: select,
+                            rotation: 9,
+                            card: $viewModel.v1c2
+                        )
                     }
                     Spacer().frame(height: 350)
                 }
                 VStack {
                     Spacer().frame(height: 20)
                     HStack(spacing: -10.0) {
-                        Button(action: {
-                            select(card: $viewModel.cc1)
-                        }) {
-                            CardImage(name: viewModel.cc1)
-                                .scaledToFit()
-                                .frame(width: 60, height: 60)
-                        }
-                        .onLongPressGesture() {
-                            viewModel.cc1 = "card"
-                        }
-                        Button(action: {
-                            select(card: $viewModel.cc2)
-                        }) {
-                            CardImage(name: viewModel.cc2)
-                                .scaledToFit()
-                                .frame(width: 60, height: 60)
-                        }
-                        .onLongPressGesture() {
-                            viewModel.cc2 = "card"
-                        }
-                        Button(action: {
-                            select(card: $viewModel.cc3)
-                        }) {
-                            CardImage(name: viewModel.cc3)
-                                .scaledToFit()
-                                .frame(width: 60, height: 60)
-                        }
-                        .onLongPressGesture() {
-                            viewModel.cc3 = "card"
-                        }
-                        Button(action: {
-                            select(card: $viewModel.cc4)
-                        }) {
-                            CardImage(name: viewModel.cc4)
-                                .scaledToFit()
-                                .frame(width: 60, height: 60)
-                        }
-                        .onLongPressGesture() {
-                            viewModel.cc4 = "card"
-                        }
-                        Button(action: {
-                            select(card: $viewModel.cc5)
-                        }) {
-                            CardImage(name: viewModel.cc5)
-                                .scaledToFit()
-                                .frame(width: 60, height: 60)
-                        }
-                        .onLongPressGesture() {
-                            viewModel.cc5 = "card"
-                        }
+                        CardView(
+                            onTap: select,
+                            width: 60,
+                            height: 60,
+                            card: $viewModel.cc1
+                        )
+                        CardView(
+                            onTap: select,
+                            width: 60,
+                            height: 60,
+                            card: $viewModel.cc2
+                        )
+                        CardView(
+                            onTap: select,
+                            width: 60,
+                            height: 60,
+                            card: $viewModel.cc3
+                        )
+                        CardView(
+                            onTap: select,
+                            width: 60,
+                            height: 60,
+                            card: $viewModel.cc4
+                        )
+                        CardView(
+                            onTap: select,
+                            width: 60,
+                            height: 60,
+                            card: $viewModel.cc5
+                        )
                     }
                 }
                 VStack {
                     Spacer().frame(height: 470)
                     HStack(spacing: -29.0) {
-                        Button(action: {
-                            select(card: $viewModel.hc1)
-                        }) {
-                            CardImage(name: viewModel.hc1)
-                                .scaledToFit()
-                                .frame(width: 80, height: 80)
-                                .rotationEffect(.degrees(-9))
-                        }
-                        .onLongPressGesture() {
-                            viewModel.hc1 = "card"
-                        }
-                        Button(action: {
-                            select(card: $viewModel.hc2)
-                        }) {
-                            CardImage(name: viewModel.hc2)
-                                .scaledToFit()
-                                .frame(width: 80, height: 80)
-                                .rotationEffect(.degrees(9))
-                        }
-                        .onLongPressGesture() {
-                            viewModel.hc2 = "card"
-                        }
+                        CardView(
+                            onTap: select,
+                            rotation: -9,
+                            card: $viewModel.hc1
+                        )
+                        CardView(
+                            onTap: select,
+                            rotation: 9,
+                            card: $viewModel.hc2
+                        )
                     }
                 }
                 VStack {
