@@ -34,7 +34,7 @@ func signup(username: String, password: String) async -> Bool {
     ]
     let httpBody = try! JSONSerialization.data(withJSONObject: body)
     if let data = await fetchData(path: path, method: method, httpBody: httpBody) {
-        return data["message"] as! String == "Signup successful"
+        return data["message"] as! String == "Sign up successful"
     }
     return false
 }
