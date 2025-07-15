@@ -68,20 +68,22 @@ struct PokerTable: View {
             let height = geo.size.height
 
             ZStack {
+                // Diamond overlay texture
                 Capsule()
-                    .fill(Color.green.opacity(0.3))
-                    .rotation3DEffect(
-                            .degrees(50),
-                            axis: (x: 1, y: 0, z: 0),
-                            perspective: 0.5
-                        )
+                    .overlay(
+                        DiamondPattern()
+                            .clipShape(Capsule())
+                            .rotation3DEffect(
+                                .degrees(50),
+                                axis: (x: 1, y: 0, z: 0),
+                                perspective: 0.5
+                            )
+                    )
+
+                // Maroon border
                 Capsule()
-                    .stroke(Color.pokerMaroon, lineWidth: 6)
-                    .rotation3DEffect(
-                            .degrees(50),
-                            axis: (x: 1, y: 0, z: 0),
-                            perspective: 0.5
-                        )
+                    .stroke(Color.pokerMaroon, lineWidth: 8)
+                    .rotation3DEffect(.degrees(50), axis: (x: 1, y: 0, z: 0), perspective: 0.5)
             }
             .frame(width: width, height: height)
             .position(x: geo.size.width / 2, y: geo.size.height / 2)
@@ -89,6 +91,51 @@ struct PokerTable: View {
         }
         .aspectRatio(0.6, contentMode: .fit)
         .padding()
+    }
+}
+
+struct DiamondPattern: View {
+    var body: some View {
+        GeometryReader { geo in
+            let spacing: CGFloat = 30
+            let columns = Int(geo.size.width / spacing) + 2
+            let rows = Int(geo.size.height / spacing) + 2
+
+            let color1 = Color.green.opacity(0.1)
+            let color2 = Color.green.opacity(0.1)
+
+            ZStack {
+                Color.green.opacity(0.3) // ensure clean background
+                ForEach(0..<columns, id: \.self) { i in
+                    ForEach(0..<rows, id: \.self) { j in
+                        DiamondShape()
+                            .fill((i + j).isMultiple(of: 2) ? color1 : color2)
+                            .frame(width: spacing, height: spacing)
+                            .position(
+                                x: CGFloat(i) * spacing,
+                                y: CGFloat(j) * spacing
+                            )
+                        
+                    }
+                }
+            }
+        }
+    }
+}
+
+struct DiamondShape: Shape {
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        let centerX = rect.midX
+        let centerY = rect.midY
+
+        path.move(to: CGPoint(x: centerX, y: rect.minY))         // Top
+        path.addLine(to: CGPoint(x: rect.maxX, y: centerY))      // Right
+        path.addLine(to: CGPoint(x: centerX, y: rect.maxY))      // Bottom
+        path.addLine(to: CGPoint(x: rect.minX, y: centerY))      // Left
+        path.closeSubpath()
+
+        return path
     }
 }
 
