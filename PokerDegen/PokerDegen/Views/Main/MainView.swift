@@ -105,7 +105,7 @@ struct DiamondPattern: View {
             let color2 = Color.green.opacity(0.1)
 
             ZStack {
-                Color.green.opacity(0.3) // ensure clean background
+                Color.green.opacity(0.3)
                 ForEach(0..<columns, id: \.self) { i in
                     ForEach(0..<rows, id: \.self) { j in
                         DiamondShape()
@@ -129,10 +129,10 @@ struct DiamondShape: Shape {
         let centerX = rect.midX
         let centerY = rect.midY
 
-        path.move(to: CGPoint(x: centerX, y: rect.minY))         // Top
-        path.addLine(to: CGPoint(x: rect.maxX, y: centerY))      // Right
-        path.addLine(to: CGPoint(x: centerX, y: rect.maxY))      // Bottom
-        path.addLine(to: CGPoint(x: rect.minX, y: centerY))      // Left
+        path.move(to: CGPoint(x: centerX, y: rect.minY))
+        path.addLine(to: CGPoint(x: rect.maxX, y: centerY))
+        path.addLine(to: CGPoint(x: centerX, y: rect.maxY))
+        path.addLine(to: CGPoint(x: rect.minX, y: centerY))
         path.closeSubpath()
 
         return path
@@ -300,6 +300,33 @@ struct MainView: View {
                         Spacer().frame(width: 80)
                     }
                     Spacer().frame(height: 210)
+                }
+                VStack {
+                    HStack {
+                        Spacer()
+                        HStack {
+                            Text("100")
+                                .foregroundStyle(Color.pdBlue)
+                            DiamondOutline()
+                                .fill(Color.pdBlue)
+                                .frame(width: 12, height: 24)
+                            Button(action: {
+                                // nothing for now
+                            }, label: {
+                                Text("+")
+                                    .foregroundStyle(Color.pdBlue)
+                                    .font(.system(size: 24, weight: .heavy, design: .default))
+                                    .padding(.horizontal, 4)
+                                    .padding(.top, -4)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 8)
+                                            .stroke(Color.pdBlue, lineWidth: 2)
+                                    )
+                            })
+                        }
+                        .padding(50)
+                    }
+                    Spacer()
                 }
             }
             .popover(isPresented: $showPopover) {
