@@ -390,7 +390,9 @@ struct VillainStackedChipsView: View {
         VStack {
             HStack {
                 StackedChipsView(count: 10, type: "chip-1")
-                StackedChipsView(count: 2, type: "chip-1")
+                StackedChipsView(count: 12, type: "chip-10")
+                StackedChipsView(count: 3, type: "chip-25")
+                StackedChipsView(count: 3, type: "chip-50")
                 Spacer().frame(width: 80)
             }
             Spacer().frame(height: 210)
