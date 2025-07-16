@@ -258,6 +258,32 @@ struct CommunityCardView: View {
     }
 }
 
+func chipBreakdown(for bet: Int) -> [(Int, Int)] {
+    let denominations = [500, 100, 50, 25, 10, 1]
+    var remaining = bet
+    var chips: [(Int, Int)] = []
+
+    for denom in denominations {
+        let count = remaining / denom
+        if count > 0 {
+            chips.append((denom, count))
+            remaining %= denom
+        }
+    }
+
+    return chips
+}
+
+func betUI(for bet: Int) -> some View {
+    let chipBreakdown = chipBreakdown(for: bet)
+    
+    return HStack {
+        ForEach(chipBreakdown, id: \.0) { chip in
+            StackedChipsView(count: chip.1, type: "chip-\(chip.0)")
+        }
+    }
+}
+
 struct HeroCardView: View {
     let navigationController: UINavigationController
     
@@ -388,15 +414,18 @@ struct StackedChipsView: View {
 struct VillainStackedChipsView: View {
     var body: some View {
         VStack {
-            HStack {
-                StackedChipsView(count: 10, type: "chip-1")
-                StackedChipsView(count: 12, type: "chip-10")
-                StackedChipsView(count: 3, type: "chip-25")
-                StackedChipsView(count: 3, type: "chip-50")
-                Spacer().frame(width: 80)
-            }
-            Spacer().frame(height: 210)
+            betUI(for: 555)
         }
+        .offset(y: CGFloat(-90))
+    }
+}
+
+struct HeroStackedChipsView: View {
+    var body: some View {
+        VStack {
+            betUI(for: 255)
+        }
+        .offset(y: CGFloat(170))
     }
 }
 
@@ -440,16 +469,7 @@ struct MainView: View {
                     viewModel: viewModel
                 )
                 VillainStackedChipsView()
-//                VStack {
-//                    Spacer().frame(height: 330)
-//                    HStack {
-//                        Spacer().frame(width: 80)
-//                        Image("chips")
-//                            .resizable()
-//                            .frame(width: 40, height: 40)
-//                    }
-//                }
-                
+                HeroStackedChipsView()
                 AnalyzeButtonView()
             }
             .popover(isPresented: $showPopover) {
