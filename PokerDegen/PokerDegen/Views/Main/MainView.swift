@@ -34,6 +34,15 @@ class CardViewModel: ObservableObject {
     @Published var v1c1: String = "card"
     @Published var v1c2: String = "card"
     
+    /// vfb = Villain Flop Bet
+    @Published var vfb: Int = 522
+    
+    /// hfb = Hero Flop Bet
+    @Published var hfb: Int = 125
+    
+    /// vpt = Villain Player Type
+    @Published var vpt: String = "Player Type"
+    
     var boardData: BoardData {
         BoardData(board: CardData(cc1: cc1, cc2: cc2, cc3: cc3, cc4: cc4, cc5: cc5, hc1: hc1, hc2: hc2, v1c1: v1c1, v1c2: v1c2))
     }
@@ -274,12 +283,17 @@ func chipBreakdown(for bet: Int) -> [(Int, Int)] {
     return chips
 }
 
-func betUI(for bet: Int) -> some View {
-    let chipBreakdown = chipBreakdown(for: bet)
-    
-    return HStack {
-        ForEach(chipBreakdown, id: \.0) { chip in
-            StackedChipsView(count: chip.1, type: "chip-\(chip.0)")
+@ViewBuilder func betUI(for bet: Int) -> some View {
+    if bet == 0 {
+        Spacer()
+            .frame(width: 80, height: 30)
+    } else {
+        let chipBreakdown = chipBreakdown(for: bet)
+        
+        HStack {
+            ForEach(chipBreakdown, id: \.0) { chip in
+                StackedChipsView(count: chip.1, type: "chip-\(chip.0)")
+            }
         }
     }
 }
@@ -412,20 +426,90 @@ struct StackedChipsView: View {
 }
 
 struct VillainStackedChipsView: View {
+    let navigationController: UINavigationController
+
+    @ObservedObject var viewModel: CardViewModel
+    
+    private func selectVillainBet() {
+        let hostingController = UIHostingController(rootView: BetSelector(
+            navigationController: navigationController,
+            bet: $viewModel.vfb
+        ))
+        hostingController.modalPresentationStyle = .overCurrentContext
+        hostingController.view.backgroundColor = .clear
+        navigationController.modalPresentationStyle = .overCurrentContext
+        navigationController.present(hostingController, animated: true)
+    }
+
     var body: some View {
         VStack {
-            betUI(for: 555)
+            Button(action: {
+                selectVillainBet()
+            }, label: {
+                betUI(for: viewModel.vfb)
+                    .padding(8)
+                    .background(
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(style: StrokeStyle(lineWidth: 2, dash: [6]))
+                            .foregroundColor(.gray.opacity(0.5))
+                    )
+            })
         }
         .offset(y: CGFloat(-90))
     }
 }
 
 struct HeroStackedChipsView: View {
+    let navigationController: UINavigationController
+
+    @ObservedObject var viewModel: CardViewModel
+    
+    private func selectHeroBet() {
+        let hostingController = UIHostingController(rootView: BetSelector(
+            navigationController: navigationController,
+            bet: $viewModel.vfb
+        ))
+        hostingController.modalPresentationStyle = .overCurrentContext
+        hostingController.view.backgroundColor = .clear
+        navigationController.modalPresentationStyle = .overCurrentContext
+        navigationController.present(hostingController, animated: true)
+    }
+
     var body: some View {
         VStack {
-            betUI(for: 255)
+            Button(action: {
+                selectHeroBet()
+            }, label: {
+                betUI(for: viewModel.hfb)
+                    .padding(8)
+                    .background(
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(style: StrokeStyle(lineWidth: 2, dash: [6]))
+                            .foregroundColor(.gray.opacity(0.5))
+                    )
+            })
         }
-        .offset(y: CGFloat(170))
+        .offset(y: CGFloat(150))
+    }
+}
+
+struct VillainPlayerTypeView: View {
+    @ObservedObject var viewModel: CardViewModel
+
+    var body: some View {
+        Button(action: {
+            // do something
+        }, label: {
+            Text(viewModel.vpt)
+                .foregroundStyle(Color.white)
+                .padding(12)
+                .background(
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(style: StrokeStyle(lineWidth: 2, dash: [6]))
+                        .foregroundColor(.gray.opacity(0.5))
+                )
+                .offset(y: CGFloat(-260))
+        })
     }
 }
 
@@ -451,6 +535,9 @@ struct MainView: View {
         VStack {
             ZStack {
                 PokerTable()
+                VillainPlayerTypeView(
+                    viewModel: viewModel
+                )
                 VillainCardView(
                     navigationController: navigationController,
                     viewModel: viewModel
@@ -468,8 +555,14 @@ struct MainView: View {
                     modelResponse: $modelResponse,
                     viewModel: viewModel
                 )
-                VillainStackedChipsView()
-                HeroStackedChipsView()
+                VillainStackedChipsView(
+                    navigationController: navigationController,
+                    viewModel: viewModel
+                )
+                HeroStackedChipsView(
+                    navigationController: navigationController,
+                    viewModel: viewModel
+                )
                 AnalyzeButtonView()
             }
             .popover(isPresented: $showPopover) {

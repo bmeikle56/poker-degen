@@ -59,9 +59,8 @@ struct Rank: View {
 
 struct CardSelector: View {
     let navigationController: UINavigationController
+
     @Binding var card: String
-    
-    
     @State private var showSuitSelector: Bool = true
 
     var body: some View {
