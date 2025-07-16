@@ -168,6 +168,236 @@ struct CardView: View {
     }
 }
 
+struct VillainCardView: View {
+    let navigationController: UINavigationController
+    
+    @ObservedObject var viewModel: CardViewModel
+
+    private func select(card: Binding<String>) {
+        let hostingController = UIHostingController(rootView: CardSelector(
+            navigationController: navigationController,
+            card: card
+        ))
+        hostingController.modalPresentationStyle = .overCurrentContext
+        hostingController.view.backgroundColor = .clear
+        navigationController.modalPresentationStyle = .overCurrentContext
+        navigationController.present(hostingController, animated: true)
+    }
+
+    var body: some View {
+        VStack {
+            HStack(spacing: -29.0) {
+                CardView(
+                    onTap: select,
+                    rotation: -9,
+                    card: $viewModel.v1c1
+                )
+                CardView(
+                    onTap: select,
+                    rotation: 9,
+                    card: $viewModel.v1c2
+                )
+            }
+            Spacer().frame(height: 350)
+        }
+    }
+}
+
+struct CommunityCardView: View {
+    let navigationController: UINavigationController
+    
+    @ObservedObject var viewModel: CardViewModel
+
+    private func select(card: Binding<String>) {
+        let hostingController = UIHostingController(rootView: CardSelector(
+            navigationController: navigationController,
+            card: card
+        ))
+        hostingController.modalPresentationStyle = .overCurrentContext
+        hostingController.view.backgroundColor = .clear
+        navigationController.modalPresentationStyle = .overCurrentContext
+        navigationController.present(hostingController, animated: true)
+    }
+
+    var body: some View {
+        VStack {
+            Spacer().frame(height: 20)
+            HStack(spacing: -10.0) {
+                CardView(
+                    onTap: select,
+                    width: 60,
+                    height: 60,
+                    card: $viewModel.cc1
+                )
+                CardView(
+                    onTap: select,
+                    width: 60,
+                    height: 60,
+                    card: $viewModel.cc2
+                )
+                CardView(
+                    onTap: select,
+                    width: 60,
+                    height: 60,
+                    card: $viewModel.cc3
+                )
+                CardView(
+                    onTap: select,
+                    width: 60,
+                    height: 60,
+                    card: $viewModel.cc4
+                )
+                CardView(
+                    onTap: select,
+                    width: 60,
+                    height: 60,
+                    card: $viewModel.cc5
+                )
+            }
+        }
+    }
+}
+
+struct HeroCardView: View {
+    let navigationController: UINavigationController
+    
+    @ObservedObject var viewModel: CardViewModel
+
+    private func select(card: Binding<String>) {
+        let hostingController = UIHostingController(rootView: CardSelector(
+            navigationController: navigationController,
+            card: card
+        ))
+        hostingController.modalPresentationStyle = .overCurrentContext
+        hostingController.view.backgroundColor = .clear
+        navigationController.modalPresentationStyle = .overCurrentContext
+        navigationController.present(hostingController, animated: true)
+    }
+
+    var body: some View {
+        VStack {
+            Spacer().frame(height: 470)
+            HStack(spacing: -29.0) {
+                CardView(
+                    onTap: select,
+                    rotation: -9,
+                    card: $viewModel.hc1
+                )
+                CardView(
+                    onTap: select,
+                    rotation: 9,
+                    card: $viewModel.hc2
+                )
+            }
+        }
+    }
+}
+
+struct DiamondBalanceView: View {
+    @Binding var showPopover: Bool
+    @Binding var modelResponse: String?
+    @ObservedObject var viewModel: CardViewModel
+
+    var body: some View {
+        VStack {
+            Spacer().frame(height: 700)
+            Button(action: {
+                Task {
+                    modelResponse = nil
+                    modelResponse = try await analyze(viewModel: viewModel)
+                }
+            }, label: {
+                HStack {
+                    Text("1")
+                        .foregroundStyle(Color.pdBlue)
+                    DiamondOutline()
+                        .fill(Color.pdBlue)
+                        .frame(width: 12, height: 24)
+                    Spacer().frame(width: 12)
+                    Text("Analyze")
+                        .foregroundStyle(Color.pdBlue)
+                }
+                .padding()
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(Color.pdBlue, lineWidth: 2)
+                )
+            })
+            .onChange(of: modelResponse, { _, _ in
+                showPopover = true
+            })
+        }
+    }
+}
+
+struct AnalyzeButtonView: View {
+    var body: some View {
+        VStack {
+            HStack {
+                Spacer()
+                HStack {
+                    Text("100")
+                        .foregroundStyle(Color.pdBlue)
+                    DiamondOutline()
+                        .fill(Color.pdBlue)
+                        .frame(width: 12, height: 24)
+                    Button(action: {
+                        // nothing for now
+                    }, label: {
+                        Text("+")
+                            .foregroundStyle(Color.pdBlue)
+                            .font(.system(size: 24, weight: .heavy, design: .default))
+                            .padding(.horizontal, 4)
+                            .padding(.top, -4)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(Color.pdBlue, lineWidth: 2)
+                            )
+                    })
+                }
+                .padding(50)
+            }
+            Spacer()
+        }
+    }
+}
+
+struct StackedChipsView: View {
+    let count: Int
+    let type: String
+
+    var body: some View {
+        ZStack {
+            ForEach(0..<count, id: \.self) { index in
+                let reverseIndex = 2 - index
+                Image(type)
+                    .resizable()
+                    .frame(width: 40, height: 40)
+                    .offset(y: CGFloat(index) * -8)
+                    .rotation3DEffect(
+                        .degrees(50),
+                        axis: (x: 1, y: 0, z: 0),
+                        perspective: 0.5
+                    )
+                    .scaleEffect(1.0 - CGFloat(reverseIndex) * 0.09)
+            }
+        }
+    }
+}
+
+struct VillainStackedChipsView: View {
+    var body: some View {
+        VStack {
+            HStack {
+                StackedChipsView(count: 10, type: "chip-1")
+                StackedChipsView(count: 2, type: "chip-1")
+                Spacer().frame(width: 80)
+            }
+            Spacer().frame(height: 210)
+        }
+    }
+}
+
 struct MainView: View {
     let navigationController: UINavigationController
     
@@ -190,144 +420,35 @@ struct MainView: View {
         VStack {
             ZStack {
                 PokerTable()
-                VStack {
-                    HStack(spacing: -29.0) {
-                        CardView(
-                            onTap: select,
-                            rotation: -9,
-                            card: $viewModel.v1c1
-                        )
-                        CardView(
-                            onTap: select,
-                            rotation: 9,
-                            card: $viewModel.v1c2
-                        )
-                    }
-                    Spacer().frame(height: 350)
-                }
-                VStack {
-                    Spacer().frame(height: 20)
-                    HStack(spacing: -10.0) {
-                        CardView(
-                            onTap: select,
-                            width: 60,
-                            height: 60,
-                            card: $viewModel.cc1
-                        )
-                        CardView(
-                            onTap: select,
-                            width: 60,
-                            height: 60,
-                            card: $viewModel.cc2
-                        )
-                        CardView(
-                            onTap: select,
-                            width: 60,
-                            height: 60,
-                            card: $viewModel.cc3
-                        )
-                        CardView(
-                            onTap: select,
-                            width: 60,
-                            height: 60,
-                            card: $viewModel.cc4
-                        )
-                        CardView(
-                            onTap: select,
-                            width: 60,
-                            height: 60,
-                            card: $viewModel.cc5
-                        )
-                    }
-                }
-                VStack {
-                    Spacer().frame(height: 470)
-                    HStack(spacing: -29.0) {
-                        CardView(
-                            onTap: select,
-                            rotation: -9,
-                            card: $viewModel.hc1
-                        )
-                        CardView(
-                            onTap: select,
-                            rotation: 9,
-                            card: $viewModel.hc2
-                        )
-                    }
-                }
-                VStack {
-                    Spacer().frame(height: 700)
-                    Button(action: {
-                        Task {
-                            modelResponse = nil
-                            modelResponse = try await analyze(viewModel: viewModel)
-                        }
-                    }, label: {
-                        HStack {
-                            Text("1")
-                                .foregroundStyle(Color.pdBlue)
-                            DiamondOutline()
-                                .fill(Color.pdBlue)
-                                .frame(width: 12, height: 24)
-                            Spacer().frame(width: 12)
-                            Text("Analyze")
-                                .foregroundStyle(Color.pdBlue)
-                        }
-                        .padding()
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 8)
-                                .stroke(Color.pdBlue, lineWidth: 2)
-                        )
-                    })
-                    .onChange(of: modelResponse, { _, _ in
-                        showPopover = true
-                    })
-                }
-                VStack {
-                    Spacer().frame(height: 330)
-                    HStack {
-                        Spacer().frame(width: 80)
-                        Image("chips")
-                            .resizable()
-                            .frame(width: 40, height: 40)
-                    }
-                }
-                VStack {
-                    HStack {
-                        Image("chips")
-                            .resizable()
-                            .frame(width: 40, height: 40)
-                        Spacer().frame(width: 80)
-                    }
-                    Spacer().frame(height: 210)
-                }
-                VStack {
-                    HStack {
-                        Spacer()
-                        HStack {
-                            Text("100")
-                                .foregroundStyle(Color.pdBlue)
-                            DiamondOutline()
-                                .fill(Color.pdBlue)
-                                .frame(width: 12, height: 24)
-                            Button(action: {
-                                // nothing for now
-                            }, label: {
-                                Text("+")
-                                    .foregroundStyle(Color.pdBlue)
-                                    .font(.system(size: 24, weight: .heavy, design: .default))
-                                    .padding(.horizontal, 4)
-                                    .padding(.top, -4)
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 8)
-                                            .stroke(Color.pdBlue, lineWidth: 2)
-                                    )
-                            })
-                        }
-                        .padding(50)
-                    }
-                    Spacer()
-                }
+                VillainCardView(
+                    navigationController: navigationController,
+                    viewModel: viewModel
+                )
+                CommunityCardView(
+                    navigationController: navigationController,
+                    viewModel: viewModel
+                )
+                HeroCardView(
+                    navigationController: navigationController,
+                    viewModel: viewModel
+                )
+                DiamondBalanceView(
+                    showPopover: $showPopover,
+                    modelResponse: $modelResponse,
+                    viewModel: viewModel
+                )
+                VillainStackedChipsView()
+//                VStack {
+//                    Spacer().frame(height: 330)
+//                    HStack {
+//                        Spacer().frame(width: 80)
+//                        Image("chips")
+//                            .resizable()
+//                            .frame(width: 40, height: 40)
+//                    }
+//                }
+                
+                AnalyzeButtonView()
             }
             .popover(isPresented: $showPopover) {
                 AnalyzeView(
