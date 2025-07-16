@@ -330,21 +330,10 @@ struct MainView: View {
                 }
             }
             .popover(isPresented: $showPopover) {
-                VStack(spacing: 16) {
-                    ScrollView {
-                        if let modelResponse {
-                            MarkdownView(markdownString: modelResponse)
-                                .font(.system(size: 14, weight: .regular, design: .default))
-                                .foregroundStyle(Color.black)
-                                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        }
-                    }
-                    Button("Close") {
-                        showPopover = false
-                    }
-                }
-                .padding()
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                AnalyzeView(
+                    showPopover: $showPopover,
+                    modelResponse: $modelResponse
+                )
             }
         }
         .navigationBarHidden(true)
