@@ -80,7 +80,7 @@ struct CardImage: View {
 struct PokerTable: View {
     var body: some View {
         GeometryReader { geo in
-            let scale: CGFloat = 0.75
+            let scale: CGFloat = 0.80
             let width = geo.size.width * scale
             let height = geo.size.height
 
@@ -99,7 +99,7 @@ struct PokerTable: View {
 
                 // Maroon border
                 Capsule()
-                    .stroke(Color.pokerMaroon, lineWidth: 8)
+                    .stroke(Color.pokerMaroon, lineWidth: 4)
                     .rotation3DEffect(.degrees(50), axis: (x: 1, y: 0, z: 0), perspective: 0.5)
             }
             .frame(width: width, height: height)
@@ -240,35 +240,35 @@ struct CommunityCardView: View {
     var body: some View {
         VStack {
             Spacer().frame(height: 20)
-            HStack(spacing: -12.0) {
+            HStack(spacing: -14.0) {
                 CardView(
                     onTap: select,
-                    width: 65,
-                    height: 65,
+                    width: 70,
+                    height: 70,
                     card: $viewModel.cc1
                 )
                 CardView(
                     onTap: select,
-                    width: 65,
-                    height: 65,
+                    width: 70,
+                    height: 70,
                     card: $viewModel.cc2
                 )
                 CardView(
                     onTap: select,
-                    width: 65,
-                    height: 65,
+                    width: 70,
+                    height: 70,
                     card: $viewModel.cc3
                 )
                 CardView(
                     onTap: select,
-                    width: 65,
-                    height: 65,
+                    width: 70,
+                    height: 70,
                     card: $viewModel.cc4
                 )
                 CardView(
                     onTap: select,
-                    width: 65,
-                    height: 65,
+                    width: 70,
+                    height: 80,
                     card: $viewModel.cc5
                 )
             }
