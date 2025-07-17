@@ -334,7 +334,7 @@ struct HeroCardView: View {
     }
 }
 
-struct DiamondBalanceView: View {
+struct AnalyzeButtonView: View {
     @Binding var showPopover: Bool
     @Binding var modelResponse: [String]?
     @ObservedObject var viewModel: CardViewModel
@@ -372,7 +372,7 @@ struct DiamondBalanceView: View {
     }
 }
 
-struct AnalyzeButtonView: View {
+struct DiamondBalanceView: View {
     var body: some View {
         VStack {
             HStack {
@@ -399,6 +399,7 @@ struct AnalyzeButtonView: View {
                 }
                 .padding(50)
             }
+            .padding(.vertical, 50)
             Spacer()
         }
     }
@@ -469,7 +470,7 @@ struct HeroStackedChipsView: View {
     private func selectHeroBet() {
         let hostingController = UIHostingController(rootView: BetSelector(
             navigationController: navigationController,
-            bet: $viewModel.vfb
+            bet: $viewModel.hfb
         ))
         hostingController.modalPresentationStyle = .overCurrentContext
         hostingController.view.backgroundColor = .clear
@@ -552,7 +553,7 @@ struct MainView: View {
                     navigationController: navigationController,
                     viewModel: viewModel
                 )
-                DiamondBalanceView(
+                AnalyzeButtonView(
                     showPopover: $showPopover,
                     modelResponse: $modelResponse,
                     viewModel: viewModel
@@ -565,7 +566,7 @@ struct MainView: View {
                     navigationController: navigationController,
                     viewModel: viewModel
                 )
-                AnalyzeButtonView()
+                DiamondBalanceView()
             }
             .popover(isPresented: $showPopover) {
                 AnalyzeView(
