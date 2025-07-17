@@ -277,7 +277,7 @@ struct CommunityCardView: View {
 }
 
 func chipBreakdown(for bet: Int) -> [(Int, Int)] {
-    let denominations = [500, 100, 50, 25, 10, 1]
+    let denominations = [500, 50, 10, 1]
     var remaining = bet
     var chips: [(Int, Int)] = []
 
