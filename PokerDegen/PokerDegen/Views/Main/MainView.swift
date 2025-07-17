@@ -17,6 +17,7 @@ struct CardData: Codable {
     let hc1, hc2: String
     let v1c1, v1c2: String
     let pot: String
+    let vpt, vp, hp: String
 }
 
 class CardViewModel: ObservableObject {
@@ -44,8 +45,14 @@ class CardViewModel: ObservableObject {
     /// vpt = Villain Player Type
     @Published var vpt: String = "Player Type"
     
+    /// vp = Villain Position
+    @Published var vp: String = "Position"
+    
+    /// hp = Hero Position
+    @Published var hp: String = "Position"
+    
     var boardData: BoardData {
-        BoardData(board: CardData(cc1: cc1, cc2: cc2, cc3: cc3, cc4: cc4, cc5: cc5, hc1: hc1, hc2: hc2, v1c1: v1c1, v1c2: v1c2, pot: String(Int(vfb+hfb))))
+        BoardData(board: CardData(cc1: cc1, cc2: cc2, cc3: cc3, cc4: cc4, cc5: cc5, hc1: hc1, hc2: hc2, v1c1: v1c1, v1c2: v1c2, pot: String(Int(vfb+hfb)), vpt: vpt, vp: vp, hp: hp))
     }
 }
 
@@ -101,6 +108,7 @@ struct PokerTable: View {
         }
         .aspectRatio(0.6, contentMode: .fit)
         .padding()
+        .offset(y: CGFloat(-10))
     }
 }
 
@@ -317,7 +325,6 @@ struct HeroCardView: View {
 
     var body: some View {
         VStack {
-            Spacer().frame(height: 470)
             HStack(spacing: -29.0) {
                 CardView(
                     onTap: select,
@@ -330,6 +337,7 @@ struct HeroCardView: View {
                     card: $viewModel.hc2
                 )
             }
+            .offset(y: CGFloat(220))
         }
     }
 }
@@ -341,12 +349,10 @@ struct AnalyzeButtonView: View {
 
     var body: some View {
         VStack {
-            Spacer().frame(height: 700)
             Button(action: {
                 Task {
                     modelResponse = nil
                     modelResponse = try await analyze(viewModel: viewModel)
-                    print(modelResponse)
                 }
             }, label: {
                 HStack {
@@ -368,6 +374,7 @@ struct AnalyzeButtonView: View {
             .onChange(of: modelResponse, { _, _ in
                 showPopover = true
             })
+            .offset(y: CGFloat(380))
         }
     }
 }
@@ -378,8 +385,6 @@ struct DiamondBalanceView: View {
             HStack {
                 Spacer()
                 HStack {
-                    Text("100")
-                        .foregroundStyle(Color.pdBlue)
                     DiamondOutline()
                         .fill(Color.pdBlue)
                         .frame(width: 12, height: 24)
@@ -492,27 +497,111 @@ struct HeroStackedChipsView: View {
                     )
             })
         }
-        .offset(y: CGFloat(150))
+        .offset(y: CGFloat(135))
+    }
+}
+
+struct HeroPositionView: View {
+    let navigationController: UINavigationController
+    @ObservedObject var viewModel: CardViewModel
+    
+    private func selectHeroPosition() {
+        let hostingController = UIHostingController(rootView: PositionSelector(
+            navigationController: navigationController,
+            selectedPosition: $viewModel.hp
+        ))
+        hostingController.modalPresentationStyle = .overCurrentContext
+        hostingController.view.backgroundColor = .clear
+        navigationController.modalPresentationStyle = .overCurrentContext
+        navigationController.present(hostingController, animated: true)
+    }
+
+    var body: some View {
+        VStack {
+            Button(action: {
+                selectHeroPosition()
+            }, label: {
+                Text(viewModel.hp)
+                    .foregroundStyle(Color.white)
+                    .padding(12)
+                    .background(
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(style: StrokeStyle(lineWidth: 2, dash: [6]))
+                            .foregroundColor(.gray.opacity(0.5))
+                    )
+                
+            })
+            .offset(y: CGFloat(300))
+        }
+    }
+}
+
+struct VillainPositionView: View {
+    let navigationController: UINavigationController
+    @ObservedObject var viewModel: CardViewModel
+    
+    private func selectVillainPosition() {
+        let hostingController = UIHostingController(rootView: PositionSelector(
+            navigationController: navigationController,
+            selectedPosition: $viewModel.vp
+        ))
+        hostingController.modalPresentationStyle = .overCurrentContext
+        hostingController.view.backgroundColor = .clear
+        navigationController.modalPresentationStyle = .overCurrentContext
+        navigationController.present(hostingController, animated: true)
+    }
+
+    var body: some View {
+        VStack {
+            Button(action: {
+                selectVillainPosition()
+            }, label: {
+                Text(viewModel.vp)
+                    .foregroundStyle(Color.white)
+                    .padding(12)
+                    .background(
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(style: StrokeStyle(lineWidth: 2, dash: [6]))
+                            .foregroundColor(.gray.opacity(0.5))
+                    )
+            })
+            .offset(x: CGFloat(55), y: CGFloat(-260))
+        }
     }
 }
 
 struct VillainPlayerTypeView: View {
+    let navigationController: UINavigationController
     @ObservedObject var viewModel: CardViewModel
+    
+    private func selectVillainPlayerType() {
+        let hostingController = UIHostingController(rootView: PlayerTypeSelector(
+            navigationController: navigationController,
+            selectedPlayerType: $viewModel.vpt
+        ))
+        hostingController.modalPresentationStyle = .overCurrentContext
+        hostingController.view.backgroundColor = .clear
+        navigationController.modalPresentationStyle = .overCurrentContext
+        navigationController.present(hostingController, animated: true)
+    }
 
     var body: some View {
-        Button(action: {
-            // do something
-        }, label: {
-            Text(viewModel.vpt)
-                .foregroundStyle(Color.white)
-                .padding(12)
-                .background(
-                    RoundedRectangle(cornerRadius: 12)
-                        .stroke(style: StrokeStyle(lineWidth: 2, dash: [6]))
-                        .foregroundColor(.gray.opacity(0.5))
-                )
-                .offset(y: CGFloat(-260))
-        })
+        VStack {
+            Button(action: {
+                selectVillainPlayerType()
+            }, label: {
+                Text(viewModel.vpt)
+                    .foregroundStyle(Color.white)
+                    .padding(12)
+                    .background(
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(style: StrokeStyle(lineWidth: 2, dash: [6]))
+                            .foregroundColor(.gray.opacity(0.5))
+                    )
+                
+            })
+            .offset(x: CGFloat(-60), y: CGFloat(-260))
+        }
     }
 }
 
@@ -537,11 +626,21 @@ struct MainView: View {
     var body: some View {
         VStack {
             ZStack {
+                DiamondBalanceView()
                 PokerTable()
                 VillainPlayerTypeView(
+                    navigationController: navigationController,
+                    viewModel: viewModel
+                )
+                VillainPositionView(
+                    navigationController: navigationController,
                     viewModel: viewModel
                 )
                 VillainCardView(
+                    navigationController: navigationController,
+                    viewModel: viewModel
+                )
+                VillainStackedChipsView(
                     navigationController: navigationController,
                     viewModel: viewModel
                 )
@@ -549,7 +648,15 @@ struct MainView: View {
                     navigationController: navigationController,
                     viewModel: viewModel
                 )
+                HeroStackedChipsView(
+                    navigationController: navigationController,
+                    viewModel: viewModel
+                )
                 HeroCardView(
+                    navigationController: navigationController,
+                    viewModel: viewModel
+                )
+                HeroPositionView(
                     navigationController: navigationController,
                     viewModel: viewModel
                 )
@@ -558,15 +665,6 @@ struct MainView: View {
                     modelResponse: $modelResponse,
                     viewModel: viewModel
                 )
-                VillainStackedChipsView(
-                    navigationController: navigationController,
-                    viewModel: viewModel
-                )
-                HeroStackedChipsView(
-                    navigationController: navigationController,
-                    viewModel: viewModel
-                )
-                DiamondBalanceView()
             }
             .popover(isPresented: $showPopover) {
                 AnalyzeView(
