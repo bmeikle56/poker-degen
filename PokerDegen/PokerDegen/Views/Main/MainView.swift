@@ -17,6 +17,7 @@ struct CardData: Codable {
     let hc1, hc2: String
     let v1c1, v1c2: String
     let pot: String
+    let vpt, vp, hp: String
 }
 
 class CardViewModel: ObservableObject {
@@ -51,7 +52,7 @@ class CardViewModel: ObservableObject {
     @Published var hp: String = "Position"
     
     var boardData: BoardData {
-        BoardData(board: CardData(cc1: cc1, cc2: cc2, cc3: cc3, cc4: cc4, cc5: cc5, hc1: hc1, hc2: hc2, v1c1: v1c1, v1c2: v1c2, pot: String(Int(vfb+hfb))))
+        BoardData(board: CardData(cc1: cc1, cc2: cc2, cc3: cc3, cc4: cc4, cc5: cc5, hc1: hc1, hc2: hc2, v1c1: v1c1, v1c2: v1c2, pot: String(Int(vfb+hfb)), vpt: vpt, vp: vp, hp: hp))
     }
 }
 
