@@ -39,15 +39,15 @@ func signup(username: String, password: String) async -> Bool {
     return false
 }
 
-func analyze(viewModel: CardViewModel) async throws -> String {
+func analyze(viewModel: CardViewModel) async throws -> [String] {
     let path = "/modelWrapper"
     let method = "POST"
     let body = viewModel.boardData
     let httpBody = try JSONEncoder().encode(body)
     if let data = await fetchData(path: path, method: method, httpBody: httpBody) {
-        return data["response"] as! String
+        return data["response"] as! [String]
     }
-    return "Unable to analyze"
+    return ["Unable to analyze"]
 }
 
 

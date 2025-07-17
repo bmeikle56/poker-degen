@@ -61,15 +61,15 @@ struct HorizontalGauge: View {
 
 struct AnalyzeView: View {
     @Binding var showPopover: Bool
-    @Binding var modelResponse: String?
+    @Binding var modelResponse: [String]?
     
     var body: some View {
         VStack(spacing: 16) {
             ScrollView {
                 Spacer().frame(height: 40)
-                ActionView(icon: "✋", action: "Check", isCorrect: true)
-                ActionView(icon: "💰", action: "Bet", isCorrect: false)
-                ActionView(icon: "🗑️", action: "Fold", isCorrect: false)
+                ActionView(icon: "✋", action: "Check", isCorrect: modelResponse![0] == "Check")
+                ActionView(icon: "💰", action: "Bet", isCorrect: modelResponse![0] == "Bet")
+                ActionView(icon: "🗑️", action: "Fold", isCorrect: modelResponse![0] == "Fold")
                 Spacer().frame(height: 40)
                 HStack(spacing: 20) {
                     VStack(alignment: .leading, spacing: 8) {
@@ -77,13 +77,13 @@ struct AnalyzeView: View {
                         Text("Hero's range")
                     }
                     VStack(spacing: 16) {
-                        HorizontalGauge(value: 0.9)
-                        HorizontalGauge(value: 0.3)
+                        HorizontalGauge(value: Double(modelResponse![1].trimmingCharacters(in: .whitespacesAndNewlines))!)
+                        HorizontalGauge(value: Double(modelResponse![2].trimmingCharacters(in: .whitespacesAndNewlines))!)
                     }
                 }
                 Spacer().frame(height: 40)
                 if let modelResponse {
-                    MarkdownView(markdownString: modelResponse)
+                    MarkdownView(markdownString: modelResponse[3].trimmingCharacters(in: .whitespacesAndNewlines))
                         .font(.system(size: 16, weight: .regular, design: .default))
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .padding(8)
@@ -103,16 +103,16 @@ struct AnalyzeView: View {
     }
 }
 
-struct AnalyzePreview: PreviewProvider {
-    @State static var showPopover = true
-    @State static var modelResponse: String? = """
-        It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
-        """
-
-    static var previews: some View {
-        AnalyzeView(
-            showPopover: $showPopover,
-            modelResponse: $modelResponse
-        )
-    }
-}
+//struct AnalyzePreview: PreviewProvider {
+//    @State static var showPopover = true
+//    @State static var modelResponse: String? = """
+//        It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+//        """
+//
+//    static var previews: some View {
+//        AnalyzeView(
+//            showPopover: $showPopover,
+//            modelResponse: $modelResponse
+//        )
+//    }
+//}

@@ -166,7 +166,7 @@ struct CardView: View {
             .rotationEffect(.degrees(rotation))
             .onTapGesture {
                 tapCount += 1
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                     if tapCount == 1 {
                         onTap($card)
                     } else if tapCount == 2 {
@@ -232,35 +232,35 @@ struct CommunityCardView: View {
     var body: some View {
         VStack {
             Spacer().frame(height: 20)
-            HStack(spacing: -10.0) {
+            HStack(spacing: -12.0) {
                 CardView(
                     onTap: select,
-                    width: 60,
-                    height: 60,
+                    width: 65,
+                    height: 65,
                     card: $viewModel.cc1
                 )
                 CardView(
                     onTap: select,
-                    width: 60,
-                    height: 60,
+                    width: 65,
+                    height: 65,
                     card: $viewModel.cc2
                 )
                 CardView(
                     onTap: select,
-                    width: 60,
-                    height: 60,
+                    width: 65,
+                    height: 65,
                     card: $viewModel.cc3
                 )
                 CardView(
                     onTap: select,
-                    width: 60,
-                    height: 60,
+                    width: 65,
+                    height: 65,
                     card: $viewModel.cc4
                 )
                 CardView(
                     onTap: select,
-                    width: 60,
-                    height: 60,
+                    width: 65,
+                    height: 65,
                     card: $viewModel.cc5
                 )
             }
@@ -336,7 +336,7 @@ struct HeroCardView: View {
 
 struct DiamondBalanceView: View {
     @Binding var showPopover: Bool
-    @Binding var modelResponse: String?
+    @Binding var modelResponse: [String]?
     @ObservedObject var viewModel: CardViewModel
 
     var body: some View {
@@ -346,6 +346,7 @@ struct DiamondBalanceView: View {
                 Task {
                     modelResponse = nil
                     modelResponse = try await analyze(viewModel: viewModel)
+                    print(modelResponse)
                 }
             }, label: {
                 HStack {
@@ -529,7 +530,7 @@ struct MainView: View {
     }
     
     @State private var showPopover = false
-    @State private var modelResponse: String?
+    @State private var modelResponse: [String]?
     @StateObject private var viewModel = CardViewModel()
 
     var body: some View {
