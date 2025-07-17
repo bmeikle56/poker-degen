@@ -1,5 +1,5 @@
 //
-//  PositionSelector.swift
+//  PlayerTypeSelector.swift
 //  PokerDegen
 //
 //  Created by Braeden Meikle on 7/17/25.
@@ -7,18 +7,18 @@
 
 import SwiftUI
 
-struct PositionSelector: View {
+struct PlayerTypeSelector: View {
     let navigationController: UINavigationController
 
-    @Binding var selectedPosition: String
+    @Binding var selectedPlayerType: String
     
     @Environment(\.dismiss) var dismiss
 
     var body: some View {
         VStack {
-            PokerPositionMenu(
+            PlayerTypeSelectorMenu(
                 navigationController: navigationController,
-                selectedPosition: $selectedPosition
+                selectedPlayerType: $selectedPlayerType
             )
         }
         .frame(width: 200, height: 200)
@@ -27,27 +27,27 @@ struct PositionSelector: View {
         .ignoresSafeArea(.keyboard)
     }
 }
-struct PokerPositionMenu: View {
+struct PlayerTypeSelectorMenu: View {
     let navigationController: UINavigationController
-    @Binding var selectedPosition: String
+    @Binding var selectedPlayerType: String
     
-    let positions = ["UTG", "+1", "LJ", "HJ", "CO", "BTN", "SB", "BB"]
+    let playerTypes = ["Aggressive", "Tight", "Average"]
     
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
         Menu {
-            ForEach(positions, id: \.self) { position in
+            ForEach(playerTypes, id: \.self) { playerType in
                 Button(action: {
-                    selectedPosition = position
+                    selectedPlayerType = playerType
                     dismiss()
                 }) {
-                    Text(position)
+                    Text(playerType)
                         .foregroundStyle(Color.smoothGray)
                 }
             }
         } label: {
-            Text(selectedPosition)
+            Text(selectedPlayerType)
                 .font(.headline)
                 .foregroundColor(.smoothGray)
                 .padding(.horizontal, 16)

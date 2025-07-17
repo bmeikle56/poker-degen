@@ -550,7 +550,6 @@ struct VillainPositionView: View {
         navigationController.present(hostingController, animated: true)
     }
 
-
     var body: some View {
         VStack {
             Button(action: {
@@ -571,22 +570,37 @@ struct VillainPositionView: View {
 }
 
 struct VillainPlayerTypeView: View {
+    let navigationController: UINavigationController
     @ObservedObject var viewModel: CardViewModel
+    
+    private func selectVillainPlayerType() {
+        let hostingController = UIHostingController(rootView: PlayerTypeSelector(
+            navigationController: navigationController,
+            selectedPlayerType: $viewModel.vpt
+        ))
+        hostingController.modalPresentationStyle = .overCurrentContext
+        hostingController.view.backgroundColor = .clear
+        navigationController.modalPresentationStyle = .overCurrentContext
+        navigationController.present(hostingController, animated: true)
+    }
 
     var body: some View {
-        Button(action: {
-            // do something
-        }, label: {
-            Text(viewModel.vpt)
-                .foregroundStyle(Color.white)
-                .padding(12)
-                .background(
-                    RoundedRectangle(cornerRadius: 12)
-                        .stroke(style: StrokeStyle(lineWidth: 2, dash: [6]))
-                        .foregroundColor(.gray.opacity(0.5))
-                )
-                .offset(x: CGFloat(-60), y: CGFloat(-260))
-        })
+        VStack {
+            Button(action: {
+                selectVillainPlayerType()
+            }, label: {
+                Text(viewModel.vpt)
+                    .foregroundStyle(Color.white)
+                    .padding(12)
+                    .background(
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(style: StrokeStyle(lineWidth: 2, dash: [6]))
+                            .foregroundColor(.gray.opacity(0.5))
+                    )
+                
+            })
+            .offset(x: CGFloat(-60), y: CGFloat(-260))
+        }
     }
 }
 
@@ -614,6 +628,7 @@ struct MainView: View {
                 DiamondBalanceView()
                 PokerTable()
                 VillainPlayerTypeView(
+                    navigationController: navigationController,
                     viewModel: viewModel
                 )
                 VillainPositionView(
