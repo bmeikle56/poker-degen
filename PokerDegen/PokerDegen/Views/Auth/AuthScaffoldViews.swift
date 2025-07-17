@@ -38,54 +38,70 @@ struct AuthErrorMessageView: View {
 
 struct UsernameField: View {
     let placeholder: String
-    
     @Binding var username: String
+    @FocusState private var isFocused: Bool
     
     var body: some View {
-        ZStack(alignment: .leading) {
-            if username.isEmpty {
-                Text("Username")
+        TextField("", text: $username)
+            .focused($isFocused)
+            .placeholder(when: username.isEmpty) {
+                Text(placeholder)
                     .foregroundColor(.smoothGray)
-                    .padding(.horizontal, 16)
             }
+            .padding()
+            .frame(width: 250, height: 60) // Ensures tappable area is consistent
+            .background(
+                RoundedRectangle(cornerRadius: 8)
+                    .stroke(Color.pdBlue, lineWidth: 1.4)
+            )
+            .contentShape(RoundedRectangle(cornerRadius: 8)) // Makes the whole area tappable
+            .onTapGesture {
+                isFocused = true
+            }
+            .autocapitalization(.none)
+            .foregroundStyle(Color.smoothGray)
+    }
+}
 
-            TextField("", text: $username)
-                .padding()
-                .frame(width: 250)
-                .autocapitalization(.none)
-                .foregroundStyle(Color.smoothGray)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(style: StrokeStyle(lineWidth: 1.4))
-                        .foregroundStyle(Color.pdBlue)
-                )
+extension View {
+    func placeholder<Content: View>(
+        when shouldShow: Bool,
+        alignment: Alignment = .leading,
+        @ViewBuilder placeholder: () -> Content
+    ) -> some View {
+        ZStack(alignment: alignment) {
+            if shouldShow {
+                placeholder()
+            }
+            self
         }
     }
 }
 
 struct PasswordField: View {
     let placeholder: String
-    
     @Binding var password: String
+    @FocusState private var isFocused: Bool
     
     var body: some View {
-        ZStack(alignment: .leading) {
-            if password.isEmpty {
-                Text("Password")
+        SecureField("", text: $password)
+            .focused($isFocused)
+            .placeholder(when: password.isEmpty) {
+                Text(placeholder)
                     .foregroundColor(.smoothGray)
-                    .padding(.horizontal, 16)
             }
-
-            SecureField("", text: $password)
-                .padding()
-                .frame(width: 250)
-                .foregroundStyle(Color.smoothGray)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(style: StrokeStyle(lineWidth: 1.4))
-                        .foregroundStyle(Color.pdBlue)
-                )
-        }
+            .padding()
+            .frame(width: 250, height: 60) // Ensures tappable area is consistent
+            .background(
+                RoundedRectangle(cornerRadius: 8)
+                    .stroke(Color.pdBlue, lineWidth: 1.4)
+            )
+            .contentShape(RoundedRectangle(cornerRadius: 8)) // Makes the whole area tappable
+            .onTapGesture {
+                isFocused = true
+            }
+            .autocapitalization(.none)
+            .foregroundStyle(Color.smoothGray)
     }
 }
 
