@@ -16,6 +16,7 @@ struct CardData: Codable {
     let cc1, cc2, cc3, cc4, cc5: String
     let hc1, hc2: String
     let v1c1, v1c2: String
+    let pot: String
 }
 
 class CardViewModel: ObservableObject {
@@ -35,16 +36,16 @@ class CardViewModel: ObservableObject {
     @Published var v1c2: String = "card"
     
     /// vfb = Villain Flop Bet
-    @Published var vfb: Int = 522
+    @Published var vfb: Int = 0
     
     /// hfb = Hero Flop Bet
-    @Published var hfb: Int = 125
+    @Published var hfb: Int = 0
     
     /// vpt = Villain Player Type
     @Published var vpt: String = "Player Type"
     
     var boardData: BoardData {
-        BoardData(board: CardData(cc1: cc1, cc2: cc2, cc3: cc3, cc4: cc4, cc5: cc5, hc1: hc1, hc2: hc2, v1c1: v1c1, v1c2: v1c2))
+        BoardData(board: CardData(cc1: cc1, cc2: cc2, cc3: cc3, cc4: cc4, cc5: cc5, hc1: hc1, hc2: hc2, v1c1: v1c1, v1c2: v1c2, pot: String(Int(vfb+hfb))))
     }
 }
 
