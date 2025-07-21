@@ -1,15 +1,11 @@
 //
-//  ChatGPTService.swift
+//  Services.swift
 //  PokerDegen
 //
 //  Created by Braeden Meikle on 7/8/25.
 //
 
 import Foundation
-
-let scheme = "https://"
-let host = "poker-degen-backend-production.up.railway.app"
-let apiKey = "pokerdegen" /// this needs to go in the Keychain...
 
 func login(username: String, password: String) async -> Bool {
     let path = "/login"
@@ -20,6 +16,7 @@ func login(username: String, password: String) async -> Bool {
     ]
     let httpBody = try! JSONSerialization.data(withJSONObject: body)
     if let data = await fetchData(path: path, method: method, httpBody: httpBody) {
+        apiKey = data["token"] as? String
         return data["message"] as! String == "Login successful"
     }
     return false
@@ -34,6 +31,7 @@ func signup(username: String, password: String) async -> Bool {
     ]
     let httpBody = try! JSONSerialization.data(withJSONObject: body)
     if let data = await fetchData(path: path, method: method, httpBody: httpBody) {
+        apiKey = data["token"] as? String
         return data["message"] as! String == "Sign up successful"
     }
     return false
@@ -61,6 +59,10 @@ func analyze(viewModel: CardViewModel) async throws -> [String] {
 ///
 ///
 
+private let scheme = "https://"
+private let host = "poker-degen-backend-production.up.railway.app"
+private var apiKey: String?
+
 private enum ServiceError: Error {
     case statusCode
 }
@@ -69,7 +71,9 @@ private func fetchData(path: String, method: String, httpBody: Data? = nil) asyn
     let url = URL(string: scheme + host + path)!
     var request = URLRequest(url: url)
     request.httpMethod = method
-    request.addValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
+    if let apiKey {
+        request.addValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
+    }
     request.addValue("application/json", forHTTPHeaderField: "Content-Type")
     do {
         if let httpBody {
