@@ -37,7 +37,7 @@ func signup(username: String, password: String) async -> Bool {
     return false
 }
 
-func analyze(viewModel: CardViewModel) async throws -> [String] {
+func analyze(viewModel: HandViewModel) async throws -> [String] {
     let path = "/modelWrapper"
     let method = "POST"
     let body = viewModel.boardData
