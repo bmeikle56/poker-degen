@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct DiamondOutline: Shape {
+struct Diamond: Shape {
     func path(in rect: CGRect) -> Path {
         var path = Path()
         let midX = rect.midX
