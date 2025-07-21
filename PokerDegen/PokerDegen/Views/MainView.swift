@@ -309,9 +309,9 @@ struct AnalyzeButtonView: View {
                 HStack {
                     Text("1")
                         .foregroundStyle(Color.pdBlue)
-                    DiamondOutline()
+                    Diamond()
                         .fill(Color.pdBlue)
-                        .frame(width: 12, height: 24)
+                        .frame(width: 12, height: (820/468)*12)
                     Spacer().frame(width: 12)
                     Text("Analyze")
                         .foregroundStyle(Color.pdBlue)
@@ -336,9 +336,9 @@ struct DiamondBalanceView: View {
             HStack {
                 Spacer()
                 HStack {
-                    DiamondOutline()
+                    Diamond()
                         .fill(Color.pdBlue)
-                        .frame(width: 12, height: 24)
+                        .frame(width: 12, height: (820/468)*12)
                     Button(action: {
                         // nothing for now
                     }, label: {

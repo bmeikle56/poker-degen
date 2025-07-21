@@ -10,9 +10,9 @@ import SwiftUI
 struct PokerDegenTitleView: View {
     var body: some View {
         HStack {
-            DiamondOutline()
-                .stroke(Color.pdBlue, lineWidth: 4)
-                .frame(width: 20, height: 40)
+            Diamond()
+                .fill(Color.pdBlue)
+                .frame(width: 20, height: (820/468)*20)
             Spacer().frame(width: 20)
             Text("PokerDegen")
                 .foregroundStyle(Color.pdBlue)
