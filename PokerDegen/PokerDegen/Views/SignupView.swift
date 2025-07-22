@@ -27,7 +27,7 @@ struct SignupView: View {
             Spacer().frame(height: 20)
             PasswordField(placeholder: "Password", password: $password)
             Spacer().frame(height: 20)
-            AuthButton(
+            SignupButton(
                 navigationController: navigationController,
                 text: "Signup",
                 auth: signup,

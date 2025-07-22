@@ -105,7 +105,7 @@ struct PasswordField: View {
     }
 }
 
-struct AuthButton: View {
+struct SignupButton: View {
     let navigationController: UINavigationController
     let text: String
     let auth: (String, String) async -> Bool
@@ -113,12 +113,15 @@ struct AuthButton: View {
     @Binding var username: String
     @Binding var password: String
     @Binding var isAuthorized: Bool?
+    
+    @State private var showFaceIDPrompt = false
 
     var body: some View {
         Button(action: {
-            Task {
-                isAuthorized = await auth(username, password)
-            }
+            showFaceIDPrompt = true
+//            Task {
+//                isAuthorized = await auth(username, password)
+//            }
         }, label: {
             Text(text)
                 .foregroundColor(.black)
@@ -130,11 +133,74 @@ struct AuthButton: View {
         })
         .onChange(of: isAuthorized, { _, _ in
             if let isAuthorized, isAuthorized == true {
+                showFaceIDPrompt = true
+//                navigationController.pushViewController(
+//                    UIHostingController(rootView: PokerTableView(navigationController: navigationController)),
+//                    animated: true
+//                )
+            }
+        })
+        .alert("Enable Face ID?", isPresented: $showFaceIDPrompt) {
+            Button("Continue") {
+                Task {
+                    isAuthorized = try? await authenticateWithFaceID()
+                    print("isAuthorized: \(isAuthorized!)")
+                }
+            }
+            Button("Cancel", role: .cancel) { }
+        } message: {
+            Text("Use Face ID to log in quickly and securely.")
+        }
+    }
+}
+
+struct LoginButton: View {
+    let navigationController: UINavigationController
+    let text: String
+    let auth: (String, String) async -> Bool
+    
+    @Binding var username: String
+    @Binding var password: String
+    @Binding var isAuthorized: Bool?
+    
+    @State private var showFaceIDPrompt = false
+
+    var body: some View {
+        Button(action: {
+            showFaceIDPrompt = true
+//            Task {
+//                isAuthorized = await auth(username, password)
+//            }
+        }, label: {
+            Text(text)
+                .foregroundColor(.black)
+                .font(.system(size: 18, weight: .bold, design: .default))
+                .padding()
+                .frame(width: 250)
+                .background(Color.pdBlue)
+                .cornerRadius(8)
+        })
+        .onChange(of: isAuthorized, { _, _ in
+            if let isAuthorized, isAuthorized == true {
+                UserDefaults.standard.set(username, forKey: "username")
+                UserDefaults.standard.set(password, forKey: "password")
                 navigationController.pushViewController(
                     UIHostingController(rootView: PokerTableView(navigationController: navigationController)),
                     animated: true
                 )
             }
         })
+        .alert("Enable Face ID?", isPresented: $showFaceIDPrompt) {
+            Button("Continue") {
+                Task { @MainActor in
+                    isAuthorized = try? await authenticateWithFaceID()
+                }
+            }
+            Button("Cancel", role: .cancel) {
+                
+            }
+        } message: {
+            Text("Use Face ID to log in quickly and securely.")
+        }
     }
 }

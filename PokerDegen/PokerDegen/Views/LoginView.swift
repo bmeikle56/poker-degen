@@ -13,6 +13,7 @@ struct LoginView: View {
     @State var username: String = ""
     @State var password: String = ""
     @State var isAuthorized: Bool?
+    @State private var showFaceIDPrompt = false
 
     var body: some View {
         VStack {
@@ -27,7 +28,7 @@ struct LoginView: View {
             Spacer().frame(height: 20)
             PasswordField(placeholder: "Password", password: $password)
             Spacer().frame(height: 20)
-            AuthButton(
+            LoginButton(
                 navigationController: navigationController,
                 text: "Login",
                 auth: login,
@@ -56,7 +57,7 @@ struct LoginView: View {
 #Preview {
     LoginView(
         navigationController: UINavigationController(),
-        username: "username",
-        password: "password",
+        username: "Username",
+        password: "Password",
     )
 }
