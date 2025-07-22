@@ -13,6 +13,7 @@ struct LoginView: View {
     @State var username: String = ""
     @State var password: String = ""
     @State var isAuthorized: Bool?
+    @State private var showFaceIDPrompt = false
 
     var body: some View {
         VStack {
@@ -27,7 +28,7 @@ struct LoginView: View {
             Spacer().frame(height: 20)
             PasswordField(placeholder: "Password", password: $password)
             Spacer().frame(height: 20)
-            AuthButton(
+            LoginButton(
                 navigationController: navigationController,
                 text: "Login",
                 auth: login,
@@ -50,13 +51,31 @@ struct LoginView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.black)
         .ignoresSafeArea()
+        .task {
+            /// prompt FaceID on appear if enabled
+            guard let useBiometrics = UserDefaults.standard.value(forKey: "biometrics") as? Bool,
+                  useBiometrics == true else {
+                return
+            }
+            Task { @MainActor in
+                isAuthorized = try? await authenticateWithFaceID()
+            }
+        }
+        .onChange(of: isAuthorized, {
+            if let isAuthorized, isAuthorized == true {
+                navigationController.pushViewController(
+                    UIHostingController(rootView: PokerTableView(navigationController: navigationController)),
+                    animated: false
+                )
+            }
+        })
     }
 }
 
 #Preview {
     LoginView(
         navigationController: UINavigationController(),
-        username: "username",
-        password: "password",
+        username: "Username",
+        password: "Password",
     )
 }

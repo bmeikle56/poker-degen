@@ -48,7 +48,6 @@ func analyze(viewModel: HandViewModel) async throws -> [String] {
     return ["Unable to analyze"]
 }
 
-
 ///
 ///
 ///
@@ -79,7 +78,7 @@ private func fetchData(path: String, method: String, httpBody: Data? = nil) asyn
         if let httpBody {
             request.httpBody = httpBody
         }
-        let (data, response) = try await URLSession.shared.data(for: request) as! (Data, HTTPURLResponse)
+        let (data, _) = try await URLSession.shared.data(for: request) as! (Data, HTTPURLResponse)
         let json = try JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
         return json
     } catch {
