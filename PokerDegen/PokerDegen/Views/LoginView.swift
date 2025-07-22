@@ -51,6 +51,24 @@ struct LoginView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.black)
         .ignoresSafeArea()
+        .task {
+            /// prompt FaceID on appear if enabled
+            guard let useBiometrics = UserDefaults.standard.value(forKey: "biometrics") as? Bool,
+                  useBiometrics == true else {
+                return
+            }
+            Task { @MainActor in
+                isAuthorized = try? await authenticateWithFaceID()
+            }
+        }
+        .onChange(of: isAuthorized, {
+            if let isAuthorized, isAuthorized == true {
+                navigationController.pushViewController(
+                    UIHostingController(rootView: PokerTableView(navigationController: navigationController)),
+                    animated: false
+                )
+            }
+        })
     }
 }
 

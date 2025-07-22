@@ -167,10 +167,20 @@ struct LoginButton: View {
 
     var body: some View {
         Button(action: {
-            showFaceIDPrompt = true
-//            Task {
-//                isAuthorized = await auth(username, password)
-//            }
+            guard let useBiometrics = UserDefaults.standard.value(forKey: "biometrics") as? Bool else {
+                /// "biometrics" = nil, first login
+                showFaceIDPrompt = true
+                return
+            }
+            if useBiometrics {
+                Task { @MainActor in
+                    isAuthorized = try? await authenticateWithFaceID()
+                }
+            } else {
+                Task {
+                    isAuthorized = await signup(username: username, password: password)
+                }
+            }
         }, label: {
             Text(text)
                 .foregroundColor(.black)
@@ -182,8 +192,6 @@ struct LoginButton: View {
         })
         .onChange(of: isAuthorized, { _, _ in
             if let isAuthorized, isAuthorized == true {
-                UserDefaults.standard.set(username, forKey: "username")
-                UserDefaults.standard.set(password, forKey: "password")
                 navigationController.pushViewController(
                     UIHostingController(rootView: PokerTableView(navigationController: navigationController)),
                     animated: true
@@ -192,12 +200,17 @@ struct LoginButton: View {
         })
         .alert("Enable Face ID?", isPresented: $showFaceIDPrompt) {
             Button("Continue") {
+                UserDefaults.standard.set(username, forKey: "username")
+                UserDefaults.standard.set(password, forKey: "password")
                 Task { @MainActor in
                     isAuthorized = try? await authenticateWithFaceID()
                 }
+                UserDefaults.standard.set(true, forKey: "biometrics")
+                print("biometrics set true")
             }
             Button("Cancel", role: .cancel) {
-                
+                UserDefaults.standard.set(false, forKey: "biometrics")
+                print("biometrics set false")
             }
         } message: {
             Text("Use Face ID to log in quickly and securely.")
