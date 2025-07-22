@@ -37,10 +37,7 @@ struct SignupView: View {
             )
             Spacer().frame(height: 20)
             Button(action: {
-                navigationController.pushViewController(
-                    UIHostingController(rootView: LoginView(navigationController: navigationController)),
-                    animated: false
-                )
+                navigationController.popToRootViewController(animated: false)
             }, label: {
                 Text("Have an account? **Login**")
                     .foregroundStyle(Color.pdBlue)

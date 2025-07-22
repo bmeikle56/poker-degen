@@ -172,11 +172,7 @@ struct LoginButton: View {
                 showFaceIDPrompt = true
                 return
             }
-            if useBiometrics {
-                Task { @MainActor in
-                    isAuthorized = try? await authenticateWithFaceID()
-                }
-            } else {
+            if !useBiometrics {
                 Task {
                     isAuthorized = await login(username: username, password: password)
                 }
