@@ -131,7 +131,7 @@ struct AuthButton: View {
         .onChange(of: isAuthorized, { _, _ in
             if let isAuthorized, isAuthorized == true {
                 navigationController.pushViewController(
-                    UIHostingController(rootView: MainView(navigationController: navigationController)),
+                    UIHostingController(rootView: PokerTableView(navigationController: navigationController)),
                     animated: true
                 )
             }

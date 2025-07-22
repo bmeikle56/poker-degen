@@ -1,5 +1,5 @@
 //
-//  MainView.swift
+//  PokerTableView.swift
 //  PokerDegen
 //
 //  Created by Braeden Meikle on 7/7/25.
@@ -59,7 +59,7 @@ struct PokerTable: View {
         }
         .aspectRatio(0.6, contentMode: .fit)
         .padding()
-        .offset(y: CGFloat(-10))
+        .offset(y: CGFloat(-20))
     }
 }
 
@@ -167,7 +167,7 @@ struct VillainCardView: View {
                     card: $viewModel.v1c2
                 )
             }
-            Spacer().frame(height: 350)
+            Spacer().frame(height: 365)
         }
     }
 }
@@ -190,7 +190,7 @@ struct CommunityCardView: View {
 
     var body: some View {
         VStack {
-            Spacer().frame(height: 20)
+            Spacer().frame(height: 10)
             HStack(spacing: -14.0) {
                 CardView(
                     onTap: select,
@@ -288,7 +288,7 @@ struct HeroCardView: View {
                     card: $viewModel.hc2
                 )
             }
-            .offset(y: CGFloat(220))
+            .offset(y: CGFloat(210))
         }
     }
 }
@@ -325,7 +325,7 @@ struct AnalyzeButtonView: View {
             .onChange(of: modelResponse, { _, _ in
                 showPopover = true
             })
-            .offset(y: CGFloat(380))
+            .offset(y: CGFloat(360))
         }
     }
 }
@@ -355,7 +355,7 @@ struct DiamondBalanceView: View {
                 }
                 .padding(50)
             }
-            .padding(.vertical, 50)
+            .padding(.vertical, 35)
             Spacer()
         }
     }
@@ -414,7 +414,7 @@ struct VillainStackedChipsView: View {
                     )
             })
         }
-        .offset(y: CGFloat(-90))
+        .offset(y: CGFloat(-100))
     }
 }
 
@@ -448,7 +448,7 @@ struct HeroStackedChipsView: View {
                     )
             })
         }
-        .offset(y: CGFloat(135))
+        .offset(y: CGFloat(125))
     }
 }
 
@@ -482,7 +482,7 @@ struct HeroPositionView: View {
                     )
                 
             })
-            .offset(y: CGFloat(300))
+            .offset(y: CGFloat(290))
         }
     }
 }
@@ -516,7 +516,7 @@ struct VillainPositionView: View {
                             .foregroundColor(.gray.opacity(0.5))
                     )
             })
-            .offset(x: CGFloat(55), y: CGFloat(-260))
+            .offset(x: CGFloat(55), y: CGFloat(-270))
         }
     }
 }
@@ -551,12 +551,12 @@ struct VillainPlayerTypeView: View {
                     )
                 
             })
-            .offset(x: CGFloat(-60), y: CGFloat(-260))
+            .offset(x: CGFloat(-60), y: CGFloat(-270))
         }
     }
 }
 
-struct MainView: View {
+struct PokerTableView: View {
     let navigationController: UINavigationController
     
     private func select(card: Binding<String>) {
@@ -646,5 +646,5 @@ struct MarkdownView: View {
 }
 
 #Preview {
-    MainView(navigationController: UINavigationController())
+    PokerTableView(navigationController: UINavigationController())
 }
