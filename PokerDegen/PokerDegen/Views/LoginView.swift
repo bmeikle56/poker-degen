@@ -53,6 +53,8 @@ struct LoginView: View {
         .background(Color.black)
         .ignoresSafeArea()
         .task {
+            username = ""
+            password = ""
             /// prompt FaceID on appear if enabled
             guard let useBiometrics = UserDefaults.standard.value(forKey: "biometrics") as? Bool,
                   useBiometrics == true else {

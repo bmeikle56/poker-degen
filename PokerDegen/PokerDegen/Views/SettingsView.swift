@@ -35,6 +35,11 @@ struct SettingsView: View {
                 }, label: {
                     Text("Disable FaceID")
                         .foregroundStyle(Color.pdBlue)
+                        .padding()
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(Color.pdBlue, lineWidth: 2)
+                        )
                 })
             }
             .alert("Disable FaceID?", isPresented: $showDisableFaceIDAlert) {
@@ -45,8 +50,20 @@ struct SettingsView: View {
                     /// do nothing by design...
                 }
             }
-            Text("Log out")
-                .foregroundStyle(Color.pdBlue)
+            Spacer().frame(height: 40)
+            Button(action: {
+                dismiss()
+                navigationController.popToRootViewController(animated: true)
+            }, label: {
+                Text("Log out")
+                    .foregroundStyle(Color.pdBlue)
+                    .padding()
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(Color.pdBlue, lineWidth: 2)
+                    )
+            })
+            
             Spacer()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
