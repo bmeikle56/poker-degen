@@ -49,7 +49,7 @@ struct UsernameField: View {
                     .foregroundColor(.smoothGray)
             }
             .padding()
-            .frame(width: 250, height: 60) // Ensures tappable area is consistent
+            .frame(width: 250, height: 50) // Ensures tappable area is consistent
             .background(
                 RoundedRectangle(cornerRadius: 8)
                     .stroke(Color.pdBlue, lineWidth: 1.4)
@@ -91,7 +91,7 @@ struct PasswordField: View {
                     .foregroundColor(.smoothGray)
             }
             .padding()
-            .frame(width: 250, height: 60) // Ensures tappable area is consistent
+            .frame(width: 250, height: 50) // Ensures tappable area is consistent
             .background(
                 RoundedRectangle(cornerRadius: 8)
                     .stroke(Color.pdBlue, lineWidth: 1.4)
