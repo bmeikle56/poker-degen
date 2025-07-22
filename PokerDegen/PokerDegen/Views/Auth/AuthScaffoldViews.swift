@@ -178,7 +178,7 @@ struct LoginButton: View {
                 }
             } else {
                 Task {
-                    isAuthorized = await signup(username: username, password: password)
+                    isAuthorized = await login(username: username, password: password)
                 }
             }
         }, label: {
@@ -206,11 +206,12 @@ struct LoginButton: View {
                     isAuthorized = try? await authenticateWithFaceID()
                 }
                 UserDefaults.standard.set(true, forKey: "biometrics")
-                print("biometrics set true")
             }
             Button("Cancel", role: .cancel) {
+                Task {
+                    isAuthorized = await login(username: username, password: password)
+                }
                 UserDefaults.standard.set(false, forKey: "biometrics")
-                print("biometrics set false")
             }
         } message: {
             Text("Use Face ID to log in quickly and securely.")
