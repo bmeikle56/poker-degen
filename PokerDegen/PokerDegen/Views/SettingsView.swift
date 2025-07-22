@@ -14,6 +14,10 @@ struct SettingsView: View {
     
     @State private var showDisableFaceIDAlert = false
     
+    private var biometrics: Bool {
+        UserDefaults.standard.value(forKey: "biometrics") as? Bool ?? false
+    }
+    
     var body: some View {
         VStack {
             HStack {
@@ -33,31 +37,31 @@ struct SettingsView: View {
                 Button(action: {
                     showDisableFaceIDAlert = true
                 }, label: {
-                    Text("Disable FaceID")
+                    Text("\(biometrics ? "Disable" : "Enable") FaceID")
                         .foregroundStyle(Color.pdBlue)
-                        .padding()
+                        .frame(width: 180, height: 60)
                         .overlay(
                             RoundedRectangle(cornerRadius: 10)
                                 .stroke(Color.pdBlue, lineWidth: 2)
                         )
                 })
             }
-            .alert("Disable FaceID?", isPresented: $showDisableFaceIDAlert) {
-                Button("Disable", role: .destructive) {
-                    UserDefaults.standard.set(false, forKey: "biometrics")
+            .alert("\(biometrics ? "Disable" : "Enable") FaceID?", isPresented: $showDisableFaceIDAlert) {
+                Button("\(biometrics ? "Disable" : "Enable")", role: .destructive) {
+                    UserDefaults.standard.set(!biometrics, forKey: "biometrics")
                 }
                 Button("Cancel", role: .cancel) {
                     /// do nothing by design...
                 }
             }
-            Spacer().frame(height: 40)
+            Spacer().frame(height: 20)
             Button(action: {
                 dismiss()
                 navigationController.popToRootViewController(animated: true)
             }, label: {
                 Text("Log out")
                     .foregroundStyle(Color.pdBlue)
-                    .padding()
+                    .frame(width: 180, height: 60)
                     .overlay(
                         RoundedRectangle(cornerRadius: 10)
                             .stroke(Color.pdBlue, lineWidth: 2)
