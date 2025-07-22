@@ -18,7 +18,7 @@ struct LoginView: View {
     var body: some View {
         VStack {
             PokerDegenTitleView()
-            Spacer().frame(height: 40)
+            Spacer().frame(height: 20)
             AuthErrorMessageView(
                 message: "Incorrect username or password", 
                 isAuthorized: $isAuthorized
@@ -46,6 +46,7 @@ struct LoginView: View {
                 Text("Create an account")
                     .foregroundStyle(Color.pdBlue)
             })
+            Spacer().frame(height: 150)
         }
         .navigationBarHidden(true)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
