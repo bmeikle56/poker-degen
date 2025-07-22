@@ -12,6 +12,8 @@ struct SettingsView: View {
     
     @Environment(\.dismiss) var dismiss
     
+    @State private var showDisableFaceIDAlert = false
+    
     var body: some View {
         VStack {
             HStack {
@@ -27,8 +29,22 @@ struct SettingsView: View {
             .padding(.horizontal, 50)
             .padding(.vertical, 25)
             Spacer()
-            Text("Disable FaceID")
-                .foregroundStyle(Color.pdBlue)
+            VStack {
+                Button(action: {
+                    showDisableFaceIDAlert = true
+                }, label: {
+                    Text("Disable FaceID")
+                        .foregroundStyle(Color.pdBlue)
+                })
+            }
+            .alert("Disable FaceID?", isPresented: $showDisableFaceIDAlert) {
+                Button("Disable", role: .destructive) {
+                    UserDefaults.standard.set(false, forKey: "biometrics")
+                }
+                Button("Cancel", role: .cancel) {
+                    /// do nothing by design...
+                }
+            }
             Text("Log out")
                 .foregroundStyle(Color.pdBlue)
             Spacer()
