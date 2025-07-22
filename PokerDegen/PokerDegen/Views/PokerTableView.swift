@@ -578,6 +578,9 @@ struct PokerTableView: View {
         VStack {
             ZStack {
                 DiamondBalanceView()
+                SettingsButtonView(
+                    navigationController: navigationController
+                )
                 PokerTable()
                 VillainPlayerTypeView(
                     navigationController: navigationController,
@@ -628,6 +631,36 @@ struct PokerTableView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.black)
         .ignoresSafeArea()
+    }
+}
+
+struct SettingsButtonView: View {
+    let navigationController: UINavigationController
+
+    var body: some View {
+        VStack {
+            HStack {
+                HStack {
+                    Button(action: {
+                        let hostingController = UIHostingController(rootView: SettingsView(
+                            navigationController: navigationController,
+                        ))
+                        hostingController.modalPresentationStyle = .overFullScreen
+                        hostingController.view.backgroundColor = .clear
+                        navigationController.modalPresentationStyle = .overFullScreen
+                        navigationController.present(hostingController, animated: true)
+                    }) {
+                        Image(systemName: "gear")
+                            .font(.title2)
+                            .foregroundStyle(Color.pdBlue)
+                    }
+                }
+                .padding(50)
+                Spacer()
+            }
+            .padding(.vertical, 35)
+            Spacer()
+        }
     }
 }
 
