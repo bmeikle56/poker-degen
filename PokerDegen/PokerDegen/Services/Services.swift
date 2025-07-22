@@ -17,7 +17,7 @@ func login(username: String, password: String) async -> Bool {
     let httpBody = try! JSONSerialization.data(withJSONObject: body)
     if let data = await fetchData(path: path, method: method, httpBody: httpBody) {
         apiKey = data["token"] as? String
-        return data["message"] as! String == "Login successful"
+        return data["response"] as! String == "login successful"
     }
     return false
 }
@@ -32,7 +32,7 @@ func signup(username: String, password: String) async -> Bool {
     let httpBody = try! JSONSerialization.data(withJSONObject: body)
     if let data = await fetchData(path: path, method: method, httpBody: httpBody) {
         apiKey = data["token"] as? String
-        return data["message"] as! String == "Sign up successful"
+        return data["response"] as! String == "sign up successful"
     }
     return false
 }
@@ -80,14 +80,10 @@ private func fetchData(path: String, method: String, httpBody: Data? = nil) asyn
             request.httpBody = httpBody
         }
         let (data, response) = try await URLSession.shared.data(for: request) as! (Data, HTTPURLResponse)
-        if (response.statusCode != 200) {
-            throw ServiceError.statusCode
-        }
-        
         let json = try JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
         return json
     } catch {
-        /// do something with error...
+        /// this is bad, force a crash...
         return nil
     }
 }
