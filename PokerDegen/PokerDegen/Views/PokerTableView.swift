@@ -558,6 +558,7 @@ struct VillainPlayerTypeView: View {
 
 struct PokerTableView: View {
     let navigationController: UINavigationController
+    @ObservedObject var authViewModel: AuthViewModel
     
     private func select(card: Binding<String>) {
         let hostingController = UIHostingController(rootView: CardSelector(
@@ -579,7 +580,8 @@ struct PokerTableView: View {
             ZStack {
                 DiamondBalanceView()
                 SettingsButtonView(
-                    navigationController: navigationController
+                    navigationController: navigationController,
+                    authViewModel: authViewModel
                 )
                 PokerTable()
                 VillainPlayerTypeView(
@@ -636,6 +638,7 @@ struct PokerTableView: View {
 
 struct SettingsButtonView: View {
     let navigationController: UINavigationController
+    @ObservedObject var authViewModel: AuthViewModel
 
     var body: some View {
         VStack {
@@ -644,6 +647,7 @@ struct SettingsButtonView: View {
                     Button(action: {
                         let hostingController = UIHostingController(rootView: SettingsView(
                             navigationController: navigationController,
+                            authViewModel: authViewModel
                         ))
                         hostingController.modalPresentationStyle = .overFullScreen
                         hostingController.view.backgroundColor = .clear
@@ -679,5 +683,8 @@ struct MarkdownView: View {
 }
 
 #Preview {
-    PokerTableView(navigationController: UINavigationController())
+    PokerTableView(
+        navigationController: UINavigationController(),
+        authViewModel: AuthViewModel()
+    )
 }
