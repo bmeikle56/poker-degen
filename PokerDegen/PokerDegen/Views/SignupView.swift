@@ -9,10 +9,7 @@ import SwiftUI
 
 struct SignupView: View {
     let navigationController: UINavigationController
-    
-    @State var username: String = ""
-    @State var password: String = ""
-    @State var isAuthorized: Bool?
+    @ObservedObject var authViewModel: AuthViewModel
 
     var body: some View {
         VStack {
@@ -20,20 +17,22 @@ struct SignupView: View {
             Spacer().frame(height: 20)
             AuthErrorMessageView(
                 message: "Enter a valid username and password",
-                isAuthorized: $isAuthorized
+                authViewModel: authViewModel
             )
             Spacer().frame(height: 20)
-            UsernameField(placeholder: "Username", username: $username)
+            UsernameField(
+                placeholder: "Username",
+                authViewModel: authViewModel
+            )
             Spacer().frame(height: 20)
-            PasswordField(placeholder: "Password", password: $password)
+            PasswordField(
+                placeholder: "Password",
+                authViewModel: authViewModel
+            )
             Spacer().frame(height: 20)
             SignupButton(
                 navigationController: navigationController,
-                text: "Signup",
-                auth: signup,
-                username: $username,
-                password: $password,
-                isAuthorized: $isAuthorized
+                authViewModel: authViewModel
             )
             Spacer().frame(height: 20)
             Button(action: {
@@ -54,7 +53,6 @@ struct SignupView: View {
 #Preview {
     SignupView(
         navigationController: UINavigationController(),
-        username: "username",
-        password: "password",
+        authViewModel: AuthViewModel()
     )
 }

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SettingsView: View {
     let navigationController: UINavigationController
+    @ObservedObject var authViewModel: AuthViewModel
     
     @Environment(\.dismiss) var dismiss
     
@@ -56,6 +57,7 @@ struct SettingsView: View {
             }
             Spacer().frame(height: 20)
             Button(action: {
+                authViewModel.logout()
                 dismiss()
                 navigationController.popToRootViewController(animated: true)
             }, label: {

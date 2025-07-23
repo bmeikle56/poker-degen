@@ -10,10 +10,9 @@ import SwiftUI
 struct LoginView: View {
     let navigationController: UINavigationController
     
-    @State var username: String = ""
-    @State var password: String = ""
-    @State var isAuthorized: Bool?
     @State private var showFaceIDPrompt = false
+    
+    @ObservedObject var authViewModel = AuthViewModel()
 
     var body: some View {
         VStack {
@@ -21,25 +20,30 @@ struct LoginView: View {
             Spacer().frame(height: 20)
             AuthErrorMessageView(
                 message: "Incorrect username or password", 
-                isAuthorized: $isAuthorized
+                authViewModel: authViewModel
             )
             Spacer().frame(height: 20)
-            UsernameField(placeholder: "Username", username: $username)
+            UsernameField(
+                placeholder: "Username",
+                authViewModel: authViewModel
+            )
             Spacer().frame(height: 20)
-            PasswordField(placeholder: "Password", password: $password)
+            PasswordField(
+                placeholder: "Password",
+                authViewModel: authViewModel
+            )
             Spacer().frame(height: 20)
             LoginButton(
                 navigationController: navigationController,
-                text: "Login",
-                auth: login,
-                username: $username,
-                password: $password,
-                isAuthorized: $isAuthorized
+                authViewModel: authViewModel,
             )
             Spacer().frame(height: 20)
             Button(action: {
                 navigationController.pushViewController(
-                    UIHostingController(rootView: SignupView(navigationController: navigationController)),
+                    UIHostingController(rootView: SignupView(
+                        navigationController: navigationController,
+                        authViewModel: authViewModel
+                    )),
                     animated: false
                 )
             }, label: {
@@ -53,24 +57,25 @@ struct LoginView: View {
         .background(Color.black)
         .ignoresSafeArea()
         .task {
-            username = ""
-            password = ""
+            authViewModel.username = ""
+            authViewModel.password = ""
             
             /// prompt FaceID on appear if enabled and username + password stored
             guard let useBiometrics = UserDefaults.standard.value(forKey: "biometrics") as? Bool,
                   useBiometrics == true,
-                  let username = UserDefaults.standard.string(forKey: "username"),
-                  let password = UserDefaults.standard.string(forKey: "password") else {
+                  let _ = UserDefaults.standard.string(forKey: "username"),
+                  let _ = UserDefaults.standard.string(forKey: "password") else {
                 return
             }
-            Task { @MainActor in
-                isAuthorized = try? await authenticateWithFaceID()
-            }
+            authViewModel.loginUserWithFaceID()
         }
-        .onChange(of: isAuthorized, {
-            if let isAuthorized, isAuthorized == true {
+        .onChange(of: authViewModel.authorized, {
+            if let authorized = authViewModel.authorized, authorized == true {
                 navigationController.pushViewController(
-                    UIHostingController(rootView: PokerTableView(navigationController: navigationController)),
+                    UIHostingController(rootView: PokerTableView(
+                        navigationController: navigationController,
+                        authViewModel: authViewModel
+                    )),
                     animated: false
                 )
             }
@@ -81,7 +86,5 @@ struct LoginView: View {
 #Preview {
     LoginView(
         navigationController: UINavigationController(),
-        username: "Username",
-        password: "Password",
     )
 }

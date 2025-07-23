@@ -23,11 +23,10 @@ struct PokerDegenTitleView: View {
 
 struct AuthErrorMessageView: View {
     let message: String
-
-    @Binding var isAuthorized: Bool?
+    @ObservedObject var authViewModel: AuthViewModel
 
     var body: some View {
-        if let isAuthorized, isAuthorized == false {
+        if let authorized = authViewModel.authorized, authorized == false {
             Text(message)
                 .foregroundStyle(Color.red)
         } else {
@@ -38,13 +37,13 @@ struct AuthErrorMessageView: View {
 
 struct UsernameField: View {
     let placeholder: String
-    @Binding var username: String
+    @ObservedObject var authViewModel: AuthViewModel
     @FocusState private var isFocused: Bool
     
     var body: some View {
-        TextField("", text: $username)
+        TextField("", text: $authViewModel.username)
             .focused($isFocused)
-            .placeholder(when: username.isEmpty) {
+            .placeholder(when: authViewModel.username.isEmpty) {
                 Text(placeholder)
                     .foregroundColor(.smoothGray)
             }
@@ -80,13 +79,13 @@ extension View {
 
 struct PasswordField: View {
     let placeholder: String
-    @Binding var password: String
+    @ObservedObject var authViewModel: AuthViewModel
     @FocusState private var isFocused: Bool
     
     var body: some View {
-        SecureField("", text: $password)
+        SecureField("", text: $authViewModel.password)
             .focused($isFocused)
-            .placeholder(when: password.isEmpty) {
+            .placeholder(when: authViewModel.password.isEmpty) {
                 Text(placeholder)
                     .foregroundColor(.smoothGray)
             }
@@ -107,23 +106,13 @@ struct PasswordField: View {
 
 struct SignupButton: View {
     let navigationController: UINavigationController
-    let text: String
-    let auth: (String, String) async -> Bool
+    @ObservedObject var authViewModel: AuthViewModel
     
-    @Binding var username: String
-    @Binding var password: String
-    @Binding var isAuthorized: Bool?
-    
-    @State private var showFaceIDPrompt = false
-
     var body: some View {
         Button(action: {
-            showFaceIDPrompt = true
-//            Task {
-//                isAuthorized = await auth(username, password)
-//            }
+            authViewModel.signupUser()
         }, label: {
-            Text(text)
+            Text("Signup")
                 .foregroundColor(.black)
                 .font(.system(size: 18, weight: .bold, design: .default))
                 .padding()
@@ -131,37 +120,23 @@ struct SignupButton: View {
                 .background(Color.pdBlue)
                 .cornerRadius(8)
         })
-        .onChange(of: isAuthorized, { _, _ in
-            if let isAuthorized, isAuthorized == true {
-                showFaceIDPrompt = true
-//                navigationController.pushViewController(
-//                    UIHostingController(rootView: PokerTableView(navigationController: navigationController)),
-//                    animated: true
-//                )
+        .onChange(of: authViewModel.authorized, { _, _ in
+            if authViewModel.authorized == true {
+                navigationController.pushViewController(
+                    UIHostingController(rootView: PokerTableView(
+                        navigationController: navigationController,
+                        authViewModel: authViewModel
+                    )),
+                    animated: true
+                )
             }
         })
-        .alert("Enable Face ID?", isPresented: $showFaceIDPrompt) {
-            Button("Continue") {
-                Task {
-                    isAuthorized = try? await authenticateWithFaceID()
-                    print("isAuthorized: \(isAuthorized!)")
-                }
-            }
-            Button("Cancel", role: .cancel) { }
-        } message: {
-            Text("Use Face ID to log in quickly and securely.")
-        }
     }
 }
 
 struct LoginButton: View {
     let navigationController: UINavigationController
-    let text: String
-    let auth: (String, String) async -> Bool
-    
-    @Binding var username: String
-    @Binding var password: String
-    @Binding var isAuthorized: Bool?
+    @ObservedObject var authViewModel: AuthViewModel
     
     @State private var showFaceIDPrompt = false
 
@@ -173,12 +148,10 @@ struct LoginButton: View {
                 return
             }
             if !useBiometrics {
-                Task {
-                    isAuthorized = await login(username: username, password: password)
-                }
+                authViewModel.loginUser()
             }
         }, label: {
-            Text(text)
+            Text("Login")
                 .foregroundColor(.black)
                 .font(.system(size: 18, weight: .bold, design: .default))
                 .padding()
@@ -186,28 +159,28 @@ struct LoginButton: View {
                 .background(Color.pdBlue)
                 .cornerRadius(8)
         })
-        .onChange(of: isAuthorized, { _, _ in
-            if let isAuthorized, isAuthorized == true {
+        .onChange(of: authViewModel.authorized, { _, _ in
+            if let authorized = authViewModel.authorized, authorized == true {
                 navigationController.pushViewController(
-                    UIHostingController(rootView: PokerTableView(navigationController: navigationController)),
+                    UIHostingController(rootView: PokerTableView(
+                        navigationController: navigationController,
+                        authViewModel: authViewModel
+                    )),
                     animated: true
                 )
             }
         })
         .alert("Enable Face ID?", isPresented: $showFaceIDPrompt) {
             Button("Continue") {
-                UserDefaults.standard.set(username, forKey: "username")
-                UserDefaults.standard.set(password, forKey: "password")
-                Task { @MainActor in
-                    isAuthorized = try? await authenticateWithFaceID()
-                }
+                UserDefaults.standard.set(authViewModel.username, forKey: "username")
+                UserDefaults.standard.set(authViewModel.password, forKey: "password")
+                authViewModel.loginUserWithFaceID()
+                authViewModel.biometrics = true
                 UserDefaults.standard.set(true, forKey: "biometrics")
             }
             Button("Cancel", role: .cancel) {
-                Task {
-                    isAuthorized = await login(username: username, password: password)
-                }
-                UserDefaults.standard.set(false, forKey: "biometrics")
+                authViewModel.loginUser()
+                authViewModel.biometrics = false
             }
         } message: {
             Text("Use Face ID to log in quickly and securely.")
