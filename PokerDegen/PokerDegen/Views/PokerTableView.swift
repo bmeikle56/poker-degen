@@ -331,6 +331,8 @@ struct AnalyzeButtonView: View {
 }
 
 struct DiamondBalanceView: View {
+    let navigationController: UINavigationController
+
     var body: some View {
         VStack {
             HStack {
@@ -340,7 +342,13 @@ struct DiamondBalanceView: View {
                         .fill(Color.pdBlue)
                         .frame(width: 12, height: (820/468)*12)
                     Button(action: {
-                        // nothing for now
+                        let hostingController = UIHostingController(rootView: PaymentView(
+                            navigationController: navigationController,
+                        ))
+                        hostingController.modalPresentationStyle = .overFullScreen
+                        hostingController.view.backgroundColor = .clear
+                        navigationController.modalPresentationStyle = .overFullScreen
+                        navigationController.present(hostingController, animated: true)
                     }, label: {
                         Text("+")
                             .foregroundStyle(Color.pdBlue)
@@ -578,7 +586,9 @@ struct PokerTableView: View {
     var body: some View {
         VStack {
             ZStack {
-                DiamondBalanceView()
+                DiamondBalanceView(
+                    navigationController: navigationController
+                )
                 SettingsButtonView(
                     navigationController: navigationController,
                     authViewModel: authViewModel
