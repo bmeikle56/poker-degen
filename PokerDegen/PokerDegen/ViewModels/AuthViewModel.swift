@@ -8,7 +8,7 @@
 import SwiftUI
 
 @MainActor class AuthViewModel: ObservableObject {
-    @Published private(set) var authorized: Bool = false
+    @Published private(set) var authorized: Bool?
     @Published var username: String = ""
     @Published var password: String = ""
     
@@ -36,6 +36,6 @@ import SwiftUI
     }
     
     func logout() {
-        authorized = false
+        authorized = nil
     }
 }

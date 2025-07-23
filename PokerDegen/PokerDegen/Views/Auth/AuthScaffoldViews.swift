@@ -26,7 +26,7 @@ struct AuthErrorMessageView: View {
     @ObservedObject var authViewModel: AuthViewModel
 
     var body: some View {
-        if authViewModel.authorized == false {
+        if let authorized = authViewModel.authorized, authorized == false {
             Text(message)
                 .foregroundStyle(Color.red)
         } else {
@@ -160,7 +160,7 @@ struct LoginButton: View {
                 .cornerRadius(8)
         })
         .onChange(of: authViewModel.authorized, { _, _ in
-            if authViewModel.authorized == true {
+            if let authorized = authViewModel.authorized, authorized == true {
                 navigationController.pushViewController(
                     UIHostingController(rootView: PokerTableView(
                         navigationController: navigationController,

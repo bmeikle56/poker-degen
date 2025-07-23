@@ -70,7 +70,7 @@ struct LoginView: View {
             authViewModel.loginUserWithFaceID()
         }
         .onChange(of: authViewModel.authorized, {
-            if authViewModel.authorized == true {
+            if let authorized = authViewModel.authorized, authorized == true {
                 navigationController.pushViewController(
                     UIHostingController(rootView: PokerTableView(
                         navigationController: navigationController,
