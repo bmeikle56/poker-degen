@@ -30,6 +30,7 @@ struct AuthErrorMessageView: View {
             let message = authViewModel.errorMessage {
             Text(message)
                 .foregroundStyle(Color.red)
+                .frame(height: 20)
         } else {
             Spacer().frame(height: 20)
         }
