@@ -19,20 +19,35 @@ import SwiftUI
     }
     
     func loginUser() {
+        /// call service on non-blocking thread
         Task {
-            (authorized, errorMessage) = await login(username: username, password: password)
+            let (auth, err) = await login(username: username, password: password)
+            
+            /// now switch to main thread to update UI
+            await MainActor.run {
+                self.authorized = auth
+                self.errorMessage = err
+            }
         }
     }
     
     func loginUserWithFaceID() {
         Task {
-            (authorized, errorMessage) = try! await authenticateWithFaceID()
+            let (auth, err) = try! await authenticateWithFaceID()
+            await MainActor.run {
+                self.authorized = auth
+                self.errorMessage = err
+            }
         }
     }
     
     func signupUser() {
         Task {
-            (authorized, errorMessage) = await signup(username: username, password: password)
+            let (auth, err) = await signup(username: username, password: password)
+            await MainActor.run {
+                self.authorized = auth
+                self.errorMessage = err
+            }
         }
     }
     
