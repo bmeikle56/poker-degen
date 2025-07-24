@@ -7,7 +7,7 @@
 
 import Foundation
 
-func login(username: String, password: String) async -> Bool {
+func login(username: String, password: String) async -> (Bool, String?) {
     let path = "/login"
     let method = "POST"
     let body: [String: Any] = [
@@ -15,11 +15,17 @@ func login(username: String, password: String) async -> Bool {
         "password": password
     ]
     let httpBody = try! JSONSerialization.data(withJSONObject: body)
-    if let data = await fetchData(path: path, method: method, httpBody: httpBody) {
-        apiKey = data["token"] as? String
-        return data["response"] as! String == "login successful"
+    let data = await fetchData(path: path, method: method, httpBody: httpBody)
+    let response = data?["response"] as? String
+    if let response, response == "login successful", let key = data?["token"] as? String {
+        /// successful login
+        apiKey = key
+        return (true, nil)
+    } else if let response, response == "failed to login user", let error = data?["error"] as? String {
+        /// unsuccessful login
+        return (false, error)
     }
-    return false
+    return (false, nil)
 }
 
 func signup(username: String, password: String) async -> (Bool, String?) {

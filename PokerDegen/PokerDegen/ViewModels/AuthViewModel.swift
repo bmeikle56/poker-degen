@@ -20,13 +20,13 @@ import SwiftUI
     
     func loginUser() {
         Task {
-            authorized = await login(username: username, password: password)
+            (authorized, errorMessage) = await login(username: username, password: password)
         }
     }
     
     func loginUserWithFaceID() {
         Task {
-            authorized = try! await authenticateWithFaceID()
+            (authorized, errorMessage) = try! await authenticateWithFaceID()
         }
     }
     
