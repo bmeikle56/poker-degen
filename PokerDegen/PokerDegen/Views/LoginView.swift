@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import TipKit
 
 struct LoginView: View {
     let navigationController: UINavigationController
