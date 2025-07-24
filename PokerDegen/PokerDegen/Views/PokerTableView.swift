@@ -564,6 +564,38 @@ struct VillainPlayerTypeView: View {
     }
 }
 
+struct HelpButtonView: View {
+    let navigationController: UINavigationController
+    @State private var showHelp = false
+
+    var body: some View {
+        VStack {
+            HStack {
+                HStack {
+                    Button(action: {
+                        let hostingController = UIHostingController(rootView: HelpView(
+                            navigationController: navigationController
+                        ))
+                        hostingController.modalPresentationStyle = .overFullScreen
+                        hostingController.view.backgroundColor = .clear
+                        navigationController.modalPresentationStyle = .overFullScreen
+                        navigationController.present(hostingController, animated: true)
+                    }) {
+                        Image(systemName: "gear")
+                            .font(.title2)
+                            .foregroundStyle(Color.pdBlue)
+                    }
+                    .padding(.horizontal, 35)
+                }
+                .padding(50)
+                Spacer()
+            }
+            .padding(.vertical, 35)
+            Spacer()
+        }
+    }
+}
+
 struct PokerTableView: View {
     let navigationController: UINavigationController
     @ObservedObject var authViewModel: AuthViewModel
@@ -592,6 +624,9 @@ struct PokerTableView: View {
                 SettingsButtonView(
                     navigationController: navigationController,
                     authViewModel: authViewModel
+                )
+                HelpButtonView(
+                    navigationController: navigationController
                 )
                 PokerTable()
                 VillainPlayerTypeView(
