@@ -22,7 +22,7 @@ func login(username: String, password: String) async -> Bool {
     return false
 }
 
-func signup(username: String, password: String) async -> Bool {
+func signup(username: String, password: String) async -> (Bool, String?) {
     let path = "/signup"
     let method = "POST"
     let body: [String: Any] = [
@@ -30,11 +30,17 @@ func signup(username: String, password: String) async -> Bool {
         "password": password
     ]
     let httpBody = try! JSONSerialization.data(withJSONObject: body)
-    if let data = await fetchData(path: path, method: method, httpBody: httpBody) {
-        apiKey = data["token"] as? String
-        return data["response"] as! String == "sign up successful"
+    let data = await fetchData(path: path, method: method, httpBody: httpBody)
+    let response = data?["response"] as? String
+    if let response, response == "sign up successful", let key = data?["token"] as? String {
+        /// successful signup
+        apiKey = key
+        return (true, nil)
+    } else if let response, response == "failed to signup user", let error = data?["error"] as? String {
+        /// unsuccessful signup
+        return (false, error)
     }
-    return false
+    return (false, nil)
 }
 
 func analyze(viewModel: HandViewModel) async throws -> [String] {

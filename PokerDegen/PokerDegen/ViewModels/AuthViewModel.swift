@@ -11,6 +11,7 @@ import SwiftUI
     @Published private(set) var authorized: Bool?
     @Published var username: String = ""
     @Published var password: String = ""
+    @Published var errorMessage: String?
     
     var biometrics: Bool? {
         get { UserDefaults.standard.value(forKey: "biometrics") as? Bool }
@@ -31,7 +32,7 @@ import SwiftUI
     
     func signupUser() {
         Task {
-            authorized = await signup(username: username, password: password)
+            (authorized, errorMessage) = await signup(username: username, password: password)
         }
     }
     

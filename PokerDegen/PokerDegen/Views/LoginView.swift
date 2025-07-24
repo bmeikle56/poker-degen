@@ -20,7 +20,6 @@ struct LoginView: View {
             PokerDegenTitleView()
             Spacer().frame(height: 20)
             AuthErrorMessageView(
-                message: "Incorrect username or password", 
                 authViewModel: authViewModel
             )
             Spacer().frame(height: 20)
