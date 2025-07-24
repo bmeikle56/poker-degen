@@ -35,6 +35,7 @@ struct SignupView: View {
             )
             Spacer().frame(height: 20)
             Button(action: {
+                authViewModel.errorMessage = nil
                 navigationController.popToRootViewController(animated: false)
             }, label: {
                 Text("Have an account? **Login**")
