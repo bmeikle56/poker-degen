@@ -16,7 +16,6 @@ struct SignupView: View {
             PokerDegenTitleView()
             Spacer().frame(height: 20)
             AuthErrorMessageView(
-                message: "Enter a valid username and password",
                 authViewModel: authViewModel
             )
             Spacer().frame(height: 20)
@@ -36,6 +35,7 @@ struct SignupView: View {
             )
             Spacer().frame(height: 20)
             Button(action: {
+                authViewModel.errorMessage = nil
                 navigationController.popToRootViewController(animated: false)
             }, label: {
                 Text("Have an account? **Login**")

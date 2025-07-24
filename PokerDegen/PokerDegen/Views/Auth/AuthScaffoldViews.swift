@@ -22,13 +22,15 @@ struct PokerDegenTitleView: View {
 }
 
 struct AuthErrorMessageView: View {
-    let message: String
     @ObservedObject var authViewModel: AuthViewModel
 
     var body: some View {
-        if let authorized = authViewModel.authorized, authorized == false {
+        if let authorized = authViewModel.authorized,
+            authorized == false,
+            let message = authViewModel.errorMessage {
             Text(message)
                 .foregroundStyle(Color.red)
+                .frame(height: 20)
         } else {
             Spacer().frame(height: 20)
         }
