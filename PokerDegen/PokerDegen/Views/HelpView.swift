@@ -26,14 +26,14 @@ struct HelpView: View {
             }
             .padding(.horizontal, 50)
             .padding(.vertical, 25)
-            Spacer()
-            VStack {
-                Text("Help goes here")
-                    .font(.headline)
-                    .foregroundColor(.white)
-                Text("Help goes here 2")
-                    .font(.headline)
-                    .foregroundColor(.white)
+            Spacer().frame(height: 150)
+            VStack(spacing: 20) {
+                Image(systemName: "questionmark.circle")
+                    .font(.title2)
+                    .foregroundStyle(Color.pdBlue)
+                Text("**Single tap** to select a card.\n\n**Double tap** to reset a card.\n\n**Single tap** the dotted regions to select a bet size, player type, and position.\n\nThen tap **Analyze** to review the hand for optimal play.")
+                    .frame(width: 300)
+                    .foregroundColor(.pdBlue)
             }
             Spacer()
         }

@@ -581,7 +581,7 @@ struct HelpButtonView: View {
                         navigationController.modalPresentationStyle = .overFullScreen
                         navigationController.present(hostingController, animated: true)
                     }) {
-                        Image(systemName: "gear")
+                        Image(systemName: "questionmark.circle")
                             .font(.title2)
                             .foregroundStyle(Color.pdBlue)
                     }
