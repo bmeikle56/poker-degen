@@ -9,14 +9,18 @@ import SwiftUI
 
 struct PokerDegenTitleView: View {
     var body: some View {
-        HStack {
-            Diamond()
-                .fill(Color.pdBlue)
-                .frame(width: 20, height: (820/468)*20)
-            Spacer().frame(width: 20)
-            Text("PokerDegen")
+        VStack(spacing: 15) {
+            HStack {
+                Diamond()
+                    .fill(Color.pdBlue)
+                    .frame(width: 20, height: (820/468)*20)
+                Spacer().frame(width: 20)
+                Text("PokerDegen")
+                    .foregroundStyle(Color.pdBlue)
+                    .font(.system(size: 34, weight: .bold, design: .default))
+            }
+            Text("A fast poker solver")
                 .foregroundStyle(Color.pdBlue)
-                .font(.system(size: 34, weight: .bold, design: .default))
         }
     }
 }
