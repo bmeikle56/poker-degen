@@ -363,7 +363,7 @@ struct DiamondBalanceView: View {
                 }
                 .padding(50)
             }
-            .padding(.vertical, -25)
+            .padding(.vertical, -45)
             Spacer()
         }
     }
@@ -590,7 +590,7 @@ struct HelpButtonView: View {
                 .padding(50)
                 Spacer()
             }
-            .padding(.vertical, -25)
+            .padding(.vertical, -45)
             Spacer()
         }
     }
@@ -709,7 +709,7 @@ struct SettingsButtonView: View {
                 .padding(50)
                 Spacer()
             }
-            .padding(.vertical, -25)
+            .padding(.vertical, -45)
             Spacer()
         }
     }
