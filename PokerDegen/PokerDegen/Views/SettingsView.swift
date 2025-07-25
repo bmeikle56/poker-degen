@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SafariServices
 
 struct SettingsView: View {
     let navigationController: UINavigationController
@@ -14,6 +15,7 @@ struct SettingsView: View {
     @Environment(\.dismiss) var dismiss
     
     @State private var showDisableFaceIDAlert = false
+    @State private var showWebView = false
     
     private var biometrics: Bool {
         UserDefaults.standard.value(forKey: "biometrics") as? Bool ?? false
@@ -69,8 +71,22 @@ struct SettingsView: View {
                             .stroke(Color.pdBlue, lineWidth: 2)
                     )
             })
-            
             Spacer()
+            HStack {
+                WebLinkText(
+                    text: "Support",
+                    url: "https://pokerdegen.app/support",
+                    navigationController: navigationController
+                )
+                
+                WebLinkText(
+                    text: "Privacy",
+                    url: "https://pokerdegen.app/privacy",
+                    navigationController: navigationController
+                )
+            }
+            .padding(.vertical, 40)
+            
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(.black)
