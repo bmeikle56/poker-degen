@@ -71,18 +71,22 @@ struct SettingsView: View {
                             .stroke(Color.pdBlue, lineWidth: 2)
                     )
             })
-            WebLinkText(
-                text: "Support",
-                url: "https://pokerdegen.app/support",
-                navigationController: navigationController
-            )
-            
-            WebLinkText(
-                text: "Privacy",
-                url: "https://pokerdegen.app/privacy",
-                navigationController: navigationController
-            )
             Spacer()
+            HStack {
+                WebLinkText(
+                    text: "Support",
+                    url: "https://pokerdegen.app/support",
+                    navigationController: navigationController
+                )
+                
+                WebLinkText(
+                    text: "Privacy",
+                    url: "https://pokerdegen.app/privacy",
+                    navigationController: navigationController
+                )
+            }
+            .padding(.vertical, 40)
+            
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(.black)
