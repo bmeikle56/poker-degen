@@ -53,10 +53,8 @@ struct LoginView: View {
                     Text("Create an account")
                         .foregroundStyle(Color.pdBlue)
                 })
-                Spacer().frame(height: 150)
+                Spacer().frame(height: 20)
             }
-            .navigationBarHidden(true)
-            .frame(maxWidth: .infinity)
             .task {
                 authViewModel.username = ""
                 authViewModel.password = ""

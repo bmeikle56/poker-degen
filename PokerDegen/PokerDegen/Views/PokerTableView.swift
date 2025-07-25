@@ -677,7 +677,6 @@ struct PokerTableView: View {
                 }
             }
             .frame(maxWidth: .infinity)
-            .background(Color.black)
         }
         .navigationBarHidden(true)
     }
