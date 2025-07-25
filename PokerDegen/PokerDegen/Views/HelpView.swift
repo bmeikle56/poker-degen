@@ -25,7 +25,7 @@ struct HelpView: View {
                 Spacer()
             }
             .padding(.horizontal, 50)
-            .padding(.vertical, 25)
+            .padding(.vertical, 10)
             Spacer().frame(height: 150)
             VStack(spacing: 20) {
                 Image(systemName: "questionmark.circle")
@@ -37,7 +37,7 @@ struct HelpView: View {
             }
             Spacer()
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .frame(maxWidth: .infinity)
         .background(.black)
     }
 }

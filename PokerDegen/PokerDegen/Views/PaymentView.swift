@@ -24,10 +24,10 @@ struct PaymentView: View {
                 Spacer()
             }
             .padding(.horizontal, 50)
-            .padding(.vertical, 25)
+            .padding(.vertical, 10)
             Spacer()
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .frame(maxWidth: .infinity)
         .background(.black)
     }
 }

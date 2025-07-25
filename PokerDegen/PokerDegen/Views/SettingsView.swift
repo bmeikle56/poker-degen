@@ -34,7 +34,7 @@ struct SettingsView: View {
                 Spacer()
             }
             .padding(.horizontal, 50)
-            .padding(.vertical, 25)
+            .padding(.vertical, 10)
             Spacer()
             VStack {
                 Button(action: {
@@ -88,7 +88,7 @@ struct SettingsView: View {
             .padding(.vertical, 40)
             
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .frame(maxWidth: .infinity)
         .background(.black)
     }
 }

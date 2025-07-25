@@ -21,6 +21,7 @@ struct PokerDegenTitleView: View {
             }
             Text("A fast poker solver")
                 .foregroundStyle(Color.pdBlue)
+                .offset(x: 15)
         }
     }
 }
@@ -41,28 +42,77 @@ struct AuthErrorMessageView: View {
     }
 }
 
+struct NoAssistantTextField: UIViewRepresentable {
+    class Coordinator: NSObject, UITextFieldDelegate {
+        var parent: NoAssistantTextField
+
+        init(_ parent: NoAssistantTextField) {
+            self.parent = parent
+        }
+
+        @objc func textFieldDidChange(_ textField: UITextField) {
+            parent.text = textField.text ?? ""
+        }
+        
+        func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+            textField.resignFirstResponder()
+            return true
+        }
+    }
+
+    var placeholder: String
+    @Binding var text: String
+    var secure: Bool
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
+
+    func makeUIView(context: Context) -> UITextField {
+        let textField = UITextField()
+        textField.isSecureTextEntry = secure
+        textField.delegate = context.coordinator
+        textField.placeholder = placeholder
+        textField.text = text
+        textField.backgroundColor = .clear
+        textField.autocapitalizationType = .none
+        textField.textColor = UIColor(cgColor: CGColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1))
+        textField.borderStyle = .roundedRect
+
+        let item = textField.inputAssistantItem
+        item.leadingBarButtonGroups = []
+        item.trailingBarButtonGroups = []
+
+        textField.addTarget(context.coordinator, action: #selector(Coordinator.textFieldDidChange(_:)), for: .editingChanged)
+
+        return textField
+    }
+
+    func updateUIView(_ uiView: UITextField, context: Context) {
+        uiView.text = text
+    }
+}
+
 struct UsernameField: View {
     let placeholder: String
     @ObservedObject var authViewModel: AuthViewModel
     @FocusState private var isFocused: Bool
-    
+
     var body: some View {
-        TextField("", text: $authViewModel.username)
+        NoAssistantTextField(placeholder: "", text: $authViewModel.username, secure: false)
             .focused($isFocused)
             .placeholder(when: authViewModel.username.isEmpty) {
                 Text(placeholder)
                     .foregroundColor(.smoothGray)
+                    .padding(.horizontal, 8)
             }
             .padding()
-            .frame(width: 250, height: 50) // Ensures tappable area is consistent
+            .frame(width: 250)
+            .frame(height: 56)
             .background(
                 RoundedRectangle(cornerRadius: 8)
                     .stroke(Color.pdBlue, lineWidth: 1.4)
             )
-            .contentShape(RoundedRectangle(cornerRadius: 8)) // Makes the whole area tappable
-            .onTapGesture {
-                isFocused = true
-            }
             .autocapitalization(.none)
             .foregroundStyle(Color.smoothGray)
     }
@@ -87,26 +137,28 @@ struct PasswordField: View {
     let placeholder: String
     @ObservedObject var authViewModel: AuthViewModel
     @FocusState private var isFocused: Bool
-    
+
     var body: some View {
-        SecureField("", text: $authViewModel.password)
+        NoAssistantTextField(placeholder: "", text: $authViewModel.password, secure: true)
             .focused($isFocused)
             .placeholder(when: authViewModel.password.isEmpty) {
                 Text(placeholder)
                     .foregroundColor(.smoothGray)
+                    .padding(.horizontal, 8)
             }
             .padding()
-            .frame(width: 250, height: 50) // Ensures tappable area is consistent
+            .frame(width: 250)
+            .frame(height: 56)
             .background(
                 RoundedRectangle(cornerRadius: 8)
                     .stroke(Color.pdBlue, lineWidth: 1.4)
             )
-            .contentShape(RoundedRectangle(cornerRadius: 8)) // Makes the whole area tappable
-            .onTapGesture {
-                isFocused = true
-            }
             .autocapitalization(.none)
             .foregroundStyle(Color.smoothGray)
+            .submitLabel(.done)
+            .onSubmit {
+                isFocused = false
+            }
     }
 }
 
