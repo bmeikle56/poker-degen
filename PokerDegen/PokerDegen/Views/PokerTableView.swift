@@ -363,7 +363,7 @@ struct DiamondBalanceView: View {
                 }
                 .padding(50)
             }
-            .padding(.vertical, 35)
+            .padding(.vertical, -25)
             Spacer()
         }
     }
@@ -590,7 +590,7 @@ struct HelpButtonView: View {
                 .padding(50)
                 Spacer()
             }
-            .padding(.vertical, 35)
+            .padding(.vertical, -25)
             Spacer()
         }
     }
@@ -616,68 +616,70 @@ struct PokerTableView: View {
     @StateObject private var viewModel = HandViewModel()
 
     var body: some View {
-        VStack {
-            ZStack {
-                DiamondBalanceView(
-                    navigationController: navigationController
-                )
-                SettingsButtonView(
-                    navigationController: navigationController,
-                    authViewModel: authViewModel
-                )
-                HelpButtonView(
-                    navigationController: navigationController
-                )
-                PokerTable()
-                VillainPlayerTypeView(
-                    navigationController: navigationController,
-                    viewModel: viewModel
-                )
-                VillainPositionView(
-                    navigationController: navigationController,
-                    viewModel: viewModel
-                )
-                VillainCardView(
-                    navigationController: navigationController,
-                    viewModel: viewModel
-                )
-                VillainStackedChipsView(
-                    navigationController: navigationController,
-                    viewModel: viewModel
-                )
-                CommunityCardView(
-                    navigationController: navigationController,
-                    viewModel: viewModel
-                )
-                HeroStackedChipsView(
-                    navigationController: navigationController,
-                    viewModel: viewModel
-                )
-                HeroCardView(
-                    navigationController: navigationController,
-                    viewModel: viewModel
-                )
-                HeroPositionView(
-                    navigationController: navigationController,
-                    viewModel: viewModel
-                )
-                AnalyzeButtonView(
-                    showPopover: $showPopover,
-                    modelResponse: $modelResponse,
-                    viewModel: viewModel
-                )
+        ZStack {
+            Color.black.ignoresSafeArea()
+            VStack {
+                ZStack {
+                    DiamondBalanceView(
+                        navigationController: navigationController
+                    )
+                    SettingsButtonView(
+                        navigationController: navigationController,
+                        authViewModel: authViewModel
+                    )
+                    HelpButtonView(
+                        navigationController: navigationController
+                    )
+                    PokerTable()
+                    VillainPlayerTypeView(
+                        navigationController: navigationController,
+                        viewModel: viewModel
+                    )
+                    VillainPositionView(
+                        navigationController: navigationController,
+                        viewModel: viewModel
+                    )
+                    VillainCardView(
+                        navigationController: navigationController,
+                        viewModel: viewModel
+                    )
+                    VillainStackedChipsView(
+                        navigationController: navigationController,
+                        viewModel: viewModel
+                    )
+                    CommunityCardView(
+                        navigationController: navigationController,
+                        viewModel: viewModel
+                    )
+                    HeroStackedChipsView(
+                        navigationController: navigationController,
+                        viewModel: viewModel
+                    )
+                    HeroCardView(
+                        navigationController: navigationController,
+                        viewModel: viewModel
+                    )
+                    HeroPositionView(
+                        navigationController: navigationController,
+                        viewModel: viewModel
+                    )
+                    AnalyzeButtonView(
+                        showPopover: $showPopover,
+                        modelResponse: $modelResponse,
+                        viewModel: viewModel
+                    )
+                }
+                .popover(isPresented: $showPopover) {
+                    AnalyzeView(
+                        showPopover: $showPopover,
+                        modelResponse: $modelResponse
+                    )
+                }
             }
-            .popover(isPresented: $showPopover) {
-                AnalyzeView(
-                    showPopover: $showPopover,
-                    modelResponse: $modelResponse
-                )
-            }
+            .frame(maxWidth: .infinity)
+            .background(Color.black)
         }
         .navigationBarHidden(true)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.black)
-        .ignoresSafeArea()
     }
 }
 
@@ -707,7 +709,7 @@ struct SettingsButtonView: View {
                 .padding(50)
                 Spacer()
             }
-            .padding(.vertical, 35)
+            .padding(.vertical, -25)
             Spacer()
         }
     }
