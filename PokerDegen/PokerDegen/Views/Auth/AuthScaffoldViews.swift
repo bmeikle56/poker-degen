@@ -21,6 +21,7 @@ struct PokerDegenTitleView: View {
             }
             Text("A fast poker solver")
                 .foregroundStyle(Color.pdBlue)
+                .offset(x: 15)
         }
     }
 }
