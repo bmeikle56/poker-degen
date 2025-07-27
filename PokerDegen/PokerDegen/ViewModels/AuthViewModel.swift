@@ -51,6 +51,15 @@ import SwiftUI
         }
     }
     
+    func deleteAccount() {
+        Task {
+            let (auth, err) = await delete(username: username, password: password)
+            await MainActor.run {
+                self.authorized = nil
+            }
+        }
+    }
+    
     func logout() {
         authorized = nil
     }

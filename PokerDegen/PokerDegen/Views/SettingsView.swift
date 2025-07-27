@@ -71,6 +71,20 @@ struct SettingsView: View {
                             .stroke(Color.pdBlue, lineWidth: 2)
                     )
             })
+            Spacer().frame(height: 20)
+            Button(action: {
+                authViewModel.deleteAccount()
+                dismiss()
+                navigationController.popToRootViewController(animated: true)
+            }, label: {
+                Text("Delete account")
+                    .foregroundStyle(Color.pdBlue)
+                    .frame(width: 180, height: 60)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(Color.pdBlue, lineWidth: 2)
+                    )
+            })
             Spacer()
             HStack {
                 WebLinkText(

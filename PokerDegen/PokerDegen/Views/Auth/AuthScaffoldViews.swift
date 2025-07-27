@@ -245,3 +245,37 @@ struct LoginButton: View {
         }
     }
 }
+
+struct DeleteAccountButton: View {
+    let navigationController: UINavigationController
+    @ObservedObject var authViewModel: AuthViewModel
+    
+    var body: some View {
+        Button(action: {
+            if let topVC = UIApplication.topViewController() {
+                topVC.dismiss(animated: true)
+            }
+            authViewModel.logout()
+            navigationController.popToRootViewController(animated: true)
+        }, label: {
+            Text("Delete account")
+                .foregroundColor(.black)
+                .font(.system(size: 18, weight: .bold, design: .default))
+                .padding()
+                .frame(width: 250)
+                .background(Color.pdBlue)
+                .cornerRadius(8)
+        })
+        .onChange(of: authViewModel.authorized, { _, _ in
+            if let authorized = authViewModel.authorized, authorized == true {
+                navigationController.pushViewController(
+                    UIHostingController(rootView: PokerTableView(
+                        navigationController: navigationController,
+                        authViewModel: authViewModel
+                    )),
+                    animated: true
+                )
+            }
+        })
+    }
+}
