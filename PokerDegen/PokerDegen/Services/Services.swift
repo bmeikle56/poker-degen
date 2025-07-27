@@ -49,6 +49,26 @@ func signup(username: String, password: String) async -> (Bool, String?) {
     return (false, nil)
 }
 
+func delete(username: String, password: String) async -> (Bool, String?) {
+    let path = "/deleteAccount"
+    let method = "POST"
+    let body: [String: Any] = [
+        "username": username,
+        "password": password
+    ]
+    let httpBody = try! JSONSerialization.data(withJSONObject: body)
+    let data = await fetchData(path: path, method: method, httpBody: httpBody)
+    let response = data?["response"] as? String
+    if let response, response == "delete successful" {
+        /// successful login
+        return (true, nil)
+    } else if let response, response == "failed to delete user", let error = data?["error"] as? String {
+        /// unsuccessful login
+        return (false, error)
+    }
+    return (false, nil)
+}
+
 func analyze(viewModel: HandViewModel) async throws -> [String] {
     let path = "/modelWrapper"
     let method = "POST"

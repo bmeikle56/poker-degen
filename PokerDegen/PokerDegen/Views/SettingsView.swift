@@ -73,16 +73,9 @@ struct SettingsView: View {
             })
             Spacer().frame(height: 20)
             Button(action: {
-                if let topVC = UIApplication.topViewController() {
-                    let hostingController = UIHostingController(
-                        rootView: DeleteAccountView(
-                            navigationController: navigationController,
-                            authViewModel: authViewModel
-                        )
-                    )
-                    hostingController.modalPresentationStyle = .automatic
-                    topVC.present(hostingController, animated: true)
-                }
+                authViewModel.deleteAccount()
+                dismiss()
+                navigationController.popToRootViewController(animated: true)
             }, label: {
                 Text("Delete account")
                     .foregroundStyle(Color.pdBlue)

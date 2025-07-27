@@ -32,8 +32,7 @@ struct DeleteAccountView: View {
                 }
                 Spacer()
             }
-            .padding(.horizontal, 50)
-            .padding(.vertical, 10)
+            .padding(.horizontal, 35)
             VStack {
                 PokerDegenTitleView()
                 Spacer().frame(height: 20)

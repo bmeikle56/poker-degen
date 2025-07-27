@@ -252,6 +252,9 @@ struct DeleteAccountButton: View {
     
     var body: some View {
         Button(action: {
+            if let topVC = UIApplication.topViewController() {
+                topVC.dismiss(animated: true)
+            }
             authViewModel.logout()
             navigationController.popToRootViewController(animated: true)
         }, label: {
