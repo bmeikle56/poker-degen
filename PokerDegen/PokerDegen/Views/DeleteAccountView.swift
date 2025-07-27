@@ -16,6 +16,25 @@ struct DeleteAccountView: View {
         ZStack {
             Color.black.ignoresSafeArea()
             VStack {
+                HStack {
+                    Button(action: {
+                        if let topVC = UIApplication.topViewController() {
+                            topVC.dismiss(animated: true)
+                        }
+                    }, label: {
+                        HStack(spacing: 4) {
+                            Image(systemName: "chevron.left")
+                            Text("Cancel")
+                        }
+                        .foregroundStyle(Color.pdBlue)
+                    })
+                    Spacer()
+                }
+                Spacer()
+            }
+            .padding(.horizontal, 50)
+            .padding(.vertical, 10)
+            VStack {
                 PokerDegenTitleView()
                 Spacer().frame(height: 20)
                 AuthErrorMessageView(

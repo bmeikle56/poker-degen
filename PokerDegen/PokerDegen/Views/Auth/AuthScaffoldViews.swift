@@ -252,9 +252,10 @@ struct DeleteAccountButton: View {
     
     var body: some View {
         Button(action: {
-            
+            authViewModel.logout()
+            navigationController.popToRootViewController(animated: true)
         }, label: {
-            Text("Delete Account")
+            Text("Delete account")
                 .foregroundColor(.black)
                 .font(.system(size: 18, weight: .bold, design: .default))
                 .padding()

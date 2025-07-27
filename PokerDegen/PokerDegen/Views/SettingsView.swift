@@ -71,6 +71,27 @@ struct SettingsView: View {
                             .stroke(Color.pdBlue, lineWidth: 2)
                     )
             })
+            Spacer().frame(height: 20)
+            Button(action: {
+                if let topVC = UIApplication.topViewController() {
+                    let hostingController = UIHostingController(
+                        rootView: DeleteAccountView(
+                            navigationController: navigationController,
+                            authViewModel: authViewModel
+                        )
+                    )
+                    hostingController.modalPresentationStyle = .automatic
+                    topVC.present(hostingController, animated: true)
+                }
+            }, label: {
+                Text("Delete account")
+                    .foregroundStyle(Color.pdBlue)
+                    .frame(width: 180, height: 60)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(Color.pdBlue, lineWidth: 2)
+                    )
+            })
             Spacer()
             HStack {
                 WebLinkText(
