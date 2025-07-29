@@ -183,6 +183,7 @@ struct SignupButton: View {
                 navigationController.pushViewController(
                     UIHostingController(rootView: PokerTableView(
                         navigationController: navigationController,
+                        layout: Layout.pokerTableView[.iPhone]!,
                         authViewModel: authViewModel
                     )),
                     animated: true
@@ -222,6 +223,7 @@ struct LoginButton: View {
                 navigationController.pushViewController(
                     UIHostingController(rootView: PokerTableView(
                         navigationController: navigationController,
+                        layout: Layout.pokerTableView[.iPhone]!,
                         authViewModel: authViewModel
                     )),
                     animated: true
@@ -271,6 +273,7 @@ struct DeleteAccountButton: View {
                 navigationController.pushViewController(
                     UIHostingController(rootView: PokerTableView(
                         navigationController: navigationController,
+                        layout: Layout.pokerTableView[.iPhone]!,
                         authViewModel: authViewModel
                     )),
                     animated: true

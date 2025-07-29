@@ -35,4 +35,27 @@ struct Layout {
             bottomPadding: 50
         )
     ]
+    
+    static let pokerTableView: [DeviceType: PokerTableViewLayout] = [
+        .iPhone: PokerTableViewLayout(
+            spacing: 20,
+            fontSize: 20,
+            iconSize: 20,
+            communityCardSize: 80,
+            playerCardSize: 80,
+            buttonWidth: 80,
+            buttonHeight: 80,
+            bottomPadding: 20
+        ),
+        .iPad: PokerTableViewLayout(
+            spacing: 20,
+            fontSize: 20,
+            iconSize: 20,
+            communityCardSize: 80,
+            playerCardSize: 80,
+            buttonWidth: 80,
+            buttonHeight: 80,
+            bottomPadding: 20
+        )
+    ]
 }

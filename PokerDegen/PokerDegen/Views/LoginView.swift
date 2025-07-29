@@ -72,6 +72,7 @@ struct LoginView: View {
                     navigationController.pushViewController(
                         UIHostingController(rootView: PokerTableView(
                             navigationController: navigationController,
+                            layout: Layout.pokerTableView[.iPhone]!,
                             authViewModel: authViewModel
                         )),
                         animated: false

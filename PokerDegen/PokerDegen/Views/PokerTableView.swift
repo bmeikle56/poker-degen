@@ -7,6 +7,17 @@
 
 import SwiftUI
 
+struct PokerTableViewLayout {
+    let spacing: CGFloat
+    let fontSize: CGFloat
+    let iconSize: CGFloat
+    let communityCardSize: CGFloat
+    let playerCardSize: CGFloat
+    let buttonWidth: CGFloat
+    let buttonHeight: CGFloat
+    let bottomPadding: CGFloat
+}
+
 struct CardImage: View {
     let name: String
 
@@ -110,8 +121,7 @@ struct DiamondShape: Shape {
 
 struct CardView: View {
     let onTap: (Binding<String>) -> Void
-    var width: CGFloat = 80
-    var height: CGFloat = 80
+    var size: CGFloat
     var rotation: Double = 0
 
     @Binding var card: String
@@ -121,7 +131,7 @@ struct CardView: View {
     var body: some View {
         CardImage(name: card)
             .scaledToFit()
-            .frame(width: width, height: height)
+            .frame(width: size, height: size)
             .rotationEffect(.degrees(rotation))
             .onTapGesture {
                 tapCount += 1
@@ -139,6 +149,7 @@ struct CardView: View {
 
 struct VillainCardView: View {
     let navigationController: UINavigationController
+    let playerCardSize: CGFloat
     
     @ObservedObject var viewModel: HandViewModel
 
@@ -158,22 +169,24 @@ struct VillainCardView: View {
             HStack(spacing: -29.0) {
                 CardView(
                     onTap: select,
+                    size: playerCardSize,
                     rotation: -9,
                     card: $viewModel.v1c1
                 )
                 CardView(
                     onTap: select,
+                    size: playerCardSize,
                     rotation: 9,
                     card: $viewModel.v1c2
                 )
             }
-            Spacer().frame(height: 365)
         }
     }
 }
 
 struct CommunityCardView: View {
     let navigationController: UINavigationController
+    let communityCardSize: CGFloat
     
     @ObservedObject var viewModel: HandViewModel
 
@@ -194,32 +207,27 @@ struct CommunityCardView: View {
             HStack(spacing: -14.0) {
                 CardView(
                     onTap: select,
-                    width: 70,
-                    height: 70,
+                    size: communityCardSize,
                     card: $viewModel.cc1
                 )
                 CardView(
                     onTap: select,
-                    width: 70,
-                    height: 70,
+                    size: communityCardSize,
                     card: $viewModel.cc2
                 )
                 CardView(
                     onTap: select,
-                    width: 70,
-                    height: 70,
+                    size: communityCardSize,
                     card: $viewModel.cc3
                 )
                 CardView(
                     onTap: select,
-                    width: 70,
-                    height: 70,
+                    size: communityCardSize,
                     card: $viewModel.cc4
                 )
                 CardView(
                     onTap: select,
-                    width: 70,
-                    height: 80,
+                    size: communityCardSize,
                     card: $viewModel.cc5
                 )
             }
@@ -227,39 +235,9 @@ struct CommunityCardView: View {
     }
 }
 
-func chipBreakdown(for bet: Int) -> [(Int, Int)] {
-    let denominations = [500, 50, 10, 1]
-    var remaining = bet
-    var chips: [(Int, Int)] = []
-
-    for denom in denominations {
-        let count = remaining / denom
-        if count > 0 {
-            chips.append((denom, count))
-            remaining %= denom
-        }
-    }
-
-    return chips
-}
-
-@ViewBuilder func betUI(for bet: Int) -> some View {
-    if bet == 0 {
-        Spacer()
-            .frame(width: 80, height: 30)
-    } else {
-        let chipBreakdown = chipBreakdown(for: bet)
-        
-        HStack {
-            ForEach(chipBreakdown, id: \.0) { chip in
-                StackedChipsView(count: chip.1, type: "chip-\(chip.0)")
-            }
-        }
-    }
-}
-
 struct HeroCardView: View {
     let navigationController: UINavigationController
+    let playerCardSize: CGFloat
     
     @ObservedObject var viewModel: HandViewModel
 
@@ -279,16 +257,17 @@ struct HeroCardView: View {
             HStack(spacing: -29.0) {
                 CardView(
                     onTap: select,
+                    size: playerCardSize,
                     rotation: -9,
                     card: $viewModel.hc1
                 )
                 CardView(
                     onTap: select,
+                    size: playerCardSize,
                     rotation: 9,
                     card: $viewModel.hc2
                 )
             }
-            .offset(y: CGFloat(210))
         }
     }
 }
@@ -297,6 +276,8 @@ struct AnalyzeButtonView: View {
     @Binding var showPopover: Bool
     @Binding var modelResponse: [String]?
     @ObservedObject var viewModel: HandViewModel
+    let fontSize: CGFloat
+    let iconSize: CGFloat
 
     var body: some View {
         VStack {
@@ -309,12 +290,14 @@ struct AnalyzeButtonView: View {
                 HStack {
                     Text("1")
                         .foregroundStyle(Color.pdBlue)
+                        .font(.system(size: fontSize))
                     Diamond()
                         .fill(Color.pdBlue)
-                        .frame(width: 12, height: (820/468)*12)
-                    Spacer().frame(width: 12)
+                        .frame(width: (iconSize-6), height: (820/468)*(iconSize-6))
+                    Spacer().frame(width: iconSize)
                     Text("Analyze")
                         .foregroundStyle(Color.pdBlue)
+                        .font(.system(size: fontSize))
                 }
                 .padding()
                 .overlay(
@@ -325,13 +308,14 @@ struct AnalyzeButtonView: View {
             .onChange(of: modelResponse, { _, _ in
                 showPopover = true
             })
-            .offset(y: CGFloat(360))
         }
     }
 }
 
 struct DiamondBalanceView: View {
     let navigationController: UINavigationController
+    let fontSize: CGFloat
+    let iconSize: CGFloat
     
     @Environment(\.dismiss) var dismiss
 
@@ -342,7 +326,7 @@ struct DiamondBalanceView: View {
                 HStack {
                     Diamond()
                         .fill(Color.pdBlue)
-                        .frame(width: 12, height: (820/468)*12)
+                        .frame(width: (iconSize-6), height: (820/468)*(iconSize-6))
                     Button(action: {
                         let hostingController = UIHostingController(rootView: PaymentView(
                             navigationController: navigationController, dismiss: { dismiss() },
@@ -354,13 +338,7 @@ struct DiamondBalanceView: View {
                     }, label: {
                         Text("+")
                             .foregroundStyle(Color.pdBlue)
-                            .font(.system(size: 24, weight: .heavy, design: .default))
-                            .padding(.horizontal, 4)
-                            .padding(.top, -4)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 8)
-                                    .stroke(Color.pdBlue, lineWidth: 2)
-                            )
+                            .font(.system(size: fontSize, weight: .heavy, design: .default))
                     })
                 }
                 .padding(50)
@@ -424,7 +402,6 @@ struct VillainStackedChipsView: View {
                     )
             })
         }
-        .offset(y: CGFloat(-100))
     }
 }
 
@@ -458,12 +435,12 @@ struct HeroStackedChipsView: View {
                     )
             })
         }
-        .offset(y: CGFloat(125))
     }
 }
 
 struct HeroPositionView: View {
     let navigationController: UINavigationController
+    let fontSize: CGFloat
     @ObservedObject var viewModel: HandViewModel
     
     private func selectHeroPosition() {
@@ -484,6 +461,7 @@ struct HeroPositionView: View {
             }, label: {
                 Text(viewModel.hp)
                     .foregroundStyle(Color.white)
+                    .font(.system(size: fontSize))
                     .padding(12)
                     .background(
                         RoundedRectangle(cornerRadius: 12)
@@ -492,13 +470,13 @@ struct HeroPositionView: View {
                     )
                 
             })
-            .offset(y: CGFloat(290))
         }
     }
 }
 
 struct VillainPositionView: View {
     let navigationController: UINavigationController
+    let fontSize: CGFloat
     @ObservedObject var viewModel: HandViewModel
     
     private func selectVillainPosition() {
@@ -519,6 +497,7 @@ struct VillainPositionView: View {
             }, label: {
                 Text(viewModel.vp)
                     .foregroundStyle(Color.white)
+                    .font(.system(size: fontSize))
                     .padding(12)
                     .background(
                         RoundedRectangle(cornerRadius: 12)
@@ -526,13 +505,13 @@ struct VillainPositionView: View {
                             .foregroundColor(.gray.opacity(0.5))
                     )
             })
-            .offset(x: CGFloat(55), y: CGFloat(-270))
         }
     }
 }
 
 struct VillainPlayerTypeView: View {
     let navigationController: UINavigationController
+    let fontSize: CGFloat
     @ObservedObject var viewModel: HandViewModel
     
     private func selectVillainPlayerType() {
@@ -553,6 +532,7 @@ struct VillainPlayerTypeView: View {
             }, label: {
                 Text(viewModel.vpt)
                     .foregroundStyle(Color.white)
+                    .font(.system(size: fontSize))
                     .padding(12)
                     .background(
                         RoundedRectangle(cornerRadius: 12)
@@ -561,13 +541,13 @@ struct VillainPlayerTypeView: View {
                     )
                 
             })
-            .offset(x: CGFloat(-60), y: CGFloat(-270))
         }
     }
 }
 
 struct HelpButtonView: View {
     let navigationController: UINavigationController
+    let iconSize: CGFloat
     @State private var showHelp = false
     
     @Environment(\.dismiss) var dismiss
@@ -588,7 +568,7 @@ struct HelpButtonView: View {
                         navigationController.present(hostingController, animated: true)
                     }) {
                         Image(systemName: "questionmark.circle")
-                            .font(.title2)
+                            .font(.system(size: iconSize))
                             .foregroundStyle(Color.pdBlue)
                     }
                     .padding(.horizontal, 35)
@@ -604,6 +584,7 @@ struct HelpButtonView: View {
 
 struct PokerTableView: View {
     let navigationController: UINavigationController
+    let layout: PokerTableViewLayout
     @ObservedObject var authViewModel: AuthViewModel
     
     private func select(card: Binding<String>) {
@@ -624,57 +605,69 @@ struct PokerTableView: View {
     var body: some View {
         ZStack {
             Color.black.ignoresSafeArea()
-            VStack {
-                ZStack {
-                    DiamondBalanceView(
-                        navigationController: navigationController
-                    )
-                    SettingsButtonView(
-                        navigationController: navigationController,
-                        authViewModel: authViewModel
-                    )
-                    HelpButtonView(
-                        navigationController: navigationController
-                    )
-                    PokerTable()
+            PokerTable()
+            DiamondBalanceView(
+                navigationController: navigationController,
+                fontSize: layout.fontSize,
+                iconSize: layout.iconSize
+            )
+            SettingsButtonView(
+                navigationController: navigationController,
+                iconSize: layout.iconSize,
+                authViewModel: authViewModel
+            )
+            HelpButtonView(
+                navigationController: navigationController,
+                iconSize: layout.iconSize
+            )
+            VStack(spacing: layout.spacing) {
+                HStack {
                     VillainPlayerTypeView(
                         navigationController: navigationController,
+                        fontSize: layout.fontSize,
                         viewModel: viewModel
                     )
                     VillainPositionView(
                         navigationController: navigationController,
-                        viewModel: viewModel
-                    )
-                    VillainCardView(
-                        navigationController: navigationController,
-                        viewModel: viewModel
-                    )
-                    VillainStackedChipsView(
-                        navigationController: navigationController,
-                        viewModel: viewModel
-                    )
-                    CommunityCardView(
-                        navigationController: navigationController,
-                        viewModel: viewModel
-                    )
-                    HeroStackedChipsView(
-                        navigationController: navigationController,
-                        viewModel: viewModel
-                    )
-                    HeroCardView(
-                        navigationController: navigationController,
-                        viewModel: viewModel
-                    )
-                    HeroPositionView(
-                        navigationController: navigationController,
-                        viewModel: viewModel
-                    )
-                    AnalyzeButtonView(
-                        showPopover: $showPopover,
-                        modelResponse: $modelResponse,
+                        fontSize: layout.fontSize,
                         viewModel: viewModel
                     )
                 }
+                VillainCardView(
+                    navigationController: navigationController,
+                    playerCardSize: layout.playerCardSize,
+                    viewModel: viewModel
+                )
+                VillainStackedChipsView(
+                    navigationController: navigationController,
+                    viewModel: viewModel
+                )
+                CommunityCardView(
+                    navigationController: navigationController,
+                    communityCardSize: layout.communityCardSize,
+                    viewModel: viewModel
+                )
+                HeroStackedChipsView(
+                    navigationController: navigationController,
+                    viewModel: viewModel
+                )
+                HeroCardView(
+                    navigationController: navigationController,
+                    playerCardSize: layout.playerCardSize,
+                    viewModel: viewModel
+                )
+                HeroPositionView(
+                    navigationController: navigationController,
+                    fontSize: layout.fontSize,
+                    viewModel: viewModel
+                )
+                AnalyzeButtonView(
+                    showPopover: $showPopover,
+                    modelResponse: $modelResponse,
+                    viewModel: viewModel,
+                    fontSize: layout.fontSize,
+                    iconSize: layout.iconSize
+                )
                 .popover(isPresented: $showPopover) {
                     AnalyzeView(
                         showPopover: $showPopover,
@@ -682,7 +675,6 @@ struct PokerTableView: View {
                     )
                 }
             }
-            .frame(maxWidth: .infinity)
         }
         .navigationBarHidden(true)
     }
@@ -690,6 +682,7 @@ struct PokerTableView: View {
 
 struct SettingsButtonView: View {
     let navigationController: UINavigationController
+    let iconSize: CGFloat
     @ObservedObject var authViewModel: AuthViewModel
     
     @Environment(\.dismiss) var dismiss
@@ -711,7 +704,7 @@ struct SettingsButtonView: View {
                         navigationController.present(hostingController, animated: true)
                     }) {
                         Image(systemName: "gear")
-                            .font(.title2)
+                            .font(.system(size: iconSize))
                             .foregroundStyle(Color.pdBlue)
                     }
                 }
@@ -738,9 +731,38 @@ struct MarkdownView: View {
     }
 }
 
-#Preview {
+/// iPhone
+#Preview("iPhone") {
     PokerTableView(
         navigationController: UINavigationController(),
+        layout: PokerTableViewLayout(
+            spacing: 30,
+            fontSize: 16,
+            iconSize: 18,
+            communityCardSize: 60,
+            playerCardSize: 60,
+            buttonWidth: 80,
+            buttonHeight: 80,
+            bottomPadding: 20
+        ),
+        authViewModel: AuthViewModel()
+    )
+}
+
+/// iPad
+#Preview("iPad") {
+    PokerTableView(
+        navigationController: UINavigationController(),
+        layout: PokerTableViewLayout(
+            spacing: 60,
+            fontSize: 28,
+            iconSize: 30,
+            communityCardSize: 120,
+            playerCardSize: 120,
+            buttonWidth: 80,
+            buttonHeight: 80,
+            bottomPadding: 20
+        ),
         authViewModel: AuthViewModel()
     )
 }
