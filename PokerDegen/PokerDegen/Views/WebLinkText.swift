@@ -11,6 +11,7 @@ import SafariServices
 struct WebLinkText: View {
     let text: String
     let url: String
+    let fontSize: CGFloat
     let navigationController: UINavigationController
 
     @State private var showWebView = false
@@ -18,6 +19,7 @@ struct WebLinkText: View {
     var body: some View {
         Text(text)
             .foregroundColor(.gray)
+            .font(.system(size: fontSize))
             .underline()
             .onTapGesture {
                 if let topVC = UIApplication.topViewController() {

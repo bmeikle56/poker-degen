@@ -579,10 +579,8 @@ struct HelpButtonView: View {
                     Button(action: {
                         let hostingController = UIHostingController(rootView: HelpView(
                             navigationController: navigationController,
-                            spacing: 30,
-                            horizontalPadding: 200,
-                            fontSize: 20,
-                            dismiss: { dismiss() }
+                            dismiss: { dismiss() },
+                            layout: Layout.helpView[.iPhone]!
                         ))
                         hostingController.modalPresentationStyle = .overFullScreen
                         hostingController.view.backgroundColor = .clear
@@ -693,6 +691,8 @@ struct PokerTableView: View {
 struct SettingsButtonView: View {
     let navigationController: UINavigationController
     @ObservedObject var authViewModel: AuthViewModel
+    
+    @Environment(\.dismiss) var dismiss
 
     var body: some View {
         VStack {
@@ -701,7 +701,9 @@ struct SettingsButtonView: View {
                     Button(action: {
                         let hostingController = UIHostingController(rootView: SettingsView(
                             navigationController: navigationController,
-                            authViewModel: authViewModel
+                            authViewModel: authViewModel,
+                            dismiss: { dismiss() },
+                            layout: Layout.settingsView[.iPhone]!
                         ))
                         hostingController.modalPresentationStyle = .overFullScreen
                         hostingController.view.backgroundColor = .clear
