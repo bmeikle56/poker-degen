@@ -13,20 +13,9 @@ struct HelpView: View {
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
-        VStack {
-            HStack {
-                Button(action: {
-                    dismiss()
-                }, label: {
-                    Image(systemName: "multiply")
-                        .font(.title2)
-                        .foregroundStyle(Color.pdBlue)
-                })
-                Spacer()
-            }
-            .padding(.horizontal, 50)
-            .padding(.vertical, 10)
-            Spacer().frame(height: 150)
+        ZStack {
+            Color.black.ignoresSafeArea()
+            ExitButton(action: dismiss)
             VStack(spacing: 20) {
                 Image(systemName: "questionmark.circle")
                     .font(.title2)
@@ -35,9 +24,6 @@ struct HelpView: View {
                     .frame(width: 300)
                     .foregroundColor(.pdBlue)
             }
-            Spacer()
         }
-        .frame(maxWidth: .infinity)
-        .background(.black)
     }
 }

@@ -12,22 +12,11 @@ struct PaymentView: View {
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
-        VStack {
-            HStack {
-                Button(action: {
-                    dismiss()
-                }, label: {
-                    Image(systemName: "multiply")
-                        .font(.title2)
-                        .foregroundStyle(Color.pdBlue)
-                })
-                Spacer()
-            }
-            .padding(.horizontal, 50)
-            .padding(.vertical, 10)
-            Spacer()
+        ZStack {
+            Color.black.ignoresSafeArea()
+            ExitButton(action: dismiss)
+            Text("Coming soon!")
+                .foregroundStyle(Color.pdBlue)
         }
-        .frame(maxWidth: .infinity)
-        .background(.black)
     }
 }
