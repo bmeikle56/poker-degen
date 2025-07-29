@@ -8,6 +8,44 @@
 import SwiftUI
 import SafariServices
 
+struct ExitButton: View {
+    let action: DismissAction
+    
+    var body: some View {
+        HStack {
+            Button(action: {
+                action()
+            }, label: {
+                Image(systemName: "multiply")
+                    .font(.title2)
+                    .foregroundStyle(Color.pdBlue)
+            })
+            Spacer()
+        }
+        .padding(.horizontal, 50)
+        .padding(.vertical, 10)
+    }
+}
+
+struct SettingsButton: View {
+    let action: () -> Void
+    let text: String
+
+    var body: some View {
+        Button(action: {
+            action()
+        }, label: {
+            Text(text)
+                .foregroundStyle(Color.pdBlue)
+                .frame(width: 180, height: 60)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(Color.pdBlue, lineWidth: 2)
+                )
+        })
+    }
+}
+
 struct SettingsView: View {
     let navigationController: UINavigationController
     @ObservedObject var authViewModel: AuthViewModel
@@ -23,32 +61,14 @@ struct SettingsView: View {
     
     var body: some View {
         VStack {
-            HStack {
-                Button(action: {
-                    dismiss()
-                }, label: {
-                    Image(systemName: "multiply")
-                        .font(.title2)
-                        .foregroundStyle(Color.pdBlue)
-                })
-                Spacer()
-            }
-            .padding(.horizontal, 50)
-            .padding(.vertical, 10)
+            ExitButton(action: dismiss)
             Spacer()
-            VStack {
-                Button(action: {
+            SettingsButton(
+                action: {
                     showDisableFaceIDAlert = true
-                }, label: {
-                    Text("\(biometrics ? "Disable" : "Enable") FaceID")
-                        .foregroundStyle(Color.pdBlue)
-                        .frame(width: 180, height: 60)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(Color.pdBlue, lineWidth: 2)
-                        )
-                })
-            }
+                },
+                text: "\(biometrics ? "Disable" : "Enable") FaceID"
+            )
             .alert("\(biometrics ? "Disable" : "Enable") FaceID?", isPresented: $showDisableFaceIDAlert) {
                 Button("\(biometrics ? "Disable" : "Enable")", role: .destructive) {
                     UserDefaults.standard.set(!biometrics, forKey: "biometrics")
