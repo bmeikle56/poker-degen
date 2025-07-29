@@ -9,21 +9,46 @@ import SwiftUI
 
 struct HelpView: View {
     let navigationController: UINavigationController
-    
-    @Environment(\.dismiss) var dismiss
+    let spacing: CGFloat
+    let horizontalPadding: CGFloat
+    let fontSize: CGFloat
+    let dismiss: () -> Void
     
     var body: some View {
         ZStack {
             Color.black.ignoresSafeArea()
             ExitButton(action: dismiss)
-            VStack(spacing: 20) {
+            VStack(spacing: spacing) {
                 Image(systemName: "questionmark.circle")
-                    .font(.title2)
+                    .font(.system(size: fontSize))
                     .foregroundStyle(Color.pdBlue)
                 Text("**Single tap** to select a card.\n\n**Double tap** to reset a card.\n\n**Single tap** the dotted regions to select a bet size, player type, and position.\n\nThen tap **Analyze** to review the hand for optimal play.")
-                    .frame(width: 300)
+                    .padding(.horizontal, horizontalPadding)
+                    .font(.system(size: fontSize))
                     .foregroundColor(.pdBlue)
             }
         }
     }
+}
+
+/// iPhone
+#Preview("iPhone") {
+    HelpView(
+        navigationController: UINavigationController(),
+        spacing: 30,
+        horizontalPadding: 60,
+        fontSize: 18,
+        dismiss: {}
+    )
+}
+
+/// iPad
+#Preview("iPad") {
+    HelpView(
+        navigationController: UINavigationController(),
+        spacing: 50,
+        horizontalPadding: 250,
+        fontSize: 30,
+        dismiss: {}
+    )
 }

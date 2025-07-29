@@ -332,6 +332,8 @@ struct AnalyzeButtonView: View {
 
 struct DiamondBalanceView: View {
     let navigationController: UINavigationController
+    
+    @Environment(\.dismiss) var dismiss
 
     var body: some View {
         VStack {
@@ -343,7 +345,7 @@ struct DiamondBalanceView: View {
                         .frame(width: 12, height: (820/468)*12)
                     Button(action: {
                         let hostingController = UIHostingController(rootView: PaymentView(
-                            navigationController: navigationController,
+                            navigationController: navigationController, dismiss: { dismiss() },
                         ))
                         hostingController.modalPresentationStyle = .overFullScreen
                         hostingController.view.backgroundColor = .clear
@@ -567,6 +569,8 @@ struct VillainPlayerTypeView: View {
 struct HelpButtonView: View {
     let navigationController: UINavigationController
     @State private var showHelp = false
+    
+    @Environment(\.dismiss) var dismiss
 
     var body: some View {
         VStack {
@@ -574,7 +578,11 @@ struct HelpButtonView: View {
                 HStack {
                     Button(action: {
                         let hostingController = UIHostingController(rootView: HelpView(
-                            navigationController: navigationController
+                            navigationController: navigationController,
+                            spacing: 30,
+                            horizontalPadding: 200,
+                            fontSize: 20,
+                            dismiss: { dismiss() }
                         ))
                         hostingController.modalPresentationStyle = .overFullScreen
                         hostingController.view.backgroundColor = .clear

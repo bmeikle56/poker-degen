@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PaymentView: View {
     let navigationController: UINavigationController
-    @Environment(\.dismiss) var dismiss
+    let dismiss: () -> Void
     
     var body: some View {
         ZStack {

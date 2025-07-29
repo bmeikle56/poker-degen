@@ -9,7 +9,7 @@ import SwiftUI
 import SafariServices
 
 struct ExitButton: View {
-    let action: DismissAction
+    let action: () -> Void
     
     var body: some View {
         VStack {
@@ -67,7 +67,7 @@ struct SettingsView: View {
     var body: some View {
         ZStack {
             Color.black.ignoresSafeArea()
-            ExitButton(action: dismiss)
+            ExitButton(action: { dismiss() })
             VStack(spacing: 20) {
                 Spacer()
                 SettingsButton(
