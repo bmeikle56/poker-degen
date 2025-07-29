@@ -53,6 +53,8 @@ struct SettingsView: View {
     @Environment(\.dismiss) var dismiss
     
     @State private var showDisableFaceIDAlert = false
+    @State private var showLogoutAccountAlert = false
+    @State private var showDeleteAccountAlert = false
     @State private var showWebView = false
     
     private var biometrics: Bool {
@@ -60,7 +62,7 @@ struct SettingsView: View {
     }
     
     var body: some View {
-        VStack {
+        VStack(spacing: 20) {
             ExitButton(action: dismiss)
             Spacer()
             SettingsButton(
@@ -77,34 +79,38 @@ struct SettingsView: View {
                     /// do nothing by design...
                 }
             }
-            Spacer().frame(height: 20)
-            Button(action: {
-                authViewModel.logout()
-                dismiss()
-                navigationController.popToRootViewController(animated: true)
-            }, label: {
-                Text("Log out")
-                    .foregroundStyle(Color.pdBlue)
-                    .frame(width: 180, height: 60)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(Color.pdBlue, lineWidth: 2)
-                    )
-            })
-            Spacer().frame(height: 20)
-            Button(action: {
-                authViewModel.deleteAccount()
-                dismiss()
-                navigationController.popToRootViewController(animated: true)
-            }, label: {
-                Text("Delete account")
-                    .foregroundStyle(Color.pdBlue)
-                    .frame(width: 180, height: 60)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(Color.pdBlue, lineWidth: 2)
-                    )
-            })
+            SettingsButton(
+                action: {
+                    showLogoutAccountAlert = true
+                },
+                text: "Log out"
+            )
+            .alert("Are you sure you want to log out?", isPresented: $showLogoutAccountAlert) {
+                Button("Log out", role: .destructive) {
+                    authViewModel.logout()
+                    dismiss()
+                    navigationController.popToRootViewController(animated: true)
+                }
+                Button("Cancel", role: .cancel) {
+                    /// do nothing by design...
+                }
+            }
+            SettingsButton(
+                action: {
+                    showDeleteAccountAlert = true
+                },
+                text: "Delete account"
+            )
+            .alert("Are you sure you want to delete your account?", isPresented: $showDeleteAccountAlert) {
+                Button("Delete", role: .destructive) {
+                    authViewModel.deleteAccount()
+                    dismiss()
+                    navigationController.popToRootViewController(animated: true)
+                }
+                Button("Cancel", role: .cancel) {
+                    /// do nothing by design...
+                }
+            }
             Spacer()
             HStack {
                 WebLinkText(

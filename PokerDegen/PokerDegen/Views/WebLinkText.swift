@@ -8,23 +8,6 @@
 import SwiftUI
 import SafariServices
 
-extension UIApplication {
-    static func topViewController(controller: UIViewController? = UIApplication.shared.connectedScenes
-        .compactMap { ($0 as? UIWindowScene)?.keyWindow }
-        .first?.rootViewController) -> UIViewController? {
-        if let nav = controller as? UINavigationController {
-            return topViewController(controller: nav.visibleViewController)
-        }
-        if let tab = controller as? UITabBarController {
-            return topViewController(controller: tab.selectedViewController)
-        }
-        if let presented = controller?.presentedViewController {
-            return topViewController(controller: presented)
-        }
-        return controller
-    }
-}
-
 struct WebLinkText: View {
     let text: String
     let url: String
@@ -44,5 +27,22 @@ struct WebLinkText: View {
                     topVC.present(safariVC, animated: true, completion: nil)
                 }
             }
+    }
+}
+
+extension UIApplication {
+    static func topViewController(controller: UIViewController? = UIApplication.shared.connectedScenes
+        .compactMap { ($0 as? UIWindowScene)?.keyWindow }
+        .first?.rootViewController) -> UIViewController? {
+        if let nav = controller as? UINavigationController {
+            return topViewController(controller: nav.visibleViewController)
+        }
+        if let tab = controller as? UITabBarController {
+            return topViewController(controller: tab.selectedViewController)
+        }
+        if let presented = controller?.presentedViewController {
+            return topViewController(controller: presented)
+        }
+        return controller
     }
 }
