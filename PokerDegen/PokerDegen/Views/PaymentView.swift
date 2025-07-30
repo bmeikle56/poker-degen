@@ -7,27 +7,40 @@
 
 import SwiftUI
 
+struct PaymentViewLayout {
+    let fontSize: CGFloat
+}
+
 struct PaymentView: View {
     let navigationController: UINavigationController
-    @Environment(\.dismiss) var dismiss
+    let dismiss: () -> Void
+    let layout: PaymentViewLayout
     
     var body: some View {
-        VStack {
-            HStack {
-                Button(action: {
-                    dismiss()
-                }, label: {
-                    Image(systemName: "multiply")
-                        .font(.title2)
-                        .foregroundStyle(Color.pdBlue)
-                })
-                Spacer()
-            }
-            .padding(.horizontal, 50)
-            .padding(.vertical, 10)
-            Spacer()
+        ZStack {
+            Color.black.ignoresSafeArea()
+            ExitButton(action: dismiss)
+            Text("Coming soon!")
+                .foregroundStyle(Color.pdBlue)
+                .font(.system(size: layout.fontSize))
         }
-        .frame(maxWidth: .infinity)
-        .background(.black)
     }
+}
+
+/// iPhone
+#Preview("iPhone") {
+    PaymentView(
+        navigationController: UINavigationController(),
+        dismiss: {},
+        layout: Layout.paymentView[.iPhone]!
+    )
+}
+
+/// iPad
+#Preview("iPad") {
+    PaymentView(
+        navigationController: UINavigationController(),
+        dismiss: {},
+        layout: Layout.paymentView[.iPad]!
+    )
 }

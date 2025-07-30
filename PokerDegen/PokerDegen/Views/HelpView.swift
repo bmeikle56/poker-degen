@@ -7,37 +7,49 @@
 
 import SwiftUI
 
+struct HelpViewLayout {
+    let spacing: CGFloat
+    let horizontalPadding: CGFloat
+    let fontSize: CGFloat
+}
+
 struct HelpView: View {
     let navigationController: UINavigationController
+    let dismiss: () -> Void
     
-    @Environment(\.dismiss) var dismiss
+    let layout: HelpViewLayout
     
     var body: some View {
-        VStack {
-            HStack {
-                Button(action: {
-                    dismiss()
-                }, label: {
-                    Image(systemName: "multiply")
-                        .font(.title2)
-                        .foregroundStyle(Color.pdBlue)
-                })
-                Spacer()
-            }
-            .padding(.horizontal, 50)
-            .padding(.vertical, 10)
-            Spacer().frame(height: 150)
-            VStack(spacing: 20) {
+        ZStack {
+            Color.black.ignoresSafeArea()
+            ExitButton(action: dismiss)
+            VStack(spacing: layout.spacing) {
                 Image(systemName: "questionmark.circle")
-                    .font(.title2)
+                    .font(.system(size: layout.fontSize))
                     .foregroundStyle(Color.pdBlue)
                 Text("**Single tap** to select a card.\n\n**Double tap** to reset a card.\n\n**Single tap** the dotted regions to select a bet size, player type, and position.\n\nThen tap **Analyze** to review the hand for optimal play.")
-                    .frame(width: 300)
+                    .padding(.horizontal, layout.horizontalPadding)
+                    .font(.system(size: layout.fontSize))
                     .foregroundColor(.pdBlue)
             }
-            Spacer()
         }
-        .frame(maxWidth: .infinity)
-        .background(.black)
     }
+}
+
+/// iPhone
+#Preview("iPhone") {
+    HelpView(
+        navigationController: UINavigationController(),
+        dismiss: {},
+        layout: Layout.helpView[.iPhone]!
+    )
+}
+
+/// iPad
+#Preview("iPad") {
+    HelpView(
+        navigationController: UINavigationController(),
+        dismiss: {},
+        layout: Layout.helpView[.iPad]!
+    )
 }

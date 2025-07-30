@@ -8,6 +8,30 @@
 import SwiftUI
 import SafariServices
 
+struct WebLinkText: View {
+    let text: String
+    let url: String
+    let fontSize: CGFloat
+    let navigationController: UINavigationController
+
+    @State private var showWebView = false
+
+    var body: some View {
+        Text(text)
+            .foregroundColor(.gray)
+            .font(.system(size: fontSize))
+            .underline()
+            .onTapGesture {
+                if let topVC = UIApplication.topViewController() {
+                    let safariVC = SFSafariViewController(url: URL(string: url)!)
+                    safariVC.modalPresentationStyle = .overFullScreen
+                    navigationController.modalPresentationStyle = .overFullScreen
+                    topVC.present(safariVC, animated: true, completion: nil)
+                }
+            }
+    }
+}
+
 extension UIApplication {
     static func topViewController(controller: UIViewController? = UIApplication.shared.connectedScenes
         .compactMap { ($0 as? UIWindowScene)?.keyWindow }
@@ -22,27 +46,5 @@ extension UIApplication {
             return topViewController(controller: presented)
         }
         return controller
-    }
-}
-
-struct WebLinkText: View {
-    let text: String
-    let url: String
-    let navigationController: UINavigationController
-
-    @State private var showWebView = false
-
-    var body: some View {
-        Text(text)
-            .foregroundColor(.gray)
-            .underline()
-            .onTapGesture {
-                if let topVC = UIApplication.topViewController() {
-                    let safariVC = SFSafariViewController(url: URL(string: url)!)
-                    safariVC.modalPresentationStyle = .overFullScreen
-                    navigationController.modalPresentationStyle = .overFullScreen
-                    topVC.present(safariVC, animated: true, completion: nil)
-                }
-            }
     }
 }
