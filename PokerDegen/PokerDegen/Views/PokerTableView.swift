@@ -667,6 +667,7 @@ struct PokerTableView: View {
                 )
                 .popover(isPresented: $showPopover) {
                     AnalyzeView(
+                        layout: Layout.analyzeView[.iPhone]!,
                         showPopover: $showPopover,
                         modelResponse: $modelResponse
                     )

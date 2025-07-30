@@ -101,4 +101,21 @@ struct Layout {
             fontSize: 28
         )
     ]
+    
+    static let analyzeView: [DeviceType: AnalyzeViewLayout] = [
+        .iPhone: AnalyzeViewLayout(
+            fontSize: 16,
+            actionViewWidth: 180,
+            actionViewHeight: 60,
+            gaugeWidth: 100,
+            gaugeHeight: 10
+        ),
+        .iPad: AnalyzeViewLayout(
+            fontSize: 28,
+            actionViewWidth: 180,
+            actionViewHeight: 60,
+            gaugeWidth: 100,
+            gaugeHeight: 10
+        )
+    ]
 }
