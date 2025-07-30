@@ -7,8 +7,16 @@
 
 import SwiftUI
 
+struct LoginViewLayout {
+    let spacing: CGFloat
+    let fontSize: CGFloat
+    let buttonWidth: CGFloat
+    let buttonHeight: CGFloat
+}
+
 struct LoginView: View {
     let navigationController: UINavigationController
+    let layout: LoginViewLayout
     
     @State private var showFaceIDPrompt = false
     
@@ -17,33 +25,37 @@ struct LoginView: View {
     var body: some View {
         ZStack {
             Color.black.ignoresSafeArea()
-            VStack {
+            VStack(spacing: layout.spacing) {
                 PokerDegenTitleView()
-                Spacer().frame(height: 20)
                 AuthErrorMessageView(
                     authViewModel: authViewModel
                 )
-                Spacer().frame(height: 20)
                 UsernameField(
                     placeholder: "Username",
+                    fontSize: layout.fontSize,
+                    buttonWidth: layout.buttonWidth,
+                    buttonHeight: layout.buttonHeight,
                     authViewModel: authViewModel
                 )
-                Spacer().frame(height: 20)
                 PasswordField(
                     placeholder: "Password",
+                    fontSize: layout.fontSize,
+                    buttonWidth: layout.buttonWidth,
+                    buttonHeight: layout.buttonHeight,
                     authViewModel: authViewModel
                 )
-                Spacer().frame(height: 20)
                 LoginButton(
                     navigationController: navigationController,
+                    fontSize: layout.fontSize,
+                    buttonWidth: layout.buttonWidth,
+                    buttonHeight: layout.buttonHeight,
                     authViewModel: authViewModel,
                 )
-                Spacer().frame(height: 20)
                 Button(action: {
                     authViewModel.errorMessage = nil
                     navigationController.pushViewController(
                         UIHostingController(rootView: SignupView(
-                            navigationController: navigationController,
+                            navigationController: navigationController, layout: Layout.signupView[.iPhone]!,
                             authViewModel: authViewModel
                         )),
                         animated: false
@@ -51,8 +63,8 @@ struct LoginView: View {
                 }, label: {
                     Text("Create an account")
                         .foregroundStyle(Color.pdBlue)
+                        .font(.system(size: layout.fontSize))
                 })
-                Spacer().frame(height: 20)
             }
             .task {
                 authViewModel.username = ""
@@ -83,8 +95,30 @@ struct LoginView: View {
     }
 }
 
-#Preview {
+/// iPhone
+#Preview("iPhone") {
     LoginView(
         navigationController: UINavigationController(),
+        layout: LoginViewLayout(
+            spacing: 20,
+            fontSize: 16,
+            buttonWidth: 200,
+            buttonHeight: 50,
+        ),
+        authViewModel: AuthViewModel()
+    )
+}
+
+/// iPad
+#Preview("iPad") {
+    LoginView(
+        navigationController: UINavigationController(),
+        layout: LoginViewLayout(
+            spacing: 50,
+            fontSize: 28,
+            buttonWidth: 350,
+            buttonHeight: 100,
+        ),
+        authViewModel: AuthViewModel()
     )
 }

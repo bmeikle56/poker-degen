@@ -7,8 +7,16 @@
 
 import SwiftUI
 
+struct SignupViewLayout {
+    let spacing: CGFloat
+    let fontSize: CGFloat
+    let buttonWidth: CGFloat
+    let buttonHeight: CGFloat
+}
+
 struct SignupView: View {
     let navigationController: UINavigationController
+    let layout: SignupViewLayout
     @ObservedObject var authViewModel: AuthViewModel
 
     var body: some View {
@@ -23,16 +31,25 @@ struct SignupView: View {
                 Spacer().frame(height: 20)
                 UsernameField(
                     placeholder: "Username",
+                    fontSize: layout.fontSize,
+                    buttonWidth: layout.buttonWidth,
+                    buttonHeight: layout.buttonHeight,
                     authViewModel: authViewModel
                 )
                 Spacer().frame(height: 20)
                 PasswordField(
                     placeholder: "Password",
+                    fontSize: layout.fontSize,
+                    buttonWidth: layout.buttonWidth,
+                    buttonHeight: layout.buttonHeight,
                     authViewModel: authViewModel
                 )
                 Spacer().frame(height: 20)
                 SignupButton(
                     navigationController: navigationController,
+                    fontSize: layout.fontSize,
+                    buttonWidth: layout.buttonWidth,
+                    buttonHeight: layout.buttonHeight,
                     authViewModel: authViewModel
                 )
                 Spacer().frame(height: 20)
@@ -50,9 +67,30 @@ struct SignupView: View {
     }
 }
 
-#Preview {
+/// iPhone
+#Preview("iPhone") {
     SignupView(
         navigationController: UINavigationController(),
+        layout: SignupViewLayout(
+            spacing: 30,
+            fontSize: 16,
+            buttonWidth: 150,
+            buttonHeight: 60,
+        ),
         authViewModel: AuthViewModel()
     )
 }
+
+/// iPad
+//#Preview("iPad") {
+//    SignupView(
+//        navigationController: UINavigationController(),
+//        layout: SignupViewLayout(
+//            spacing: 30,
+//            fontSize: 16,
+//            buttonWidth: 150,
+//            buttonHeight: 60,
+//        ),
+//        authViewModel: AuthViewModel()
+//    )
+//}

@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     ) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
         let navigationController = UINavigationController()
-        let rootSwiftUIView = LoginView(navigationController: navigationController)
+        let rootSwiftUIView = LoginView(navigationController: navigationController, layout: Layout.loginView[.iPhone]!)
         let hostingController = UIHostingController(rootView: rootSwiftUIView)
         navigationController.viewControllers = [hostingController]
         window?.rootViewController = navigationController

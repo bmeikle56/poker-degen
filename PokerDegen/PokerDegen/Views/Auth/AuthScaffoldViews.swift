@@ -61,6 +61,7 @@ struct NoAssistantTextField: UIViewRepresentable {
     }
 
     var placeholder: String
+    let fontSize: CGFloat
     @Binding var text: String
     var secure: Bool
 
@@ -74,6 +75,7 @@ struct NoAssistantTextField: UIViewRepresentable {
         textField.delegate = context.coordinator
         textField.placeholder = placeholder
         textField.text = text
+        textField.font = .systemFont(ofSize: fontSize)
         textField.backgroundColor = .clear
         textField.autocapitalizationType = .none
         textField.textColor = UIColor(cgColor: CGColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1))
@@ -95,20 +97,24 @@ struct NoAssistantTextField: UIViewRepresentable {
 
 struct UsernameField: View {
     let placeholder: String
+    let fontSize: CGFloat
+    let buttonWidth: CGFloat
+    let buttonHeight: CGFloat
     @ObservedObject var authViewModel: AuthViewModel
     @FocusState private var isFocused: Bool
 
     var body: some View {
-        NoAssistantTextField(placeholder: "", text: $authViewModel.username, secure: false)
+        NoAssistantTextField(placeholder: "", fontSize: fontSize, text: $authViewModel.username, secure: false)
             .focused($isFocused)
             .placeholder(when: authViewModel.username.isEmpty) {
                 Text(placeholder)
                     .foregroundColor(.smoothGray)
+                    .font(.system(size: fontSize))
                     .padding(.horizontal, 8)
             }
             .padding()
-            .frame(width: 250)
-            .frame(height: 56)
+            .frame(width: buttonWidth)
+            .frame(height: buttonHeight)
             .background(
                 RoundedRectangle(cornerRadius: 8)
                     .stroke(Color.pdBlue, lineWidth: 1.4)
@@ -135,20 +141,24 @@ extension View {
 
 struct PasswordField: View {
     let placeholder: String
+    let fontSize: CGFloat
+    let buttonWidth: CGFloat
+    let buttonHeight: CGFloat
     @ObservedObject var authViewModel: AuthViewModel
     @FocusState private var isFocused: Bool
 
     var body: some View {
-        NoAssistantTextField(placeholder: "", text: $authViewModel.password, secure: true)
+        NoAssistantTextField(placeholder: "", fontSize: fontSize, text: $authViewModel.password, secure: true)
             .focused($isFocused)
             .placeholder(when: authViewModel.password.isEmpty) {
                 Text(placeholder)
                     .foregroundColor(.smoothGray)
+                    .font(.system(size: fontSize))
                     .padding(.horizontal, 8)
             }
             .padding()
-            .frame(width: 250)
-            .frame(height: 56)
+            .frame(width: buttonWidth)
+            .frame(height: buttonHeight)
             .background(
                 RoundedRectangle(cornerRadius: 8)
                     .stroke(Color.pdBlue, lineWidth: 1.4)
@@ -164,6 +174,9 @@ struct PasswordField: View {
 
 struct SignupButton: View {
     let navigationController: UINavigationController
+    let fontSize: CGFloat
+    let buttonWidth: CGFloat
+    let buttonHeight: CGFloat
     @ObservedObject var authViewModel: AuthViewModel
     
     var body: some View {
@@ -172,9 +185,9 @@ struct SignupButton: View {
         }, label: {
             Text("Signup")
                 .foregroundColor(.black)
-                .font(.system(size: 18, weight: .bold, design: .default))
+                .font(.system(size: fontSize, weight: .bold, design: .default))
                 .padding()
-                .frame(width: 250)
+                .frame(width: buttonWidth)
                 .background(Color.pdBlue)
                 .cornerRadius(8)
         })
@@ -195,6 +208,9 @@ struct SignupButton: View {
 
 struct LoginButton: View {
     let navigationController: UINavigationController
+    let fontSize: CGFloat
+    let buttonWidth: CGFloat
+    let buttonHeight: CGFloat
     @ObservedObject var authViewModel: AuthViewModel
     
     @State private var showFaceIDPrompt = false
@@ -212,9 +228,9 @@ struct LoginButton: View {
         }, label: {
             Text("Login")
                 .foregroundColor(.black)
-                .font(.system(size: 18, weight: .bold, design: .default))
+                .font(.system(size: fontSize, weight: .bold, design: .default))
                 .padding()
-                .frame(width: 250)
+                .frame(width: buttonWidth, height: buttonHeight)
                 .background(Color.pdBlue)
                 .cornerRadius(8)
         })
