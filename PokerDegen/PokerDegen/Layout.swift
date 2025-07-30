@@ -8,14 +8,14 @@
 struct Layout {
     static let helpView: [DeviceType: HelpViewLayout] = [
         .iPhone: HelpViewLayout(
-            spacing: 50,
-            horizontalPadding: 250,
-            fontSize: 30
-        ),
-        .iPad: HelpViewLayout(
             spacing: 30,
             horizontalPadding: 60,
             fontSize: 18
+        ),
+        .iPad: HelpViewLayout(
+            spacing: 50,
+            horizontalPadding: 250,
+            fontSize: 30
         )
     ]
     
@@ -38,21 +38,21 @@ struct Layout {
     
     static let pokerTableView: [DeviceType: PokerTableViewLayout] = [
         .iPhone: PokerTableViewLayout(
-            spacing: 20,
-            fontSize: 20,
-            iconSize: 20,
-            communityCardSize: 80,
-            playerCardSize: 80,
+            spacing: 30,
+            fontSize: 16,
+            iconSize: 18,
+            communityCardSize: 60,
+            playerCardSize: 60,
             buttonWidth: 80,
             buttonHeight: 80,
             bottomPadding: 20
         ),
         .iPad: PokerTableViewLayout(
-            spacing: 20,
-            fontSize: 20,
-            iconSize: 20,
-            communityCardSize: 80,
-            playerCardSize: 80,
+            spacing: 60,
+            fontSize: 28,
+            iconSize: 30,
+            communityCardSize: 120,
+            playerCardSize: 120,
             buttonWidth: 80,
             buttonHeight: 80,
             bottomPadding: 20

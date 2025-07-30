@@ -338,7 +338,7 @@ struct DiamondBalanceView: View {
                     }, label: {
                         Text("+")
                             .foregroundStyle(Color.pdBlue)
-                            .font(.system(size: fontSize, weight: .heavy, design: .default))
+                            .font(.system(size: iconSize+8, weight: .heavy, design: .default))
                     })
                 }
                 .padding(50)
@@ -553,31 +553,20 @@ struct HelpButtonView: View {
     @Environment(\.dismiss) var dismiss
 
     var body: some View {
-        VStack {
-            HStack {
-                HStack {
-                    Button(action: {
-                        let hostingController = UIHostingController(rootView: HelpView(
-                            navigationController: navigationController,
-                            dismiss: { dismiss() },
-                            layout: Layout.helpView[.iPhone]!
-                        ))
-                        hostingController.modalPresentationStyle = .overFullScreen
-                        hostingController.view.backgroundColor = .clear
-                        navigationController.modalPresentationStyle = .overFullScreen
-                        navigationController.present(hostingController, animated: true)
-                    }) {
-                        Image(systemName: "questionmark.circle")
-                            .font(.system(size: iconSize))
-                            .foregroundStyle(Color.pdBlue)
-                    }
-                    .padding(.horizontal, 35)
-                }
-                .padding(50)
-                Spacer()
-            }
-            .padding(.vertical, -45)
-            Spacer()
+        Button(action: {
+            let hostingController = UIHostingController(rootView: HelpView(
+                navigationController: navigationController,
+                dismiss: { dismiss() },
+                layout: Layout.helpView[.iPhone]!
+            ))
+            hostingController.modalPresentationStyle = .overFullScreen
+            hostingController.view.backgroundColor = .clear
+            navigationController.modalPresentationStyle = .overFullScreen
+            navigationController.present(hostingController, animated: true)
+        }) {
+            Image(systemName: "questionmark.circle")
+                .font(.system(size: iconSize))
+                .foregroundStyle(Color.pdBlue)
         }
     }
 }
@@ -611,15 +600,23 @@ struct PokerTableView: View {
                 fontSize: layout.fontSize,
                 iconSize: layout.iconSize
             )
-            SettingsButtonView(
-                navigationController: navigationController,
-                iconSize: layout.iconSize,
-                authViewModel: authViewModel
-            )
-            HelpButtonView(
-                navigationController: navigationController,
-                iconSize: layout.iconSize
-            )
+            VStack {
+                HStack {
+                    SettingsButtonView(
+                        navigationController: navigationController,
+                        iconSize: layout.iconSize,
+                        authViewModel: authViewModel
+                    )
+                    HelpButtonView(
+                        navigationController: navigationController,
+                        iconSize: layout.iconSize
+                    )
+                    Spacer()
+                }
+                .padding(.horizontal, 30)
+                Spacer()
+            }
+            .padding(.vertical, 10)
             VStack(spacing: layout.spacing) {
                 HStack {
                     VillainPlayerTypeView(
@@ -688,31 +685,21 @@ struct SettingsButtonView: View {
     @Environment(\.dismiss) var dismiss
 
     var body: some View {
-        VStack {
-            HStack {
-                HStack {
-                    Button(action: {
-                        let hostingController = UIHostingController(rootView: SettingsView(
-                            navigationController: navigationController,
-                            authViewModel: authViewModel,
-                            dismiss: { dismiss() },
-                            layout: Layout.settingsView[.iPhone]!
-                        ))
-                        hostingController.modalPresentationStyle = .overFullScreen
-                        hostingController.view.backgroundColor = .clear
-                        navigationController.modalPresentationStyle = .overFullScreen
-                        navigationController.present(hostingController, animated: true)
-                    }) {
-                        Image(systemName: "gear")
-                            .font(.system(size: iconSize))
-                            .foregroundStyle(Color.pdBlue)
-                    }
-                }
-                .padding(50)
-                Spacer()
-            }
-            .padding(.vertical, -45)
-            Spacer()
+        Button(action: {
+            let hostingController = UIHostingController(rootView: SettingsView(
+                navigationController: navigationController,
+                authViewModel: authViewModel,
+                dismiss: { dismiss() },
+                layout: Layout.settingsView[.iPhone]!
+            ))
+            hostingController.modalPresentationStyle = .overFullScreen
+            hostingController.view.backgroundColor = .clear
+            navigationController.modalPresentationStyle = .overFullScreen
+            navigationController.present(hostingController, animated: true)
+        }) {
+            Image(systemName: "gear")
+                .font(.system(size: iconSize))
+                .foregroundStyle(Color.pdBlue)
         }
     }
 }
@@ -735,16 +722,7 @@ struct MarkdownView: View {
 #Preview("iPhone") {
     PokerTableView(
         navigationController: UINavigationController(),
-        layout: PokerTableViewLayout(
-            spacing: 30,
-            fontSize: 16,
-            iconSize: 18,
-            communityCardSize: 60,
-            playerCardSize: 60,
-            buttonWidth: 80,
-            buttonHeight: 80,
-            bottomPadding: 20
-        ),
+        layout: Layout.pokerTableView[.iPhone]!,
         authViewModel: AuthViewModel()
     )
 }
@@ -753,16 +731,7 @@ struct MarkdownView: View {
 #Preview("iPad") {
     PokerTableView(
         navigationController: UINavigationController(),
-        layout: PokerTableViewLayout(
-            spacing: 60,
-            fontSize: 28,
-            iconSize: 30,
-            communityCardSize: 120,
-            playerCardSize: 120,
-            buttonWidth: 80,
-            buttonHeight: 80,
-            bottomPadding: 20
-        ),
+        layout: Layout.pokerTableView[.iPad]!,
         authViewModel: AuthViewModel()
     )
 }
