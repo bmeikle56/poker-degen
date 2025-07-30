@@ -41,11 +41,7 @@ struct HelpView: View {
     HelpView(
         navigationController: UINavigationController(),
         dismiss: {},
-        layout: HelpViewLayout(
-            spacing: 30,
-            horizontalPadding: 60,
-            fontSize: 18
-        )
+        layout: Layout.helpView[.iPhone]!
     )
 }
 
@@ -54,10 +50,6 @@ struct HelpView: View {
     HelpView(
         navigationController: UINavigationController(),
         dismiss: {},
-        layout: HelpViewLayout(
-            spacing: 50,
-            horizontalPadding: 250,
-            fontSize: 30
-        )
+        layout: Layout.helpView[.iPad]!
     )
 }

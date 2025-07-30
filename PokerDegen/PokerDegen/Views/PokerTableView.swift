@@ -329,7 +329,7 @@ struct DiamondBalanceView: View {
                         .frame(width: (iconSize-6), height: (820/468)*(iconSize-6))
                     Button(action: {
                         let hostingController = UIHostingController(rootView: PaymentView(
-                            navigationController: navigationController, dismiss: { dismiss() },
+                            navigationController: navigationController, dismiss: { dismiss() }, layout: Layout.paymentView[.iPhone]!,
                         ))
                         hostingController.modalPresentationStyle = .overFullScreen
                         hostingController.view.backgroundColor = .clear

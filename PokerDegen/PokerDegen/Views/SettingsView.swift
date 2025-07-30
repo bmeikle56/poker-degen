@@ -167,13 +167,7 @@ struct SettingsView: View {
         navigationController: UINavigationController(),
         authViewModel: AuthViewModel(),
         dismiss: {},
-        layout: SettingsViewLayout(
-            spacing: 30,
-            fontSize: 16,
-            buttonWidth: 150,
-            buttonHeight: 60,
-            bottomPadding: 40,
-        )
+        layout: Layout.settingsView[.iPhone]!
     )
 }
 
@@ -183,12 +177,6 @@ struct SettingsView: View {
         navigationController: UINavigationController(),
         authViewModel: AuthViewModel(),
         dismiss: {},
-        layout: SettingsViewLayout(
-            spacing: 50,
-            fontSize: 28,
-            buttonWidth: 250,
-            buttonHeight: 100,
-            bottomPadding: 50,
-        )
+        layout: Layout.settingsView[.iPad]!
     )
 }

@@ -21,18 +21,18 @@ struct Layout {
     
     static let settingsView: [DeviceType: SettingsViewLayout] = [
         .iPhone: SettingsViewLayout(
-            spacing: 50,
+            spacing: 30,
             fontSize: 16,
-            buttonWidth: 250,
-            buttonHeight: 250,
-            bottomPadding: 50
+            buttonWidth: 150,
+            buttonHeight: 60,
+            bottomPadding: 40,
         ),
         .iPad: SettingsViewLayout(
             spacing: 50,
-            fontSize: 30,
+            fontSize: 28,
             buttonWidth: 250,
-            buttonHeight: 250,
-            bottomPadding: 50
+            buttonHeight: 100,
+            bottomPadding: 50,
         )
     ]
     
@@ -90,6 +90,15 @@ struct Layout {
             fontSize: 28,
             buttonWidth: 350,
             buttonHeight: 100,
+        )
+    ]
+    
+    static let paymentView: [DeviceType: PaymentViewLayout] = [
+        .iPhone: PaymentViewLayout(
+            fontSize: 16
+        ),
+        .iPad: PaymentViewLayout(
+            fontSize: 28
         )
     ]
 }
