@@ -15,14 +15,14 @@ struct HelpViewLayout {
 
 struct HelpView: View {
     let navigationController: UINavigationController
-    let dismiss: () -> Void
+    @Environment(\.dismiss) var dismiss
     
     let layout: HelpViewLayout
     
     var body: some View {
         ZStack {
             Color.black.ignoresSafeArea()
-            ExitButton(action: dismiss)
+            ExitButton(action: { dismiss() })
             VStack(spacing: layout.spacing) {
                 Image(systemName: "questionmark.circle")
                     .font(.system(size: layout.fontSize))
@@ -40,7 +40,6 @@ struct HelpView: View {
 #Preview("iPhone") {
     HelpView(
         navigationController: UINavigationController(),
-        dismiss: {},
         layout: Layout.helpView[.iPhone]!
     )
 }
@@ -49,7 +48,6 @@ struct HelpView: View {
 #Preview("iPad") {
     HelpView(
         navigationController: UINavigationController(),
-        dismiss: {},
         layout: Layout.helpView[.iPad]!
     )
 }
