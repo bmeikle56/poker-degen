@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct LoginViewLayout {
+    let titleScale: CGFloat
     let spacing: CGFloat
     let fontSize: CGFloat
     let buttonWidth: CGFloat
@@ -26,7 +27,9 @@ struct LoginView: View {
         ZStack {
             Color.black.ignoresSafeArea()
             VStack(spacing: layout.spacing) {
-                PokerDegenTitleView()
+                PokerDegenTitleView(
+                    scale: layout.titleScale
+                )
                 AuthErrorMessageView(
                     authViewModel: authViewModel
                 )
@@ -99,12 +102,7 @@ struct LoginView: View {
 #Preview("iPhone") {
     LoginView(
         navigationController: UINavigationController(),
-        layout: LoginViewLayout(
-            spacing: 20,
-            fontSize: 16,
-            buttonWidth: 200,
-            buttonHeight: 50,
-        ),
+        layout: Layout.loginView[.iPhone]!,
         authViewModel: AuthViewModel()
     )
 }
@@ -113,12 +111,7 @@ struct LoginView: View {
 #Preview("iPad") {
     LoginView(
         navigationController: UINavigationController(),
-        layout: LoginViewLayout(
-            spacing: 50,
-            fontSize: 28,
-            buttonWidth: 350,
-            buttonHeight: 100,
-        ),
+        layout: Layout.loginView[.iPad]!,
         authViewModel: AuthViewModel()
     )
 }

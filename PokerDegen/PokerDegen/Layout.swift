@@ -61,27 +61,31 @@ struct Layout {
     
     static let loginView: [DeviceType: LoginViewLayout] = [
         .iPhone: LoginViewLayout(
-            spacing: 30,
+            titleScale: 26,
+            spacing: 20,
             fontSize: 16,
-            buttonWidth: 150,
-            buttonHeight: 60,
+            buttonWidth: 200,
+            buttonHeight: 50,
         ),
         .iPad: LoginViewLayout(
-            spacing: 30,
-            fontSize: 16,
-            buttonWidth: 150,
-            buttonHeight: 60,
+            titleScale: 50,
+            spacing: 50,
+            fontSize: 28,
+            buttonWidth: 350,
+            buttonHeight: 100,
         )
     ]
     
     static let signupView: [DeviceType: SignupViewLayout] = [
         .iPhone: SignupViewLayout(
+            titleScale: 16,
             spacing: 30,
             fontSize: 16,
             buttonWidth: 150,
             buttonHeight: 60,
         ),
         .iPad: SignupViewLayout(
+            titleScale: 30,
             spacing: 30,
             fontSize: 16,
             buttonWidth: 150,

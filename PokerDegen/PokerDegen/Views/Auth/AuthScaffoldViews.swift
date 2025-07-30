@@ -8,20 +8,23 @@
 import SwiftUI
 
 struct PokerDegenTitleView: View {
+    let scale: CGFloat
+
     var body: some View {
         VStack(spacing: 15) {
             HStack {
                 Diamond()
                     .fill(Color.pdBlue)
-                    .frame(width: 20, height: (820/468)*20)
+                    .frame(width: (scale-6), height: (820/468)*(scale-6))
                 Spacer().frame(width: 20)
                 Text("PokerDegen")
                     .foregroundStyle(Color.pdBlue)
-                    .font(.system(size: 34, weight: .bold, design: .default))
+                    .font(.system(size: scale, weight: .bold, design: .default))
             }
-            Text("A fast poker solver")
-                .foregroundStyle(Color.pdBlue)
-                .offset(x: 15)
+//            Text("A fast poker solver")
+//                .foregroundStyle(Color.pdBlue)
+//                .font(.system(size: (scale/2)))
+//                .offset(x: 15)
         }
     }
 }

@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SignupViewLayout {
+    let titleScale: CGFloat
     let spacing: CGFloat
     let fontSize: CGFloat
     let buttonWidth: CGFloat
@@ -23,7 +24,9 @@ struct SignupView: View {
         ZStack {
             Color.black.ignoresSafeArea()
             VStack {
-                PokerDegenTitleView()
+                PokerDegenTitleView(
+                    scale: layout.titleScale
+                )
                 Spacer().frame(height: 20)
                 AuthErrorMessageView(
                     authViewModel: authViewModel
@@ -72,6 +75,7 @@ struct SignupView: View {
     SignupView(
         navigationController: UINavigationController(),
         layout: SignupViewLayout(
+            titleScale: 16,
             spacing: 30,
             fontSize: 16,
             buttonWidth: 150,
@@ -82,15 +86,16 @@ struct SignupView: View {
 }
 
 /// iPad
-//#Preview("iPad") {
-//    SignupView(
-//        navigationController: UINavigationController(),
-//        layout: SignupViewLayout(
-//            spacing: 30,
-//            fontSize: 16,
-//            buttonWidth: 150,
-//            buttonHeight: 60,
-//        ),
-//        authViewModel: AuthViewModel()
-//    )
-//}
+#Preview("iPad") {
+    SignupView(
+        navigationController: UINavigationController(),
+        layout: SignupViewLayout(
+            titleScale: 30,
+            spacing: 30,
+            fontSize: 16,
+            buttonWidth: 150,
+            buttonHeight: 60,
+        ),
+        authViewModel: AuthViewModel()
+    )
+}
