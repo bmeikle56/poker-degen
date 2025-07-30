@@ -13,13 +13,13 @@ struct PaymentViewLayout {
 
 struct PaymentView: View {
     let navigationController: UINavigationController
-    let dismiss: () -> Void
+    @Environment(\.dismiss) var dismiss
     let layout: PaymentViewLayout
     
     var body: some View {
         ZStack {
             Color.black.ignoresSafeArea()
-            ExitButton(action: dismiss)
+            ExitButton(action: { dismiss() })
             Text("Coming soon!")
                 .foregroundStyle(Color.pdBlue)
                 .font(.system(size: layout.fontSize))
@@ -31,7 +31,6 @@ struct PaymentView: View {
 #Preview("iPhone") {
     PaymentView(
         navigationController: UINavigationController(),
-        dismiss: {},
         layout: Layout.paymentView[.iPhone]!
     )
 }
@@ -40,7 +39,6 @@ struct PaymentView: View {
 #Preview("iPad") {
     PaymentView(
         navigationController: UINavigationController(),
-        dismiss: {},
         layout: Layout.paymentView[.iPad]!
     )
 }

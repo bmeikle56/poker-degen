@@ -44,7 +44,7 @@ struct BetField: View {
 
             TextField("", text: $betText)
                 .keyboardType(.numberPad)
-                .onChange(of: betText) { newValue in
+                .onChange(of: betText) { newValue, _ in
                     // Remove non-digit characters
                     let digitsOnly = newValue.filter { $0.isNumber }
 

@@ -7,7 +7,7 @@
 
 import UIKit
 
-func currentDeviceType() -> DeviceType {
+var currentDeviceType: DeviceType {
     switch UIDevice.current.userInterfaceIdiom {
     case .pad:
         return .iPad

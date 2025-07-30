@@ -65,7 +65,7 @@ struct SettingsView: View {
     let navigationController: UINavigationController
     @ObservedObject var authViewModel: AuthViewModel
     
-    let dismiss: () -> Void
+    @Environment(\.dismiss) var dismiss
     
     let layout: SettingsViewLayout
     
@@ -166,7 +166,6 @@ struct SettingsView: View {
     SettingsView(
         navigationController: UINavigationController(),
         authViewModel: AuthViewModel(),
-        dismiss: {},
         layout: Layout.settingsView[.iPhone]!
     )
 }
@@ -176,7 +175,6 @@ struct SettingsView: View {
     SettingsView(
         navigationController: UINavigationController(),
         authViewModel: AuthViewModel(),
-        dismiss: {},
         layout: Layout.settingsView[.iPad]!
     )
 }

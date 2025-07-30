@@ -316,8 +316,6 @@ struct DiamondBalanceView: View {
     let navigationController: UINavigationController
     let fontSize: CGFloat
     let iconSize: CGFloat
-    
-    @Environment(\.dismiss) var dismiss
 
     var body: some View {
         VStack {
@@ -329,7 +327,8 @@ struct DiamondBalanceView: View {
                         .frame(width: (iconSize-6), height: (820/468)*(iconSize-6))
                     Button(action: {
                         let hostingController = UIHostingController(rootView: PaymentView(
-                            navigationController: navigationController, dismiss: { dismiss() }, layout: Layout.paymentView[.iPhone]!,
+                            navigationController: navigationController,
+                            layout: Layout.paymentView[currentDeviceType]!,
                         ))
                         hostingController.modalPresentationStyle = .overFullScreen
                         hostingController.view.backgroundColor = .clear
@@ -549,15 +548,12 @@ struct HelpButtonView: View {
     let navigationController: UINavigationController
     let iconSize: CGFloat
     @State private var showHelp = false
-    
-    @Environment(\.dismiss) var dismiss
 
     var body: some View {
         Button(action: {
             let hostingController = UIHostingController(rootView: HelpView(
                 navigationController: navigationController,
-                dismiss: { dismiss() },
-                layout: Layout.helpView[.iPhone]!
+                layout: Layout.helpView[currentDeviceType]!
             ))
             hostingController.modalPresentationStyle = .overFullScreen
             hostingController.view.backgroundColor = .clear
@@ -667,7 +663,7 @@ struct PokerTableView: View {
                 )
                 .popover(isPresented: $showPopover) {
                     AnalyzeView(
-                        layout: Layout.analyzeView[.iPhone]!,
+                        layout: Layout.analyzeView[currentDeviceType]!,
                         showPopover: $showPopover,
                         modelResponse: $modelResponse
                     )
@@ -682,16 +678,13 @@ struct SettingsButtonView: View {
     let navigationController: UINavigationController
     let iconSize: CGFloat
     @ObservedObject var authViewModel: AuthViewModel
-    
-    @Environment(\.dismiss) var dismiss
 
     var body: some View {
         Button(action: {
             let hostingController = UIHostingController(rootView: SettingsView(
                 navigationController: navigationController,
                 authViewModel: authViewModel,
-                dismiss: { dismiss() },
-                layout: Layout.settingsView[.iPhone]!
+                layout: Layout.settingsView[currentDeviceType]!
             ))
             hostingController.modalPresentationStyle = .overFullScreen
             hostingController.view.backgroundColor = .clear
