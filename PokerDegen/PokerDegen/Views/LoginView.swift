@@ -58,7 +58,7 @@ struct LoginView: View {
                     authViewModel.errorMessage = nil
                     navigationController.pushViewController(
                         UIHostingController(rootView: SignupView(
-                            navigationController: navigationController, layout: Layout.signupView[.iPhone]!,
+                            navigationController: navigationController, layout: Layout.signupView[currentDeviceType]!,
                             authViewModel: authViewModel
                         )),
                         animated: false
@@ -87,7 +87,7 @@ struct LoginView: View {
                     navigationController.pushViewController(
                         UIHostingController(rootView: PokerTableView(
                             navigationController: navigationController,
-                            layout: Layout.pokerTableView[.iPhone]!,
+                            layout: Layout.pokerTableView[currentDeviceType]!,
                             authViewModel: authViewModel
                         )),
                         animated: false

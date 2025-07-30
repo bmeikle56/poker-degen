@@ -329,7 +329,7 @@ struct DiamondBalanceView: View {
                         .frame(width: (iconSize-6), height: (820/468)*(iconSize-6))
                     Button(action: {
                         let hostingController = UIHostingController(rootView: PaymentView(
-                            navigationController: navigationController, dismiss: { dismiss() }, layout: Layout.paymentView[.iPhone]!,
+                            navigationController: navigationController, dismiss: { dismiss() }, layout: Layout.paymentView[currentDeviceType]!,
                         ))
                         hostingController.modalPresentationStyle = .overFullScreen
                         hostingController.view.backgroundColor = .clear
@@ -557,7 +557,7 @@ struct HelpButtonView: View {
             let hostingController = UIHostingController(rootView: HelpView(
                 navigationController: navigationController,
                 dismiss: { dismiss() },
-                layout: Layout.helpView[.iPhone]!
+                layout: Layout.helpView[currentDeviceType]!
             ))
             hostingController.modalPresentationStyle = .overFullScreen
             hostingController.view.backgroundColor = .clear
@@ -667,7 +667,7 @@ struct PokerTableView: View {
                 )
                 .popover(isPresented: $showPopover) {
                     AnalyzeView(
-                        layout: Layout.analyzeView[.iPhone]!,
+                        layout: Layout.analyzeView[currentDeviceType]!,
                         showPopover: $showPopover,
                         modelResponse: $modelResponse
                     )
@@ -691,7 +691,7 @@ struct SettingsButtonView: View {
                 navigationController: navigationController,
                 authViewModel: authViewModel,
                 dismiss: { dismiss() },
-                layout: Layout.settingsView[.iPhone]!
+                layout: Layout.settingsView[currentDeviceType]!
             ))
             hostingController.modalPresentationStyle = .overFullScreen
             hostingController.view.backgroundColor = .clear
