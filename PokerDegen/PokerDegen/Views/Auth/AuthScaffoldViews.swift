@@ -190,7 +190,7 @@ struct SignupButton: View {
                 .foregroundColor(.black)
                 .font(.system(size: fontSize, weight: .bold, design: .default))
                 .padding()
-                .frame(width: buttonWidth)
+                .frame(width: buttonWidth, height: buttonHeight)
                 .background(Color.pdBlue)
                 .cornerRadius(8)
         })

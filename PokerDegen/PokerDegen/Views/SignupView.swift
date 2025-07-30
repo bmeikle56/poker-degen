@@ -23,15 +23,13 @@ struct SignupView: View {
     var body: some View {
         ZStack {
             Color.black.ignoresSafeArea()
-            VStack {
+            VStack(spacing: layout.spacing) {
                 PokerDegenTitleView(
                     scale: layout.titleScale
                 )
-                Spacer().frame(height: 20)
                 AuthErrorMessageView(
                     authViewModel: authViewModel
                 )
-                Spacer().frame(height: 20)
                 UsernameField(
                     placeholder: "Username",
                     fontSize: layout.fontSize,
@@ -39,7 +37,6 @@ struct SignupView: View {
                     buttonHeight: layout.buttonHeight,
                     authViewModel: authViewModel
                 )
-                Spacer().frame(height: 20)
                 PasswordField(
                     placeholder: "Password",
                     fontSize: layout.fontSize,
@@ -47,7 +44,6 @@ struct SignupView: View {
                     buttonHeight: layout.buttonHeight,
                     authViewModel: authViewModel
                 )
-                Spacer().frame(height: 20)
                 SignupButton(
                     navigationController: navigationController,
                     fontSize: layout.fontSize,
@@ -55,15 +51,14 @@ struct SignupView: View {
                     buttonHeight: layout.buttonHeight,
                     authViewModel: authViewModel
                 )
-                Spacer().frame(height: 20)
                 Button(action: {
                     authViewModel.errorMessage = nil
                     navigationController.popToRootViewController(animated: false)
                 }, label: {
                     Text("Have an account? **Login**")
                         .foregroundStyle(Color.pdBlue)
+                        .font(.system(size: layout.fontSize))
                 })
-                Spacer().frame(height: 20)
             }
         }
         .navigationBarHidden(true)
@@ -74,13 +69,7 @@ struct SignupView: View {
 #Preview("iPhone") {
     SignupView(
         navigationController: UINavigationController(),
-        layout: SignupViewLayout(
-            titleScale: 16,
-            spacing: 30,
-            fontSize: 16,
-            buttonWidth: 150,
-            buttonHeight: 60,
-        ),
+        layout: Layout.signupView[.iPhone]!,
         authViewModel: AuthViewModel()
     )
 }
@@ -89,13 +78,7 @@ struct SignupView: View {
 #Preview("iPad") {
     SignupView(
         navigationController: UINavigationController(),
-        layout: SignupViewLayout(
-            titleScale: 30,
-            spacing: 30,
-            fontSize: 16,
-            buttonWidth: 150,
-            buttonHeight: 60,
-        ),
+        layout: Layout.signupView[.iPad]!,
         authViewModel: AuthViewModel()
     )
 }
