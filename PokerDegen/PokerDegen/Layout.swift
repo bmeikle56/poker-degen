@@ -93,15 +93,6 @@ struct Layout {
         )
     ]
     
-    static let paymentView: [DeviceType: PaymentViewLayout] = [
-        .iPhone: PaymentViewLayout(
-            fontSize: 16
-        ),
-        .iPad: PaymentViewLayout(
-            fontSize: 28
-        )
-    ]
-    
     static let analyzeView: [DeviceType: AnalyzeViewLayout] = [
         .iPhone: AnalyzeViewLayout(
             fontSize: 16,

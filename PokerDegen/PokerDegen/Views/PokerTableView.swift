@@ -287,18 +287,9 @@ struct AnalyzeButtonView: View {
                     modelResponse = try await analyze(viewModel: viewModel)
                 }
             }, label: {
-                HStack {
-                    Text("1")
-                        .foregroundStyle(Color.pdBlue)
-                        .font(.system(size: fontSize))
-                    Diamond()
-                        .fill(Color.pdBlue)
-                        .frame(width: (iconSize-6), height: (820/468)*(iconSize-6))
-                    Spacer().frame(width: iconSize)
-                    Text("Analyze")
-                        .foregroundStyle(Color.pdBlue)
-                        .font(.system(size: fontSize))
-                }
+                Text("Analyze")
+                    .foregroundStyle(Color.pdBlue)
+                    .font(.system(size: fontSize))
                 .padding()
                 .overlay(
                     RoundedRectangle(cornerRadius: 8)
@@ -308,42 +299,6 @@ struct AnalyzeButtonView: View {
             .onChange(of: modelResponse, { _, _ in
                 showPopover = true
             })
-        }
-    }
-}
-
-struct DiamondBalanceView: View {
-    let navigationController: UINavigationController
-    let fontSize: CGFloat
-    let iconSize: CGFloat
-
-    var body: some View {
-        VStack {
-            HStack {
-                Spacer()
-                HStack {
-                    Diamond()
-                        .fill(Color.pdBlue)
-                        .frame(width: (iconSize-6), height: (820/468)*(iconSize-6))
-                    Button(action: {
-                        let hostingController = UIHostingController(rootView: PaymentView(
-                            navigationController: navigationController,
-                            layout: Layout.paymentView[currentDeviceType]!,
-                        ))
-                        hostingController.modalPresentationStyle = .overFullScreen
-                        hostingController.view.backgroundColor = .clear
-                        navigationController.modalPresentationStyle = .overFullScreen
-                        navigationController.present(hostingController, animated: true)
-                    }, label: {
-                        Text("+")
-                            .foregroundStyle(Color.pdBlue)
-                            .font(.system(size: iconSize+8, weight: .heavy, design: .default))
-                    })
-                }
-                .padding(50)
-            }
-            .padding(.vertical, -45)
-            Spacer()
         }
     }
 }
@@ -591,11 +546,6 @@ struct PokerTableView: View {
         ZStack {
             Color.black.ignoresSafeArea()
             PokerTable()
-            DiamondBalanceView(
-                navigationController: navigationController,
-                fontSize: layout.fontSize,
-                iconSize: layout.iconSize
-            )
             VStack {
                 HStack {
                     SettingsButtonView(
