@@ -24,38 +24,38 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		D27FA2EB2E1C9974001427D1 /* PokerDegen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PokerDegen.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		D27FA2F82E1C9976001427D1 /* PokerDegenTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PokerDegenTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		D27FA3022E1C9976001427D1 /* PokerDegenUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PokerDegenUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D27FA2EB2E1C9974001427D1 /* ActionPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ActionPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D27FA2F82E1C9976001427D1 /* ActionPlayerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ActionPlayerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D27FA3022E1C9976001427D1 /* ActionPlayerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ActionPlayerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		D27B09AA2E26CEE700CE62C0 /* Exceptions for "PokerDegen" folder in "PokerDegen" target */ = {
+		D27B09AA2E26CEE700CE62C0 /* Exceptions for "ActionPlayer" folder in "ActionPlayer" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = D27FA2EA2E1C9974001427D1 /* PokerDegen */;
+			target = D27FA2EA2E1C9974001427D1 /* ActionPlayer */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		D27FA2ED2E1C9974001427D1 /* PokerDegen */ = {
+		D27FA2ED2E1C9974001427D1 /* ActionPlayer */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				D27B09AA2E26CEE700CE62C0 /* Exceptions for "PokerDegen" folder in "PokerDegen" target */,
+				D27B09AA2E26CEE700CE62C0 /* Exceptions for "ActionPlayer" folder in "ActionPlayer" target */,
 			);
-			path = PokerDegen;
+			path = ActionPlayer;
 			sourceTree = "<group>";
 		};
-		D27FA2FB2E1C9976001427D1 /* PokerDegenTests */ = {
+		D27FA2FB2E1C9976001427D1 /* ActionPlayerTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = PokerDegenTests;
+			path = ActionPlayerTests;
 			sourceTree = "<group>";
 		};
-		D27FA3052E1C9976001427D1 /* PokerDegenUITests */ = {
+		D27FA3052E1C9976001427D1 /* ActionPlayerUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = PokerDegenUITests;
+			path = ActionPlayerUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -88,9 +88,9 @@
 		D27FA2E22E1C9974001427D1 = {
 			isa = PBXGroup;
 			children = (
-				D27FA2ED2E1C9974001427D1 /* PokerDegen */,
-				D27FA2FB2E1C9976001427D1 /* PokerDegenTests */,
-				D27FA3052E1C9976001427D1 /* PokerDegenUITests */,
+				D27FA2ED2E1C9974001427D1 /* ActionPlayer */,
+				D27FA2FB2E1C9976001427D1 /* ActionPlayerTests */,
+				D27FA3052E1C9976001427D1 /* ActionPlayerUITests */,
 				D27FA2EC2E1C9974001427D1 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -98,9 +98,9 @@
 		D27FA2EC2E1C9974001427D1 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D27FA2EB2E1C9974001427D1 /* PokerDegen.app */,
-				D27FA2F82E1C9976001427D1 /* PokerDegenTests.xctest */,
-				D27FA3022E1C9976001427D1 /* PokerDegenUITests.xctest */,
+				D27FA2EB2E1C9974001427D1 /* ActionPlayer.app */,
+				D27FA2F82E1C9976001427D1 /* ActionPlayerTests.xctest */,
+				D27FA3022E1C9976001427D1 /* ActionPlayerUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -108,9 +108,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		D27FA2EA2E1C9974001427D1 /* PokerDegen */ = {
+		D27FA2EA2E1C9974001427D1 /* ActionPlayer */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D27FA30C2E1C9976001427D1 /* Build configuration list for PBXNativeTarget "PokerDegen" */;
+			buildConfigurationList = D27FA30C2E1C9976001427D1 /* Build configuration list for PBXNativeTarget "ActionPlayer" */;
 			buildPhases = (
 				D27FA2E72E1C9974001427D1 /* Sources */,
 				D27FA2E82E1C9974001427D1 /* Frameworks */,
@@ -121,18 +121,18 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				D27FA2ED2E1C9974001427D1 /* PokerDegen */,
+				D27FA2ED2E1C9974001427D1 /* ActionPlayer */,
 			);
-			name = PokerDegen;
+			name = ActionPlayer;
 			packageProductDependencies = (
 			);
 			productName = PokerDegen;
-			productReference = D27FA2EB2E1C9974001427D1 /* PokerDegen.app */;
+			productReference = D27FA2EB2E1C9974001427D1 /* ActionPlayer.app */;
 			productType = "com.apple.product-type.application";
 		};
-		D27FA2F72E1C9976001427D1 /* PokerDegenTests */ = {
+		D27FA2F72E1C9976001427D1 /* ActionPlayerTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D27FA30F2E1C9976001427D1 /* Build configuration list for PBXNativeTarget "PokerDegenTests" */;
+			buildConfigurationList = D27FA30F2E1C9976001427D1 /* Build configuration list for PBXNativeTarget "ActionPlayerTests" */;
 			buildPhases = (
 				D27FA2F42E1C9976001427D1 /* Sources */,
 				D27FA2F52E1C9976001427D1 /* Frameworks */,
@@ -144,18 +144,18 @@
 				D27FA2FA2E1C9976001427D1 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				D27FA2FB2E1C9976001427D1 /* PokerDegenTests */,
+				D27FA2FB2E1C9976001427D1 /* ActionPlayerTests */,
 			);
-			name = PokerDegenTests;
+			name = ActionPlayerTests;
 			packageProductDependencies = (
 			);
 			productName = PokerDegenTests;
-			productReference = D27FA2F82E1C9976001427D1 /* PokerDegenTests.xctest */;
+			productReference = D27FA2F82E1C9976001427D1 /* ActionPlayerTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		D27FA3012E1C9976001427D1 /* PokerDegenUITests */ = {
+		D27FA3012E1C9976001427D1 /* ActionPlayerUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D27FA3122E1C9976001427D1 /* Build configuration list for PBXNativeTarget "PokerDegenUITests" */;
+			buildConfigurationList = D27FA3122E1C9976001427D1 /* Build configuration list for PBXNativeTarget "ActionPlayerUITests" */;
 			buildPhases = (
 				D27FA2FE2E1C9976001427D1 /* Sources */,
 				D27FA2FF2E1C9976001427D1 /* Frameworks */,
@@ -167,13 +167,13 @@
 				D27FA3042E1C9976001427D1 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				D27FA3052E1C9976001427D1 /* PokerDegenUITests */,
+				D27FA3052E1C9976001427D1 /* ActionPlayerUITests */,
 			);
-			name = PokerDegenUITests;
+			name = ActionPlayerUITests;
 			packageProductDependencies = (
 			);
 			productName = PokerDegenUITests;
-			productReference = D27FA3022E1C9976001427D1 /* PokerDegenUITests.xctest */;
+			productReference = D27FA3022E1C9976001427D1 /* ActionPlayerUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -199,7 +199,7 @@
 					};
 				};
 			};
-			buildConfigurationList = D27FA2E62E1C9974001427D1 /* Build configuration list for PBXProject "PokerDegen" */;
+			buildConfigurationList = D27FA2E62E1C9974001427D1 /* Build configuration list for PBXProject "ActionPlayer" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -215,9 +215,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				D27FA2EA2E1C9974001427D1 /* PokerDegen */,
-				D27FA2F72E1C9976001427D1 /* PokerDegenTests */,
-				D27FA3012E1C9976001427D1 /* PokerDegenUITests */,
+				D27FA2EA2E1C9974001427D1 /* ActionPlayer */,
+				D27FA2F72E1C9976001427D1 /* ActionPlayerTests */,
+				D27FA3012E1C9976001427D1 /* ActionPlayerUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -273,12 +273,12 @@
 /* Begin PBXTargetDependency section */
 		D27FA2FA2E1C9976001427D1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = D27FA2EA2E1C9974001427D1 /* PokerDegen */;
+			target = D27FA2EA2E1C9974001427D1 /* ActionPlayer */;
 			targetProxy = D27FA2F92E1C9976001427D1 /* PBXContainerItemProxy */;
 		};
 		D27FA3042E1C9976001427D1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = D27FA2EA2E1C9974001427D1 /* PokerDegen */;
+			target = D27FA2EA2E1C9974001427D1 /* ActionPlayer */;
 			targetProxy = D27FA3032E1C9976001427D1 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -483,7 +483,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PokerDegen.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/PokerDegen";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ActionPlayer.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ActionPlayer";
 			};
 			name = Debug;
 		};
@@ -503,7 +503,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PokerDegen.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/PokerDegen";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ActionPlayer.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ActionPlayer";
 			};
 			name = Release;
 		};
@@ -546,7 +546,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		D27FA2E62E1C9974001427D1 /* Build configuration list for PBXProject "PokerDegen" */ = {
+		D27FA2E62E1C9974001427D1 /* Build configuration list for PBXProject "ActionPlayer" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D27FA30A2E1C9976001427D1 /* Debug */,
@@ -555,7 +555,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D27FA30C2E1C9976001427D1 /* Build configuration list for PBXNativeTarget "PokerDegen" */ = {
+		D27FA30C2E1C9976001427D1 /* Build configuration list for PBXNativeTarget "ActionPlayer" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D27FA30D2E1C9976001427D1 /* Debug */,
@@ -564,7 +564,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D27FA30F2E1C9976001427D1 /* Build configuration list for PBXNativeTarget "PokerDegenTests" */ = {
+		D27FA30F2E1C9976001427D1 /* Build configuration list for PBXNativeTarget "ActionPlayerTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D27FA3102E1C9976001427D1 /* Debug */,
@@ -573,7 +573,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D27FA3122E1C9976001427D1 /* Build configuration list for PBXNativeTarget "PokerDegenUITests" */ = {
+		D27FA3122E1C9976001427D1 /* Build configuration list for PBXNativeTarget "ActionPlayerUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D27FA3132E1C9976001427D1 /* Debug */,

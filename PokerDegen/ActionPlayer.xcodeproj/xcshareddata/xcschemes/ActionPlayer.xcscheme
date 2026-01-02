@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1640"
+   LastUpgradeVersion = "2620"
    version = "1.7">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -16,9 +16,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D27FA2EA2E1C9974001427D1"
-               BuildableName = "PokerDegen.app"
-               BlueprintName = "PokerDegen"
-               ReferencedContainer = "container:PokerDegen.xcodeproj">
+               BuildableName = "ActionPlayer.app"
+               BlueprintName = "ActionPlayer"
+               ReferencedContainer = "container:ActionPlayer.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,9 +45,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D27FA2EA2E1C9974001427D1"
-            BuildableName = "PokerDegen.app"
-            BlueprintName = "PokerDegen"
-            ReferencedContainer = "container:PokerDegen.xcodeproj">
+            BuildableName = "ActionPlayer.app"
+            BlueprintName = "ActionPlayer"
+            ReferencedContainer = "container:ActionPlayer.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -62,9 +62,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D27FA2EA2E1C9974001427D1"
-            BuildableName = "PokerDegen.app"
-            BlueprintName = "PokerDegen"
-            ReferencedContainer = "container:PokerDegen.xcodeproj">
+            BuildableName = "ActionPlayer.app"
+            BlueprintName = "ActionPlayer"
+            ReferencedContainer = "container:ActionPlayer.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
