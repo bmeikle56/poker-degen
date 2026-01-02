@@ -1,10 +1,3 @@
-//
-//  BetSelector.swift
-//  PokerDegen
-//
-//  Created by Braeden Meikle on 7/16/25.
-//
-
 import SwiftUI
 
 struct BetSelector: View {

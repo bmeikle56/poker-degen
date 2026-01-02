@@ -1,10 +1,3 @@
-//
-//  WebView.swift
-//  PokerDegen
-//
-//  Created by Braeden Meikle on 7/25/25.
-//
-
 import SwiftUI
 import SafariServices
 

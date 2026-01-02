@@ -1,10 +1,3 @@
-//
-//  AuthScaffoldViews.swift
-//  PokerDegen
-//
-//  Created by Braeden Meikle on 7/13/25.
-//
-
 import SwiftUI
 
 struct PokerDegenTitleView: View {

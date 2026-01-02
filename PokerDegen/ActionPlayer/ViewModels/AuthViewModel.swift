@@ -1,10 +1,3 @@
-//
-//  AuthViewModel.swift
-//  PokerDegen
-//
-//  Created by Braeden Meikle on 7/22/25.
-//
-
 import SwiftUI
 
 @MainActor class AuthViewModel: ObservableObject {

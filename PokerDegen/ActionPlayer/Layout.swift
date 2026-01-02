@@ -1,10 +1,3 @@
-//
-//  Layout.swift
-//  PokerDegen
-//
-//  Created by Braeden Meikle on 7/29/25.
-//
-
 struct Layout {
     static let helpView: [DeviceType: HelpViewLayout] = [
         .iPhone: HelpViewLayout(

@@ -1,10 +1,3 @@
-//
-//  SettingsView.swift
-//  PokerDegen
-//
-//  Created by Braeden Meikle on 7/22/25.
-//
-
 import SwiftUI
 import SafariServices
 

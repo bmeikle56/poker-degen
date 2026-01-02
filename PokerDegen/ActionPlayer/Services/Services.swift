@@ -1,10 +1,3 @@
-//
-//  Services.swift
-//  PokerDegen
-//
-//  Created by Braeden Meikle on 7/8/25.
-//
-
 import Foundation
 
 func login(username: String, password: String) async -> (Bool, String?) {

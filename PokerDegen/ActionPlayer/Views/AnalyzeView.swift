@@ -1,10 +1,3 @@
-//
-//  AnalyzeView.swift
-//  PokerDegen
-//
-//  Created by Braeden Meikle on 7/15/25.
-//
-
 import SwiftUI
 
 struct AnalyzeViewLayout {

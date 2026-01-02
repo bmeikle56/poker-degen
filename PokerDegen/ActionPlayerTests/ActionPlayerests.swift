@@ -1,14 +1,7 @@
-//
-//  PokerDegenTests.swift
-//  PokerDegenTests
-//
-//  Created by Braeden Meikle on 7/7/25.
-//
-
 import Testing
-@testable import PokerDegen
+@testable import ActionPlayer
 
-struct PokerDegenTests {
+struct ActionPlayerTests {
 
     @Test func example() async throws {
         // Write your test here and use APIs like `#expect(...)` to check expected conditions.

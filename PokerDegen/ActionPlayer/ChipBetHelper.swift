@@ -1,10 +1,3 @@
-//
-//  ChipBetHelper.swift
-//  PokerDegen
-//
-//  Created by Braeden Meikle on 7/29/25.
-//
-
 import SwiftUI
 
 func chipBreakdown(for bet: Int) -> [(Int, Int)] {

@@ -1,10 +1,3 @@
-//
-//  PositionSelector.swift
-//  PokerDegen
-//
-//  Created by Braeden Meikle on 7/17/25.
-//
-
 import SwiftUI
 
 struct PositionSelector: View {

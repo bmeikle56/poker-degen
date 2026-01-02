@@ -1,10 +1,3 @@
-//
-//  HelpView.swift
-//  PokerDegen
-//
-//  Created by Braeden Meikle on 7/24/25.
-//
-
 import SwiftUI
 
 struct HelpViewLayout {

@@ -1,13 +1,6 @@
-//
-//  PokerDegenUITestsLaunchTests.swift
-//  PokerDegenUITests
-//
-//  Created by Braeden Meikle on 7/7/25.
-//
-
 import XCTest
 
-final class PokerDegenUITestsLaunchTests: XCTestCase {
+final class ActionPlayerUITestsLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true

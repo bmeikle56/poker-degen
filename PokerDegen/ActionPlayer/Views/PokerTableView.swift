@@ -1,10 +1,3 @@
-//
-//  PokerTableView.swift
-//  PokerDegen
-//
-//  Created by Braeden Meikle on 7/7/25.
-//
-
 import SwiftUI
 
 struct PokerTableViewLayout {

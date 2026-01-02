@@ -1,13 +1,6 @@
-//
-//  PokerDegenUITests.swift
-//  PokerDegenUITests
-//
-//  Created by Braeden Meikle on 7/7/25.
-//
-
 import XCTest
 
-final class PokerDegenUITests: XCTestCase {
+final class ActionPlayerUITests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
