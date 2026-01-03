@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct PokerDegenTitleView: View {
+struct ActionPlayerTitleView: View {
     let scale: CGFloat
 
     var body: some View {
@@ -10,7 +10,7 @@ struct PokerDegenTitleView: View {
                     .fill(Color.pdBlue)
                     .frame(width: (scale-6), height: (820/468)*(scale-6))
                 Spacer().frame(width: 20)
-                Text("PokerDegen")
+                Text("ActionPlayer")
                     .foregroundStyle(Color.pdBlue)
                     .font(.system(size: scale, weight: .bold, design: .default))
             }

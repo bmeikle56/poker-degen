@@ -17,7 +17,7 @@ struct SignupView: View {
         ZStack {
             Color.black.ignoresSafeArea()
             VStack(spacing: layout.spacing) {
-                PokerDegenTitleView(
+                ActionPlayerTitleView(
                     scale: layout.titleScale
                 )
                 AuthErrorMessageView(
