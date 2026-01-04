@@ -113,7 +113,7 @@ struct UsernameField: View {
             .frame(height: buttonHeight)
             .background(
                 RoundedRectangle(cornerRadius: 8)
-                    .stroke(Color.pdBlue, lineWidth: 1.4)
+                    .stroke(Color.smoothGray, lineWidth: 1.4)
             )
             .autocapitalization(.none)
             .foregroundStyle(Color.smoothGray)
@@ -157,7 +157,7 @@ struct PasswordField: View {
             .frame(height: buttonHeight)
             .background(
                 RoundedRectangle(cornerRadius: 8)
-                    .stroke(Color.pdBlue, lineWidth: 1.4)
+                    .stroke(Color.smoothGray, lineWidth: 1.4)
             )
             .autocapitalization(.none)
             .foregroundStyle(Color.smoothGray)

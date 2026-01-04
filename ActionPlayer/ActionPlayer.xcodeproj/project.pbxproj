@@ -12,14 +12,14 @@
 			containerPortal = D27FA2E32E1C9974001427D1 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = D27FA2EA2E1C9974001427D1;
-			remoteInfo = PokerDegen;
+			remoteInfo = ActionPlayer;
 		};
 		D27FA3032E1C9976001427D1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D27FA2E32E1C9974001427D1 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = D27FA2EA2E1C9974001427D1;
-			remoteInfo = PokerDegen;
+			remoteInfo = ActionPlayer;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -126,7 +126,7 @@
 			name = ActionPlayer;
 			packageProductDependencies = (
 			);
-			productName = PokerDegen;
+			productName = ActionPlayer;
 			productReference = D27FA2EB2E1C9974001427D1 /* ActionPlayer.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -149,7 +149,7 @@
 			name = ActionPlayerTests;
 			packageProductDependencies = (
 			);
-			productName = PokerDegenTests;
+			productName = ActionPlayerTests;
 			productReference = D27FA2F82E1C9976001427D1 /* ActionPlayerTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
@@ -172,7 +172,7 @@
 			name = ActionPlayerUITests;
 			packageProductDependencies = (
 			);
-			productName = PokerDegenUITests;
+			productName = ActionPlayerUITests;
 			productReference = D27FA3022E1C9976001427D1 /* ActionPlayerUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
@@ -337,13 +337,13 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = PokerDegen/Info.plist;
+				INFOPLIST_FILE = ActionPlayer/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_NAME = PokerDegen;
+				PRODUCT_NAME = ActionPlayer;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -397,12 +397,12 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = PokerDegen/Info.plist;
+				INFOPLIST_FILE = ActionPlayer/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				PRODUCT_NAME = PokerDegen;
+				PRODUCT_NAME = ActionPlayer;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				VALIDATE_PRODUCT = YES;
@@ -419,7 +419,7 @@
 				DEVELOPMENT_TEAM = PFNA8FG4U6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = PokerDegen/Info.plist;
+				INFOPLIST_FILE = ActionPlayer/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
@@ -430,7 +430,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.4;
-				PRODUCT_BUNDLE_IDENTIFIER = com.braedenmeikle.PokerDegen;
+				PRODUCT_BUNDLE_IDENTIFIER = com.braedenmeikle.ActionPlayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -448,7 +448,7 @@
 				DEVELOPMENT_TEAM = PFNA8FG4U6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = PokerDegen/Info.plist;
+				INFOPLIST_FILE = ActionPlayer/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
@@ -459,7 +459,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.4;
-				PRODUCT_BUNDLE_IDENTIFIER = com.braedenmeikle.PokerDegen;
+				PRODUCT_BUNDLE_IDENTIFIER = com.braedenmeikle.ActionPlayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -478,7 +478,7 @@
 				INFOPLIST_FILE = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.braedenmeikle.PokerDegenTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.braedenmeikle.ActionPlayerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -498,7 +498,7 @@
 				INFOPLIST_FILE = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.braedenmeikle.PokerDegenTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.braedenmeikle.ActionPlayerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -516,12 +516,12 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "";
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.braedenmeikle.PokerDegenUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.braedenmeikle.ActionPlayerUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = PokerDegen;
+				TEST_TARGET_NAME = ActionPlayer;
 			};
 			name = Debug;
 		};
@@ -534,12 +534,12 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "";
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.braedenmeikle.PokerDegenUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.braedenmeikle.ActionPlayerUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = PokerDegen;
+				TEST_TARGET_NAME = ActionPlayer;
 			};
 			name = Release;
 		};
